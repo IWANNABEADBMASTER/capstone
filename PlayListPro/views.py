@@ -2,18 +2,18 @@ from django.shortcuts import render
 
 # Create your views here.
 def main(request):
-    return render(request, 'html/main.html')
+    return render(request, 'main.html')
 def search(request):
-    return render(request, 'html/search.html')
+    return render(request, 'search.html')
 def myplaylist(request):
-    return render(request, 'html/myplaylist.html')
+    return render(request, 'myplaylist.html')
 def profile(request):
-    return render(request, 'html/profile.html')
+    return render(request, 'profile.html')
 def profileUpdate(request):
-    return render(request, 'html/profileUpdate.html')
+    return render(request, 'profileUpdate.html')
 def passwordUpdate(request):
-    return render(request, 'html/passwordUpdate.html')
+    return render(request, 'passwordUpdate.html')
 def login(request):
-    return render(request, 'html/login.html')
+    return render(request, 'login.html')
 def signup(request):
-    return render(request, 'html/signup.html')    
+    return render(request, 'signup.html')    
