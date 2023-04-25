@@ -10,9 +10,9 @@ def search(request):
         query = request.POST['query']
         results = spotify.search_spotify(query)
         context = {'results': results}
-        return render(request, 'searchResult.html', context)
+        return render(request, 'search/searchResult.html', context)
     else:
-        return render(request, 'search.html')
+        return render(request, 'search/search.html')
 def myplaylist(request):
     return render(request, 'myplaylist.html')
 def profile(request):
