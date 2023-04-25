@@ -28,6 +28,10 @@ a {
   height: 30px;
 }
 
+.menu_img:hover {
+  cursor: pointer;
+}
+
 .login_img {
   width: 30px;
   height: 30px;
@@ -68,4 +72,18 @@ a {
 .chart td {
   border: 1px solid white;
   text-align: center;
+}
+
+.menu {
+  background-color: rgb(39, 50, 56);
+  width: 100px;
+  height: 130px;
+  list-style: none;
+  position: fixed;
+  border-top: 1px solid white;
+}
+
+.menu li {
+  padding: 10px;
+  text-align: left;
 }
