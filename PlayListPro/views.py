@@ -1,10 +1,18 @@
 from django.shortcuts import render
+from . import spotify
 
 # Create your views here.
 def main(request):
     return render(request, 'main.html')
+
 def search(request):
-    return render(request, 'search.html')
+    if request.method == 'POST':
+        query = request.POST['query']
+        results = spotify.search_spotify(query)
+        context = {'results': results}
+        return render(request, 'searchResult.html', context)
+    else:
+        return render(request, 'search.html')
 def myplaylist(request):
     return render(request, 'myplaylist.html')
 def profile(request):
