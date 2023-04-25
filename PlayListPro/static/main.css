@@ -1,6 +1,7 @@
 body {
   background-color: black;
   margin: 0;
+  text-align: center;
 }
 
 a {
@@ -10,11 +11,61 @@ a {
 
 .bar {
   background-color: rgb(39, 50, 56);
+  display: flex;
+  justify-content: space-between;
   height: 40px;
   line-height: 40px;
-  padding: 10px;
+  align-items: center;
+  padding: 10px 20px;
 }
 
 .title {
   font-size: 20px;
+}
+
+.menu_img {
+  width: 30px;
+  height: 30px;
+}
+
+.login_img {
+  width: 30px;
+  height: 30px;
+}
+
+.main_box {
+  width: 600px;
+  margin: auto;
+  height: 512px;
+  background-image: url("./favicon/background.jpg");
+}
+
+.search {
+  width: 470px;
+  height: 50px;
+}
+
+.search_img {
+  width: 40px;
+  height: 40px;
+  margin-left: 10px;
+}
+
+.search-wrapper {
+  display: flex;
+  align-items: center;
+}
+
+.chart {
+  background-color: rgb(64, 64, 64);
+  border-spacing: 0;
+  color: white;
+  width: 600px;
+  height: 120px;
+  table-layout: fixed;
+}
+
+.chart td {
+  border: 1px solid white;
+  text-align: center;
 }

@@ -8,14 +8,70 @@
   </head>
   <body>
     <div class="bar">
-      <a href="#" class="title">PlayListPro</a>
+      <div>
+        <img src="{% static '/favicon/menu.png' %}" class="menu_img" />
+      </div>
+      <div class="title"><a href="#">PlayListPro</a></div>
+      <div></div>
+      <div></div>
+      <div></div>
+      <div></div>
+      <div></div>
+      <div></div>
+      <div></div>
+      <div></div>
+      <div></div>
+      <div></div>
+      <div></div>
+      <div></div>
+
+      <div class="login">
+        <a href="/login">Login </a>
+      </div>
+      <div>
+        <a href="/login"
+          ><img src="{% static '/favicon/login.png' %}" class="menu_img"
+        /></a>
+      </div>
     </div>
     <a href="/search">search</a>
     <a href="/myplaylist">myplaylist</a>
     <a href="/profile">profile</a>
     <a href="/profileUpdate">profileUpdate</a>
     <a href="/passwordUpdate">passwordUpdate</a>
-    <a href="/login">login</a>
     <a href="/signup">signup</a>
+
+    <div class="main_box">
+      <form action="">
+        <div class="search-wrapper">
+          <input
+            type="text"
+            class="search"
+            placeholder="찾고싶은 곡을 검색하세요"
+          />
+          <img src="{% static '/favicon/search.png' %}" class="search_img" />
+        </div>
+      </form>
+
+      <div>
+        <table class="chart">
+          <tr>
+            <td colspan="4" style="height: 20px">인기차트</td>
+          </tr>
+          <tr>
+            <td>전체 TOP</td>
+            <td>발라드</td>
+            <td>팝스타</td>
+            <td>ROCK</td>
+          </tr>
+          <tr>
+            <td>힙합</td>
+            <td>댄스</td>
+            <td>R&B</td>
+            <td>인디뮤직</td>
+          </tr>
+        </table>
+      </div>
+    </div>
   </body>
 </html>
