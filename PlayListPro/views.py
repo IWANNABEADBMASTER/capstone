@@ -13,6 +13,7 @@ def search(request):
         return render(request, 'search/searchResult.html', context)
     else:
         return render(request, 'search/search.html')
+
 def myplaylist(request):
     return render(request, 'myplaylist.html')
 def profile(request):
