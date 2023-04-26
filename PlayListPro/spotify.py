@@ -1,9 +1,11 @@
 import spotipy
 from spotipy.oauth2 import SpotifyClientCredentials
 import os
+from dotenv import load_dotenv
 
-client_id = 'acdc0379579049c88c48df22a78d5633'
-client_secret = '525e490e047648af84ba36882e91afdf'
+load_dotenv()
+client_id = os.getenv("cid")
+client_secret = os.getenv("secrete")
 
 # 인증 정보 설정
 client_credentials_manager = SpotifyClientCredentials(client_id=client_id, client_secret=client_secret)
