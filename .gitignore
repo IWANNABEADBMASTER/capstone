@@ -1,7 +1,0 @@
-# .gitignore 파일 내용
-
-# 파이썬 가상환경
-venv/
-
-# API 키 및 비밀번호
-.env
