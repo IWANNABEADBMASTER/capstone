@@ -4,58 +4,38 @@
   <head>
     <meta charset="UTF-8" />
     <link rel="stylesheet" href="{% static 'main.css' %}" />
-    <title>main</title>
+    <title>PlayListPro</title>
   </head>
   <body>
     <div class="bar">
       <div>
         <img src="{% static '/favicon/menu.png' %}" class="menu_img" />
       </div>
-      <div class="title"><a href="#">PlayListPro</a></div>
-      <div></div>
-      <div></div>
-      <div></div>
-      <div></div>
-      <div></div>
-      <div></div>
-      <div></div>
-      <div></div>
-      <div></div>
-      <div></div>
-      <div></div>
-      <div></div>
+      <div class="title"><a href="/">PlayListPro</a></div>
 
       <div class="login">
         <a href="/login">Login </a>
       </div>
       <div>
-        <a href="/login"
-          ><img src="{% static '/favicon/login.png' %}" class="menu_img"
+        <a href="/profile"
+          ><img src="{% static '/favicon/login.png' %}" class="login_img"
         /></a>
       </div>
     </div>
 
     <div class="menu">
-      <li><a href="#">home</a></li>
+      <li><a href="/">home</a></li>
       <li><a href="/search">search</a></li>
       <li><a href="/myplaylist">playlist</a></li>
     </div>
 
-    <a href="/profile">profile</a>
-    <a href="/profileUpdate">profileUpdate</a>
-    <a href="/passwordUpdate">passwordUpdate</a>
-    <a href="/signup">signup</a>
-
     <div class="main_box">
-      <form action="">
-        <div class="search-wrapper">
-          <input
-            type="text"
-            class="search"
-            placeholder="찾고싶은 곡을 검색하세요"
-          />
-          <img src="{% static '/favicon/search.png' %}" class="search_img" />
-        </div>
+      <form action="/search">
+        <input
+          type="text"
+          class="search"
+          placeholder="찾고싶은 곡을 검색하세요"
+        />
       </form>
 
       <div>
