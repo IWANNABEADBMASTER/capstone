@@ -30,11 +30,14 @@
     </div>
 
     <div class="main_box">
-      <form action="/search">
+      <form method="POST" action="/search">
+        {% csrf_token %}
         <input
           type="text"
           class="search"
           placeholder="찾고싶은 곡을 검색하세요"
+          id="query"
+          name="query"
         />
       </form>
 

@@ -30,22 +30,25 @@
     </div>
 
     <div class="main_box">
-      <form action="/search">
+      <form method="POST" action="/search">
+        {% csrf_token %}
         <input
           type="text"
           class="search"
-          placeholder="찾고싶은 곡을 검색하세요"
+          value="{{query}}"
+          id="query"
+          name="query"
         />
       </form>
 
       <div class="mugic_box">
-        <div class="mugic_box_bar">로 검색한 결과입니다.</div>
+        <div class="mugic_box_bar">"{{query}}"의 검색 결과입니다.</div>
         {% if results %}
         <div>
           {% for track in results %}
           <li class="mugic_li">
             <div>{{ forloop.counter }}</div>
-            <img src="{{ track.album.images.0.url }}" alt="" />
+            <img src="{{ track.album.images.0.url }}" alt="no image" />
             <div>{{ track.name }}</div>
             <div>{{ track.artists.0.name }}</div>
             <div>{{ track.album.name }}</div>

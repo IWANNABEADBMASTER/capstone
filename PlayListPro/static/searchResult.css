@@ -1,0 +1,96 @@
+body {
+  background-color: black;
+  margin: 0;
+  text-align: center;
+  color: white;
+}
+
+a {
+  color: white;
+  text-decoration: none;
+}
+
+.bar {
+  background-color: rgb(39, 50, 56);
+  display: flex;
+  justify-content: space-between;
+  height: 40px;
+  line-height: 40px;
+  align-items: center;
+  padding: 10px 20px;
+}
+
+.title {
+  font-size: 20px;
+}
+
+.menu_img {
+  width: 30px;
+  height: 30px;
+  cursor: pointer;
+}
+
+.login {
+  margin-left: 900px;
+}
+
+.login_img {
+  width: 30px;
+  height: 30px;
+}
+
+.main_box {
+  width: 800px;
+  height: 512px;
+  margin: auto;
+  padding-top: 100px;
+}
+
+.search {
+  width: 470px;
+  height: 50px;
+  background-image: url("./favicon/search.png");
+  background-position: right;
+  background-size: 40px;
+  background-repeat: no-repeat;
+}
+
+.menu {
+  background-color: rgb(39, 50, 56);
+  width: 100px;
+  height: 130px;
+  list-style: none;
+  position: fixed;
+  border-top: 1px solid white;
+}
+
+.menu li {
+  padding: 10px;
+  text-align: left;
+}
+
+.mugic_box {
+  list-style: none;
+  background-color: rgb(39, 50, 56);
+}
+
+.mugic_box li {
+  border-top: 1px solid black;
+  text-align: left;
+  height: 50px;
+}
+
+.mugic_box img {
+  width: 50px;
+  height: 50px;
+}
+
+.mugic_li {
+  display: flex;
+  justify-content: space-between;
+  line-height: 50px;
+}
+
+.mugic_li div {
+  border-left: 1px solid black;
+}
