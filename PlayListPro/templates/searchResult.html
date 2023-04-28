@@ -1,0 +1,62 @@
+{% load static %}
+
+<html lang="ko">
+  <head>
+    <meta charset="UTF-8" />
+    <link rel="stylesheet" href="{% static 'searchResult.css' %}" />
+    <title>Search</title>
+  </head>
+  <body>
+    <div class="bar">
+      <div>
+        <img src="{% static '/favicon/menu.png' %}" class="menu_img" />
+      </div>
+      <div class="title"><a href="/">PlayListPro</a></div>
+
+      <div class="login">
+        <a href="/login">Login </a>
+      </div>
+      <div>
+        <a href="/profile"
+          ><img src="{% static '/favicon/login.png' %}" class="login_img"
+        /></a>
+      </div>
+    </div>
+
+    <div class="menu">
+      <li><a href="/">home</a></li>
+      <li><a href="/search">search</a></li>
+      <li><a href="/myplaylist">playlist</a></li>
+    </div>
+
+    <div class="main_box">
+      <form action="/search">
+        <input
+          type="text"
+          class="search"
+          placeholder="찾고싶은 곡을 검색하세요"
+        />
+      </form>
+
+      <div class="mugic_box">
+        <div class="mugic_box_bar">로 검색한 결과입니다.</div>
+        {% if results %}
+        <div>
+          {% for track in results %}
+          <li class="mugic_li">
+            <div>{{ forloop.counter }}</div>
+            <img src="{{ track.album.images.0.url }}" alt="" />
+            <div>{{ track.name }}</div>
+            <div>{{ track.artists.0.name }}</div>
+            <div>{{ track.album.name }}</div>
+          </li>
+          {% endfor %}
+        </div>
+        {% else %}
+        <p>No results found.</p>
+        {% endif %}
+      </div>
+    </div>
+  </body>
+</html>
+<script src="{% static 'main.js' %}"></script>
