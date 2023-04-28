@@ -45,15 +45,20 @@
         <div class="mugic_box_bar">"{{query}}"의 검색 결과입니다.</div>
         {% if results %}
         <div>
-          {% for track in results %}
-          <li class="mugic_li">
-            <div>{{ forloop.counter }}</div>
-            <img src="{{ track.album.images.0.url }}" alt="no image" />
-            <div>{{ track.name }}</div>
-            <div>{{ track.artists.0.name }}</div>
-            <div>{{ track.album.name }}</div>
-          </li>
-          {% endfor %}
+          <table class="mugic_table">
+            {% for track in results %}
+            <tr>
+              <td class="mugic_number">{{ forloop.counter }}</td>
+              <td class="mugic_img">
+                <img src="{{ track.album.images.0.url }}" alt="no image" />
+              </td>
+              <td class="mugic_name">{{ track.name }}</td>
+              <td class="mugic_artist">{{ track.artists.0.name }}</td>
+              <td class="mugic_album">{{ track.album.name }}</td>
+              <td><div class="mugic_add">+</div></td>
+            </tr>
+            {% endfor %}
+          </table>
         </div>
         {% else %}
         <p>No results found.</p>

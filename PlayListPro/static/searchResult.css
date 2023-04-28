@@ -40,7 +40,7 @@ a {
 }
 
 .main_box {
-  width: 800px;
+  width: 900px;
   height: 512px;
   margin: auto;
   padding-top: 100px;
@@ -70,27 +70,62 @@ a {
 }
 
 .mugic_box {
-  list-style: none;
   background-color: rgb(39, 50, 56);
 }
 
-.mugic_box li {
-  border-top: 1px solid black;
-  text-align: left;
-  height: 50px;
+.mugic_table {
+  width: 900px;
+  table-layout: fixed;
+  border-collapse: collapse;
 }
 
-.mugic_box img {
+.mugic_table tr {
+  border-top: 2px solid black;
+}
+
+.mugic_number {
+  text-align: center;
+  padding: 10px;
+  width: 30px;
+}
+
+.mugic_img {
   width: 50px;
   height: 50px;
 }
 
-.mugic_li {
-  display: flex;
-  justify-content: space-between;
-  line-height: 50px;
+.mugic_img img {
+  width: 50px;
+  height: 50px;
 }
 
-.mugic_li div {
-  border-left: 1px solid black;
+.mugic_name {
+  text-align: center;
+  padding: 10px;
+  border-right: 2px solid black;
+  width: 100px;
+}
+
+.mugic_artist {
+  text-align: center;
+  padding: 10px;
+  border-right: 2px solid black;
+  width: 150px;
+}
+
+.mugic_album {
+  text-align: center;
+  padding: 10px;
+  width: 400px;
+}
+
+.mugic_add {
+  font-size: 30px;
+  text-align: center;
+  font-weight: bold;
+  border-radius: 2px;
+  border: 1px solid white;
+  width: 35px;
+  height: 35px;
+  line-height: 30px;
 }

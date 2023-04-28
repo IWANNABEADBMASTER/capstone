@@ -8,9 +8,13 @@ def main(request):
 def search(request):
     if request.method == 'POST':
         query = request.POST['query']
-        results = spotify.search_spotify(query)
-        context = {'results': results ,'query': query}
-        return render(request, 'searchResult.html', context)
+        if len(query)>0:
+            results = spotify.search_spotify(query)
+            context = {'results': results ,'query': query}
+            return render(request, 'searchResult.html', context)
+        else:
+            context = {'result': '', 'query': query}
+            return render(request, 'searchResult.html', context)
     else:
         return render(request, 'search.html')
 
