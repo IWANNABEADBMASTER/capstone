@@ -14,7 +14,6 @@
 		<h2>Search Results:</h2>
 		<ul>
 		{% for track in results %}
-
 			<li><img src="{{ track.album.images.0.url }}" alt="no image" style="max-width : 50px; height : auto">{{ forloop.counter }}. {{ track.name }} - {{ track.artists.0.name }} ({{ track.album.name }})</li>
 		{% endfor %}
 		</ul>

@@ -25,4 +25,13 @@ def passwordUpdate(request):
 def login(request):
     return render(request, 'login.html')
 def signup(request):
-    return render(request, 'signup.html')    
+    return render(request, 'signup.html')
+
+def topSong(request):
+    if request.method == 'POST':
+        selected_genre = request.POST['genre']     #선택된 장르 받음
+        results = spotify.get_top_songs_by_genre(selected_genre)    #
+        context = {'results': results}
+        return render(request, 'topSong.html', context)
+    else:
+        return render(request, 'topSong.html')
