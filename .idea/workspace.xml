@@ -5,15 +5,10 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="7d0023d0-cd6c-471d-a5d4-de75a0a9b07c" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/PlayListPro/templates/topSong.html" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.cache" beforeDir="false" afterPath="$PROJECT_DIR$/.cache" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Update_at_2023-04-25__10_10__Changes_.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Update_at_2023-04-25__10_10__Changes_.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/PlayListPro/spotify.py" beforeDir="false" afterPath="$PROJECT_DIR$/PlayListPro/spotify.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/PlayListPro/templates/main.html" beforeDir="false" afterPath="$PROJECT_DIR$/PlayListPro/templates/main.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/PlayListPro/templates/search/searchResult.html" beforeDir="false" afterPath="$PROJECT_DIR$/PlayListPro/templates/search/searchResult.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/PlayListPro/urls.py" beforeDir="false" afterPath="$PROJECT_DIR$/PlayListPro/urls.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/PlayListPro/views.py" beforeDir="false" afterPath="$PROJECT_DIR$/PlayListPro/views.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/PlayListPro/templates/topSong.html" beforeDir="false" afterPath="$PROJECT_DIR$/PlayListPro/templates/topSong.html" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -75,7 +70,7 @@
     "DefaultHtmlFileTemplate": "HTML File",
     "RunOnceActivity.OpenProjectViewOnStart": "true",
     "RunOnceActivity.ShowReadmeOnStart": "true",
-    "last_opened_file_path": "C:/capstone"
+    "last_opened_file_path": "D:/capstone"
   }
 }]]></component>
   <component name="RecentsManager">

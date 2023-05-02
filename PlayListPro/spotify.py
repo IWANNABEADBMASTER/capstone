@@ -20,6 +20,10 @@ def search_spotify(query):
     return tracks
 
 def get_top_songs_by_genre(genre):
-    results = sp.search(q='genre:"{}"'.format(genre), type='track', limit=10, market='KR')  # 장르별로 10개의 노래 검색
-    tracks = results['tracks']['items']
-    return tracks
+    results = sp.search(q='genre:"{}"'.format(genre), type='track', limit=50, market='KR')  # 장르별로 10개의 노래 검색
+    sorted_results = sorted(results['tracks']['items'], key=lambda x: x['popularity'], reverse=True)
+    return sorted_results
+
+    # results = sp.search(q='genre:"{}"'.format(genre), type='track', limit=50, market='KR')
+    # tracks = results['tracks']['items']
+    # return tracks
