@@ -1,4 +1,5 @@
 {% load static %}
+{% load socialaccount %}
 
 <html lang="ko">
   <head>
@@ -9,6 +10,7 @@
   <body>
     <div class="bar">
       <div>
+      <a href="{% provider_login_url 'spotify' method='oauth2' %}">스포티파이 로그인</a>
         <img src="{% static '/favicon/menu.png' %}" class="menu_img" />
       </div>
       <div class="title"><a href="/">PlayListPro</a></div>
