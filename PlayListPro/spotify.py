@@ -24,6 +24,3 @@ def get_top_songs_by_genre(genre):
     sorted_results = sorted(results['tracks']['items'], key=lambda x: x['popularity'], reverse=True)
     return sorted_results
 
-    # results = sp.search(q='genre:"{}"'.format(genre), type='track', limit=50, market='KR')
-    # tracks = results['tracks']['items']
-    # return tracks
