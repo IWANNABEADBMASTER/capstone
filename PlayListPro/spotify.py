@@ -24,7 +24,6 @@ def get_top_songs_by_genre(genre):
     if genre == 'top':
         results = sp.search(q='Top 50: korea', type='playlist', limit=1)
         playlist_id = results['playlists']['items'][0]['id']
-        # 플레이리스트에 포함된 트랙 목록 추출
         tracks_response = sp.playlist_items(playlist_id, additional_types=['track'])
         tracks = tracks_response['items']
         result = []
