@@ -47,18 +47,30 @@
             <td colspan="4" style="height: 20px">인기차트</td>
           </tr>
           <tr>
-            <td>전체 TOP</td>
-            <td>발라드</td>
-            <td>팝스타</td>
-            <td>ROCK</td>
+            <td onclick="submitForm('top')">전체 TOP</td>
+            <td onclick="submitForm('k-po')">K-POP</td>
+            <td onclick="submitForm('Korean-indie')">K-indie</td>
+            <td onclick="submitForm('korean underground rap')">K-Hip-Hop</td>
           </tr>
           <tr>
-            <td>힙합</td>
-            <td>댄스</td>
-            <td>R&B</td>
-            <td>인디뮤직</td>
+            <td onclick="submitForm('korean-R&B')">K-R&B</td>
+            <td onclick="submitForm('pop')">POP</td>
+            <td onclick="submitForm('r&b')">R&B</td>
+            <td onclick="submitForm('hip-hop')">Hip-Hop</td>
           </tr>
         </table>
+
+        <form id="myForm" method="post" action="/topChart">
+          {% csrf_token %}
+          <input type="hidden" name="genre" id="genre">
+        </form>
+
+        <script>
+          function submitForm(value) {
+            document.getElementById("genre").value = value;
+            document.getElementById("myForm").submit();
+          }
+        </script>
       </div>
     </div>
   </body>

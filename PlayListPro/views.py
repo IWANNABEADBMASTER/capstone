@@ -18,6 +18,12 @@ def search(request):
     else:
         return render(request, 'search.html')
 
+def topChart(request):
+    if request.method == 'POST':
+        selected_genre = request.POST.get('genre')
+        results = spotify.get_top_songs_by_genre(selected_genre)
+        context = {'results': results, 'selected_genre':selected_genre}
+        return render(request, 'topChart.html', context)
 def myplaylist(request):
     return render(request, 'myplaylist.html')
 def profile(request):

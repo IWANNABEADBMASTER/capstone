@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+    <form method="post">
+          {% if results %}
+            <h2>{{selected_genre}} chart:</h2>
+            <ul>
+                {% for track in results %}
+                <li><img src="{{ track.album.images.0.url }}" alt="no image" style="max-width : 50px; height : auto">{{ forloop.counter }}. {{ track.name }} - {{ track.artists.0.name }} ({{ track.album.name }})</li>
+                {% endfor %}
+            </ul>
+          {% endif %}
+    </form>
+
+</body>
+</html>
