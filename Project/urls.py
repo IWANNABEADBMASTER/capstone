@@ -16,12 +16,14 @@ Including another URLconf
 from django.contrib import admin
 from django.urls import include, path
 from django.shortcuts import render
+from django.views.generic.base import RedirectView
 
 
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('', include('PlayListPro.urls')),
     path('accounts/', include('allauth.urls')),
+    path('accounts/profile/', RedirectView.as_view(url='/profile')),
     
 
 ]
