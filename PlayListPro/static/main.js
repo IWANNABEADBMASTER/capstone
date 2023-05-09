@@ -28,3 +28,9 @@ text.onclick = function () {
     i1 = "접기";
   }
 };
+
+function submitForm(genre, genre_name) {
+  document.getElementById("genre").value = genre;
+  document.getElementById("genre_name").value = genre_name;
+  document.getElementById("myForm").submit();
+}

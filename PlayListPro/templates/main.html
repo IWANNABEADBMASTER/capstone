@@ -30,7 +30,7 @@
     </div>
 
     <div class="main_box">
-      <form method="POST" action="/search">
+      <form action="/search" method="POST">
         {% csrf_token %}
         <input
           type="text"
@@ -38,28 +38,37 @@
           placeholder="찾고싶은 곡을 검색하세요"
           id="query"
           name="query"
+          autocomplete="off"
         />
       </form>
 
-      <div>
-        <table class="chart">
-          <tr>
-            <td colspan="4" style="height: 20px">인기차트</td>
-          </tr>
-          <tr>
-            <td>전체 TOP</td>
-            <td>발라드</td>
-            <td>팝스타</td>
-            <td>ROCK</td>
-          </tr>
-          <tr>
-            <td>힙합</td>
-            <td>댄스</td>
-            <td>R&B</td>
-            <td>인디뮤직</td>
-          </tr>
-        </table>
-      </div>
+      <table class="chart">
+        <tr>
+          <td colspan="4" style="height: 20px">인기차트</td>
+        </tr>
+        <tr>
+          <td onclick="submitForm('top','전체 TOP')"><a>전체 TOP</a></td>
+          <td onclick="submitForm('k-po','K-POP')"><a>K-POP</a></td>
+          <td onclick="submitForm('Korean-indie','K-indie')">
+            <a>K-indie</a>
+          </td>
+          <td onclick="submitForm('korean underground rap','K-Hip-Hop')">
+            <a>K-Hip-Hop</a>
+          </td>
+        </tr>
+        <tr>
+          <td onclick="submitForm('korean-R&B','K-R&B')"><a>K-R&B</a></td>
+          <td onclick="submitForm('pop','POP')"><a>POP</a></td>
+          <td onclick="submitForm('r&b','R&B')"><a>R&B</a></td>
+          <td onclick="submitForm('hip-hop','Hip-Hop')"><a>Hip-Hop</a></td>
+        </tr>
+      </table>
+
+      <form id="myForm" method="post" action="/topChart">
+        {% csrf_token %}
+        <input type="hidden" name="genre" id="genre" />
+        <input type="hidden" name="genre_name" id="genre_name" />
+      </form>
     </div>
   </body>
 </html>

@@ -23,3 +23,18 @@ def get_top_songs_by_genre(genre):
     results = sp.search(q='genre:"{}"'.format(genre), type='track', limit=10, market='KR')  # 장르별로 10개의 노래 검색
     tracks = results['tracks']['items']
     return tracks
+
+def get_top_songs_by_genre(genre):
+    if genre == 'top':
+        results = sp.search(q='Top 50: korea', type='playlist', limit=1)
+        playlist_id = results['playlists']['items'][0]['id']
+        tracks_response = sp.playlist_items(playlist_id, additional_types=['track'])
+        tracks = tracks_response['items']
+        result = []
+        for track in tracks:
+            result.append(track['track'])
+        return result
+    else:
+        results = sp.search(q='genre:"{}"'.format(genre), type='track', limit=50, market='KR')  # 장르별로 10개의 노래 검색
+        sorted_results = sorted(results['tracks']['items'], key=lambda x: x['popularity'], reverse=True)
+        return sorted_results

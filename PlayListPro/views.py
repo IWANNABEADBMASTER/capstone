@@ -30,3 +30,11 @@ def login(request):
     return render(request, 'login.html')
 def signup(request):
     return render(request, 'signup.html')    
+    
+def topChart(request):
+    if request.method == 'POST':
+        selected_genre = request.POST.get('genre') #선택된 장르 받음(스포티파이에 넘겨줄 값)
+        selected_genre_name = request.POST.get('genre_name') #선택된 장르 이름 받음(ex K-R&B)
+        results = spotify.get_top_songs_by_genre(selected_genre)
+        context = {'results': results, 'select_genre_name':selected_genre_name}
+        return render(request, 'topChart.html', context)
