@@ -1,9 +1,61 @@
+{% load static %}
+
 <html lang="ko">
   <head>
     <meta charset="UTF-8" />
-    <title>login</title>
+    <link rel="stylesheet" href="{% static 'login.css' %}" />
+    <title>로그인</title>
   </head>
   <body>
-    <h1>login</h1>
+    <div class="bar">
+      <div>
+        <img src="{% static '/favicon/menu.png' %}" class="menu_img" />
+      </div>
+      <div class="title"><a href="/">PlayListPro</a></div>
+
+      <div class="login">
+        <a href="/login">Login </a>
+      </div>
+      <div>
+        <a href="/profile"
+          ><img src="{% static '/favicon/login.png' %}" class="login_img"
+        /></a>
+      </div>
+    </div>
+
+    <div class="menu">
+      <li><a href="/">home</a></li>
+      <li><a href="/search">search</a></li>
+      <li><a href="/myplaylist">playlist</a></li>
+    </div>
+
+    <div class="login_box">
+      <div class="form_box">
+        <form action="" method="post">
+          <div class="login_title">로그인</div>
+          <div class="input_id"></div>
+          <input
+            type="text"
+            placeholder="아이디"
+            onfocus="this.placeholder = ''"
+            onblur="this.placeholder = '아이디'"
+            name="id"
+          />
+          <input
+            type="text"
+            placeholder="비밀번호"
+            onfocus="this.placeholder = ''"
+            onblur="this.placeholder = '비밀번호'"
+            name="password"
+          />
+          <br />
+          <input type="submit" class="submit" value="로그인" />
+        </form>
+      </div>
+      <div class="signUp">
+        회원 가입은 <a href="/signup">여기</a>에서 할 수 있습니다.
+      </div>
+    </div>
   </body>
 </html>
+<script src="{% static 'main.js' %}"></script>

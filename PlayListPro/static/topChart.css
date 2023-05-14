@@ -2,6 +2,7 @@ body {
   background-color: black;
   margin: 0;
   text-align: center;
+  color: white;
 }
 
 a {
@@ -39,20 +40,10 @@ a {
 }
 
 .main_box {
-  width: 600px;
+  width: 900px;
   height: 512px;
-  background-image: url("./favicon/background.jpg");
   margin: auto;
   padding-top: 100px;
-}
-
-.search {
-  width: 470px;
-  height: 50px;
-  background-image: url("./favicon/search.png");
-  background-position: right;
-  background-size: 40px;
-  background-repeat: no-repeat;
 }
 
 .chart {
@@ -62,7 +53,7 @@ a {
   width: 600px;
   height: 120px;
   table-layout: fixed;
-  margin-top: 200px;
+  margin: 0 auto;
 }
 
 .chart td {
@@ -86,4 +77,66 @@ a {
 .menu li {
   padding: 10px;
   text-align: left;
+}
+
+.mugic_box {
+  background-color: rgb(39, 50, 56);
+  margin-top: 30px;
+}
+
+.mugic_table {
+  width: 900px;
+  table-layout: fixed;
+  border-collapse: collapse;
+}
+
+.mugic_table tr {
+  border-top: 2px solid black;
+}
+
+.mugic_number {
+  text-align: center;
+  padding: 10px;
+  width: 30px;
+}
+
+.mugic_img {
+  width: 50px;
+  height: 50px;
+}
+
+.mugic_img img {
+  width: 50px;
+  height: 50px;
+}
+
+.mugic_name {
+  text-align: center;
+  padding: 10px;
+  border-right: 2px solid black;
+  width: 100px;
+}
+
+.mugic_artist {
+  text-align: center;
+  padding: 10px;
+  border-right: 2px solid black;
+  width: 150px;
+}
+
+.mugic_album {
+  text-align: center;
+  padding: 10px;
+  width: 400px;
+}
+
+.mugic_add {
+  font-size: 30px;
+  text-align: center;
+  font-weight: bold;
+  border-radius: 2px;
+  border: 1px solid white;
+  width: 35px;
+  height: 35px;
+  line-height: 30px;
 }

@@ -1,134 +1,53 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
-  <component name="AutoImportSettings">
-    <option name="autoReloadType" value="SELECTIVE" />
-  </component>
   <component name="ChangeListManager">
-    <list default="true" id="7d0023d0-cd6c-471d-a5d4-de75a0a9b07c" name="Changes" comment="">
-      <change beforePath="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Update_at_2023-04-25__10_10__Changes_.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Update_at_2023-04-25__10_10__Changes_.xml" afterDir="false" />
+    <list default="true" id="9987ae94-fbe5-4555-a9d5-3f7a14eed595" name="Changes" comment="">
+      <change beforePath="$PROJECT_DIR$/.cache" beforeDir="false" afterPath="$PROJECT_DIR$/.cache" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/inspectionProfiles/profiles_settings.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/inspectionProfiles/profiles_settings.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Update_at_2023-04-25__10_10__Changes_.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Update_at_2023-04-25_오후_10_10_[Changes]/shelved.patch" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/PlayListPro/spotify.py" beforeDir="false" afterPath="$PROJECT_DIR$/PlayListPro/spotify.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/PlayListPro/static/main.css" beforeDir="false" afterPath="$PROJECT_DIR$/PlayListPro/static/main.css" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/PlayListPro/templates/login.html" beforeDir="false" afterPath="$PROJECT_DIR$/PlayListPro/templates/login.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/PlayListPro/templates/main.html" beforeDir="false" afterPath="$PROJECT_DIR$/PlayListPro/templates/main.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/PlayListPro/templates/search/search.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/PlayListPro/templates/search/searchResult.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/PlayListPro/templates/signup.html" beforeDir="false" afterPath="$PROJECT_DIR$/PlayListPro/templates/signup.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/PlayListPro/templates/topSong.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/PlayListPro/urls.py" beforeDir="false" afterPath="$PROJECT_DIR$/PlayListPro/urls.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/PlayListPro/views.py" beforeDir="false" afterPath="$PROJECT_DIR$/PlayListPro/views.py" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
     <option name="LAST_RESOLUTION" value="IGNORE" />
   </component>
-  <component name="FileTemplateManagerImpl">
-    <option name="RECENT_TEMPLATES">
-      <list>
-        <option value="Python Script" />
-        <option value="HTML File" />
-      </list>
-    </option>
-  </component>
   <component name="Git.Settings">
-    <favorite-branches>
-      <branch-storage>
-        <map>
-          <entry type="LOCAL">
-            <value>
-              <list>
-                <branch-info repo="$PROJECT_DIR$" source="kek" />
-              </list>
-            </value>
-          </entry>
-        </map>
-      </branch-storage>
-    </favorite-branches>
-    <option name="RECENT_BRANCH_BY_REPOSITORY">
-      <map>
-        <entry key="$PROJECT_DIR$" value="kek" />
-      </map>
-    </option>
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
   </component>
-  <component name="GitHubPullRequestSearchHistory">{
-  &quot;lastFilter&quot;: {
-    &quot;state&quot;: &quot;OPEN&quot;
-  }
-}</component>
-  <component name="GithubPullRequestsUISettings">
-    <option name="selectedUrlAndAccountId">
-      <UrlAndAccount>
-        <option name="accountId" value="e4f15137-6606-4dcc-8012-b37e89e38393" />
-        <option name="url" value="https://github.com/IWANNABEADBMASTER/capstone.git" />
-      </UrlAndAccount>
-    </option>
-  </component>
-  <component name="MarkdownSettingsMigration">
-    <option name="stateVersion" value="1" />
-  </component>
-  <component name="ProjectId" id="2OupduvYVu9yChBDHYGxREBAR9a" />
+  <component name="ProjectId" id="2PlxxzFr26vwgVPzmBeNlwQ1vCn" />
   <component name="ProjectViewState">
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent">{
-  &quot;keyToString&quot;: {
-    &quot;DefaultHtmlFileTemplate&quot;: &quot;HTML File&quot;,
-    &quot;RunOnceActivity.OpenProjectViewOnStart&quot;: &quot;true&quot;,
-    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
-    &quot;last_opened_file_path&quot;: &quot;D:/capstone&quot;
+  <component name="PropertiesComponent"><![CDATA[{
+  "keyToString": {
+    "RunOnceActivity.OpenProjectViewOnStart": "true",
+    "RunOnceActivity.ShowReadmeOnStart": "true",
+    "last_opened_file_path": "C:/Users/alexe/capstone"
   }
-}</component>
-  <component name="RecentsManager">
-    <key name="CopyFile.RECENT_KEYS">
-      <recent name="C:\Users\alexe\PycharmProjects\capstone" />
-      <recent name="C:\Users\alexe\PycharmProjects\capstone\PlayListPro" />
-    </key>
-    <key name="MoveFile.RECENT_KEYS">
-      <recent name="C:\capstone\PlayListPro\templates" />
-      <recent name="C:\Users\alexe\PycharmProjects\capstone\PlayListPro\templates\search" />
-    </key>
-  </component>
+}]]></component>
   <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
   <component name="TaskManager">
     <task active="true" id="Default" summary="Default task">
-      <changelist id="7d0023d0-cd6c-471d-a5d4-de75a0a9b07c" name="Changes" comment="" />
-      <created>1682420411867</created>
+      <changelist id="9987ae94-fbe5-4555-a9d5-3f7a14eed595" name="Changes" comment="" />
+      <created>1684045720411</created>
       <option name="number" value="Default" />
       <option name="presentableId" value="Default" />
-      <updated>1682420411867</updated>
+      <updated>1684045720411</updated>
     </task>
     <servers />
-  </component>
-  <component name="Vcs.Log.Tabs.Properties">
-    <option name="TAB_STATES">
-      <map>
-        <entry key="MAIN">
-          <value>
-            <State>
-              <option name="FILTERS">
-                <map>
-                  <entry key="branch">
-                    <value>
-                      <list>
-                        <option value="kek" />
-                      </list>
-                    </value>
-                  </entry>
-                </map>
-              </option>
-            </State>
-          </value>
-        </entry>
-      </map>
-    </option>
-    <option name="RECENT_FILTERS">
-      <map>
-        <entry key="Branch">
-          <value>
-            <list>
-              <RecentGroup>
-                <option name="FILTER_VALUES">
-                  <option value="kek" />
-                </option>
-              </RecentGroup>
-            </list>
-          </value>
-        </entry>
-      </map>
-    </option>
   </component>
 </project>
