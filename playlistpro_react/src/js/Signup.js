@@ -59,9 +59,7 @@ const Signup = () => {
         // 서버에서 반환한 데이터 처리
         if (data.success) {
           alert("회원가입 성공!");
-          console.log(data.post);
         }
-        alert("회원가입 성공!");
       })
       .catch((error) => {
         alert("회원가입 중 오류가 발생했습니다.", error);

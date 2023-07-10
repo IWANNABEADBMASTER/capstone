@@ -1,0 +1,21 @@
+.sideBar {
+  position: absolute;
+  left: 0;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  background-color: #343748;
+  width: 60px;
+  height: 400px;
+  padding: 10px;
+  border-radius: 0px 15px 15px 0px;
+}
+
+.sideBarIcon {
+  display: flex;
+  align-items: center;
+  margin-top: 10px;
+  margin-bottom: 5px;
+  cursor: pointer;
+}

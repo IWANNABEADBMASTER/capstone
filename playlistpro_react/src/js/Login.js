@@ -1,12 +1,13 @@
 import React, { useState } from "react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 
 function Login() {
-  const [username, setUsername] = useState("");
+  const [userId, setUserId] = useState("");
   const [password, setPassword] = useState("");
+  const navigate = useNavigate();
 
   const handleUsernameChange = (event) => {
-    setUsername(event.target.value);
+    setUserId(event.target.value);
   };
 
   const handlePasswordChange = (event) => {
@@ -15,22 +16,67 @@ function Login() {
 
   const handleSubmit = (event) => {
     event.preventDefault();
-    // 여기서 로그인 처리 로직을 구현하면 됩니다.
-    // 예를 들어, 서버로 사용자 정보를 전송하거나 상태를 업데이트할 수 있습니다.
-    console.log("Username:", username);
-    console.log("Password:", password);
+
+    const csrftoken = getCookie("csrftoken"); // csrftoken은 Django에서 제공하는 쿠키 이름입니다.
+
+    const userData = {
+      userId: userId,
+      password: password,
+    };
+
+    // 서버로 전송할 데이터 객체(아이디, 비밀번호, 이름, 이메일)
+    const postData = {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+        "X-CSRFToken": csrftoken, // CSRF 토큰을 요청 헤더에 포함
+      },
+      body: JSON.stringify(userData),
+    };
+
+    fetch("http://127.0.0.1:8000/login", postData)
+      .then((response) => response.json()) // 응답을 JSON 형식으로 파싱
+      .then((data) => {
+        const { message, access_token, success } = data;
+        if (success) {
+          localStorage.setItem("access_token", access_token);
+          // 로그인 성공 후 메인 페이지로 이동
+          navigate("/");
+        } else {
+          alert(message);
+        }
+      })
+      .catch((error) => {
+        alert("로그인 중 오류가 발생했습니다.", error);
+      });
   };
+
+  // getCookie 함수는 쿠키 값을 가져오기 위한 헬퍼 함수입니다.
+  function getCookie(name) {
+    let cookieValue = null;
+    if (document.cookie && document.cookie !== "") {
+      const cookies = document.cookie.split(";");
+      for (let i = 0; i < cookies.length; i++) {
+        const cookie = cookies[i].trim();
+        if (cookie.substring(0, name.length + 1) === name + "=") {
+          cookieValue = decodeURIComponent(cookie.substring(name.length + 1));
+          break;
+        }
+      }
+    }
+    return cookieValue;
+  }
 
   return (
     <div>
       <form onSubmit={handleSubmit}>
         <label>
-          Username:
-          <input type="text" value={username} onChange={handleUsernameChange} />
+          아이디:
+          <input type="text" value={userId} onChange={handleUsernameChange} />
         </label>
         <br />
         <label>
-          Password:
+          비밀번호:
           <input
             type="password"
             value={password}
