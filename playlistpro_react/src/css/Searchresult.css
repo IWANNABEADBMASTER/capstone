@@ -1,0 +1,136 @@
+.Searchresult {
+  margin-left: 200px;
+  margin-top: 50px;
+  font-family: Montserrat;
+  color: white;
+}
+
+@font-face {
+  font-family: "Montserrat";
+  src: url("../../public/Montserrat-Light.ttf") format("truetype");
+}
+
+.Searchresult .input {
+  background: rgba(93, 11, 90, 0.3);
+  color: white;
+  width: 300px;
+  font-size: 15px;
+}
+
+.column {
+  display: flex;
+  margin-top: 10px;
+  font-weight: 400;
+}
+
+.column > *:nth-child(1) {
+  margin-left: 75px;
+}
+
+.column > *:nth-child(2) {
+  margin-left: 395px;
+}
+
+.column > *:nth-child(3) {
+  margin-left: 100px;
+}
+
+.container {
+  width: 750px;
+  height: 400px; /* 원하는 세로 높이 지정 */
+  overflow: auto; /* 스크롤 가능하도록 설정 */
+  overflow-x: hidden; /* 가로 스크롤 제거 */
+  padding-right: 20px;
+  padding-top: 10px;
+}
+
+/* 수직 스크롤바 스타일 */
+.container::-webkit-scrollbar {
+  width: 6px; /* 스크롤바의 너비 */
+}
+
+.container::-webkit-scrollbar-track {
+  background-color: transparent; /* 스크롤바 트랙의 배경색 */
+}
+
+.container::-webkit-scrollbar-thumb {
+  background-color: white; /* 스크롤바 색상 */
+  border-radius: 6px; /* 스크롤바 테두리의 둥글기 */
+}
+
+.container::-webkit-scrollbar-thumb:hover {
+  background-color: lightgray; /* 스크롤바에 마우스 호버 시 색상 */
+}
+
+.mugic_data {
+  border: 1px solid rgba(94, 45, 132, 1);
+  border-radius: 6px;
+  display: flex;
+  padding: 8px;
+  align-items: center;
+  text-align: left;
+  margin-bottom: 10px;
+}
+
+.selected_mugic_data {
+  border: 1px solid rgba(94, 45, 132, 1);
+  border-radius: 6px;
+  background: linear-gradient(
+      0deg,
+      rgba(75, 23, 115, 0.7),
+      rgba(75, 23, 115, 0.7)
+    ),
+    linear-gradient(0deg, rgba(94, 45, 132, 0.7), rgba(94, 45, 132, 0.7));
+  display: flex;
+  padding: 8px;
+  align-items: center;
+  margin-bottom: 10px;
+}
+
+.mugic_data > *:nth-child(1),
+.selected_mugic_data > *:nth-child(1) {
+  margin-right: 10px;
+  margin-left: 7px;
+}
+
+.mugic_data > *:nth-child(2),
+.selected_mugic_data > *:nth-child(2) {
+  margin-right: 10px;
+}
+
+.mugic_data > *:nth-child(3),
+.selected_mugic_data > *:nth-child(3) {
+  margin-right: 250px;
+}
+
+.mugic_data > *:nth-child(4),
+.selected_mugic_data > *:nth-child(4) {
+  margin-right: 90px;
+}
+
+.index {
+  font-size: 14px;
+  font-weight: 400;
+  color: rgba(255, 255, 255, 0.47);
+  width: 10px;
+}
+
+.title {
+  font-weight: 600;
+  width: 200px;
+}
+
+.artist {
+  font-size: 14px;
+  font-weight: 400;
+  color: rgba(255, 255, 255, 0.47);
+}
+
+.duration {
+  width: 50px;
+}
+
+.exception {
+  margin-top: 30px;
+  margin-left: 20px;
+}

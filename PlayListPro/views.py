@@ -30,21 +30,6 @@ def main(request):
     return JsonResponse(response_data)
 
 
-# Create your views here.
-def search(request):
-    if request.method == "POST":
-        query = request.POST["query"]
-        if len(query) > 0:
-            results = spotify.search_spotify(query)
-            context = {"results": results, "query": query}
-            return render(request, "searchResult.html", context)
-        else:
-            context = {"result": "", "query": query}
-            return render(request, "searchResult.html", context)
-    else:
-        return render(request, "search.html")
-
-
 @api_view(["POST"])
 @csrf_exempt
 def login(request):
@@ -115,6 +100,23 @@ def signup(request):
         # POST 요청이 아닌 경우 에러 반환
         response_data = {"success": False, "message": "잘못된 요청입니다."}
         return JsonResponse(response_data, status=400)
+
+
+@api_view(["POST"])
+@csrf_exempt
+# Create your views here.
+def search(request):
+    if request.method == "POST":
+        data = json.loads(request.body)
+        query = data.get("query")
+        if len(query) > 0:
+            results = spotify.search_spotify(query)
+            context = {"results": results}
+        else:
+            context = {"result": ""}
+    else:
+        context = {"results": ""}
+    return JsonResponse(context)
 
 
 def topChart(request):

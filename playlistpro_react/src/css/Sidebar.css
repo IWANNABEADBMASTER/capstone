@@ -3,19 +3,71 @@
   left: 0;
   display: flex;
   flex-direction: column;
-  justify-content: center;
-  align-items: center;
   background-color: #343748;
-  width: 60px;
-  height: 400px;
+  width: 50px;
+  height: 500px;
   padding: 10px;
   border-radius: 0px 15px 15px 0px;
+  margin-top: 30px;
+  align-items: flex-start;
+  overflow: hidden;
+}
+
+.sideBar::after {
+  content: "";
+  position: absolute;
+  bottom: -10%;
+  left: -60%;
+  width: 150px;
+  height: 150px;
+  background-color: rgba(208, 206, 206, 0.1);
+  border-radius: 50%;
+  pointer-events: none; /* 마우스 이벤트를 통과시킵니다. */
+}
+
+.noStyleSideBar {
+  position: absolute;
+  left: 0;
+  display: flex;
+  flex-direction: column;
+  background-color: #343748;
+  width: 50px;
+  height: 500px;
+  padding: 10px;
+  border-radius: 0px 15px 15px 0px;
+  margin-top: 30px;
+  align-items: flex-start;
+  overflow: hidden;
 }
 
 .sideBarIcon {
   display: flex;
+  flex-direction: column;
+  justify-content: center;
   align-items: center;
-  margin-top: 10px;
-  margin-bottom: 5px;
+  margin-bottom: 20px;
   cursor: pointer;
+  width: 100%; /* 아이콘과 텍스트가 가로로 균등하게 정렬되도록 너비를 100%로 설정 */
+}
+
+.sideBarIcon:first-child {
+  margin-top: 20px;
+}
+
+.sideBarIcon:nth-child(2) {
+  margin-top: 20px;
+}
+
+.sideBarIcon:nth-child(3) {
+  margin-top: 20px;
+}
+
+.sideBarIcon:last-child {
+  margin-bottom: 20px;
+  margin-top: auto;
+}
+
+img {
+  width: 30px;
+  height: 30px;
 }

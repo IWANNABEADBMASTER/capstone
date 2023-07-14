@@ -1,0 +1,76 @@
+.search {
+  position: relative;
+  margin-left: 200px;
+  margin-top: 50px;
+  background-color: rgba(28, 31, 55, 1);
+  width: 400px;
+  height: 170px;
+  padding: 20px 50px;
+  border-radius: 30px;
+  overflow: hidden; /* 넘침 제어 */
+}
+
+.search::after {
+  content: "";
+  position: absolute;
+  bottom: 0;
+  right: 0;
+  width: 150px;
+  height: 150px;
+  background: linear-gradient(
+    180deg,
+    rgba(0, 194, 255, 0),
+    rgba(174, 41, 255, 1)
+  );
+  border-radius: 50%;
+  filter: blur(10px); /* 흐림 효과 적용 */
+  right: -20px; /* 오른쪽으로 이동하여 부분적으로 짤림 */
+  bottom: -20px;
+}
+
+.input {
+  border-radius: 24px;
+  padding: 5px 20px;
+  background: linear-gradient(
+    to right,
+    rgba(56, 252, 243, 1),
+    rgba(152, 70, 216, 0.6)
+  );
+  color: rgba(0, 103, 132, 1);
+  border: 1px solid rgba(255, 255, 255, 0.6);
+  font-size: large;
+  width: 200px;
+}
+
+.submit {
+  border-radius: 24px;
+  border: none;
+  padding: 7px 20px;
+  margin-left: 15px;
+  background-color: #4a3aff;
+  color: white;
+  cursor: pointer;
+}
+
+.comment {
+  font-size: 15px;
+  margin-top: 20px;
+}
+
+.university {
+  font-family: "Cherish";
+  color: rgba(97, 99, 128, 1);
+  font-size: 12px;
+  margin-top: 30px;
+}
+
+.class {
+  color: rgba(97, 99, 128, 1);
+  font-size: 10px;
+  margin-top: 5px;
+}
+
+@font-face {
+  font-family: "Cherish";
+  src: url("../../public/Cherish Demo.ttf") format("truetype");
+}

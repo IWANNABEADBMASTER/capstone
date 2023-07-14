@@ -1,13 +1,32 @@
 import React from "react";
-import { BrowserRouter as Router, Route, Routes, Link } from "react-router-dom";
 import { useEffect, useState } from "react";
-
-import Logo from "../favicon/Logo.png";
 import "../css/Main.css";
+import Bar from "./Bar";
 import SideBar from "./Sidebar";
+import Search from "./Search";
+import Searchresult from "./Searchresult";
 
 function Main() {
+  // 메인페이지에서 보여주는 화면 상태
+  // 1. home 2. search 3. playlist
+  const [state, setState] = useState("home");
+
+  // 하위 컴포넌트에서 state 값 변경
+  const handleStateChange = (newState) => {
+    setState(newState);
+  };
+
+  // 사용자 이름
   const [username, setUsername] = useState("");
+  // 사용자 로그인 여부
+  const [isLoggedIn, setIsLoggedIn] = useState(false);
+
+  // 검색 쿼리
+  const [query, setQuery] = useState("");
+  // search 컴포넌트에서 query 값 변경
+  const handleQueryChange = (newQuery) => {
+    setQuery(newQuery);
+  };
 
   // 로컬 스토리지에서 토큰을 가져옵니다.
   const [accessToken, setAccessToken] = useState(
@@ -28,6 +47,7 @@ function Main() {
         .then((data) => {
           const { username } = data;
           setUsername(username);
+          setIsLoggedIn(true);
         })
         .catch((error) => {
           // 오류 처리 로직을 작성합니다.
@@ -49,8 +69,9 @@ function Main() {
           // 서버에서 로그아웃 성공 응답을 받았을 때 클라이언트에서 토큰을 삭제하고 추가적인 처리를 진행할 수 있습니다.
           localStorage.removeItem("access_token");
           setAccessToken("");
+          setIsLoggedIn(false);
+          handleStateChange("home");
           console.log("토큰 삭제");
-          // 추가적인 로직을 진행하거나 다른 동작을 수행할 수 있습니다.
         } else {
           // 로그아웃 실패 시에 대한 처리를 진행합니다.
           console.log("로그아웃 실패");
@@ -61,29 +82,37 @@ function Main() {
         // 요청 실패 시에 대한 처리를 진행합니다.
         console.log("로그아웃 요청 에러", error);
       });
+    window.location.reload();
   };
 
   return (
     <div className="main">
-      <div className="bar">
-        <div>
-          <img src={Logo} style={{ width: "75px", height: "75px" }} />
-        </div>
-        <div style={{ fontSize: "30px" }}>PlayListPro</div>
-        <div>Search</div>
-        <div>MyList</div>
-        {accessToken !== null && accessToken.length > 0 ? (
-          <div className="username">{username} 님</div>
-        ) : (
-          <div className="login">
-            <Link to="/login">Log In</Link>
-            <span style={{ margin: "0 5px" }}>/</span>
-            <Link to="/signup">Sign In</Link>
-          </div>
-        )}
-      </div>
+      <Bar isLoggedIn={isLoggedIn} username={username} />
+      <SideBar
+        handleLogout={handleLogout}
+        state={state}
+        handleStateChange={handleStateChange}
+        isLoggedIn={isLoggedIn}
+      />
 
-      <SideBar handleLogout={handleLogout} />
+      {state === "home" ? (
+        isLoggedIn ? (
+          <div className="welcome">{username}님, 환영합니다!</div>
+        ) : (
+          <div className="welcome">
+            로그인을 하시면 다양한 정보 를 제공받으실 수 있습니다!
+          </div>
+        )
+      ) : null}
+
+      {state === "home" ? (
+        <Search
+          handleStateChange={handleStateChange}
+          handleQueryChange={handleQueryChange}
+        />
+      ) : state === "search" ? (
+        <Searchresult handleQueryChange={handleQueryChange} query={query} />
+      ) : null}
     </div>
   );
 }
