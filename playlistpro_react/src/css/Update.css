@@ -1,0 +1,50 @@
+.update_container {
+  margin-top: 80px;
+  margin-left: 100px;
+  font-family: Inter;
+}
+
+@font-face {
+  font-family: "Inter";
+  src: url("../../public/Inter-Light.ttf") format("truetype");
+}
+
+.update_title {
+  font-weight: 800;
+  font-size: 20px;
+}
+
+.update_form {
+  margin-top: 100px;
+}
+
+.update_form input {
+  padding: 5px 0px;
+  margin-bottom: 15px;
+  width: 300px;
+  border: none;
+  border-bottom: 1px solid rgba(26, 23, 23, 0.38);
+}
+
+.password_label {
+  font-weight: 600;
+  font-size: 16px;
+  margin-bottom: 10px;
+}
+
+.update_form input::placeholder {
+  font-size: 14px;
+  font-weight: 400;
+  color: rgba(26, 23, 23, 0.38);
+}
+
+.update_buttom {
+  width: 300px;
+  margin-top: 60px;
+  padding: 10px;
+  color: white;
+  border: none;
+  border-radius: 8px;
+  background: rgba(74, 58, 255, 1);
+  cursor: pointer;
+}

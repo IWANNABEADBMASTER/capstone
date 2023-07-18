@@ -2,6 +2,8 @@
   display: flex;
   justify-content: flex-start;
   align-items: center;
+  color: white;
+  background-color: black;
 }
 
 .bar > *:nth-child(1) {
@@ -31,6 +33,7 @@
   border-radius: 50px;
   background-color: #4a3aff;
   padding: 5px 30px;
+  cursor: pointer;
 }
 
 .login {

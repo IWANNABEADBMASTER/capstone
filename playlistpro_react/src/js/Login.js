@@ -1,5 +1,8 @@
 import React, { useState } from "react";
-import { Link, useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
+import Bar from "./Bar";
+import "../css/Login.css";
+import Spotify from "../favicon/Spotify.png";
 
 function Login() {
   const [userId, setUserId] = useState("");
@@ -16,6 +19,18 @@ function Login() {
 
   const handleSubmit = (event) => {
     event.preventDefault();
+
+    if (userId == "") {
+      // 아이디가 비어있는 경우
+      alert("아이디를 입력해주세요.");
+      return;
+    }
+
+    if (password == "") {
+      // 비밀번호가 비어있는 경우
+      alert("비밀번호를 입력해주세요.");
+      return;
+    }
 
     const csrftoken = getCookie("csrftoken"); // csrftoken은 Django에서 제공하는 쿠키 이름입니다.
 
@@ -69,26 +84,43 @@ function Login() {
 
   return (
     <div>
-      <form onSubmit={handleSubmit}>
-        <label>
-          아이디:
-          <input type="text" value={userId} onChange={handleUsernameChange} />
-        </label>
-        <br />
-        <label>
-          비밀번호:
+      <Bar isLoggedIn={false} username={null} />
+
+      <div className="login_container">
+        <div className="login_title">Login</div>
+
+        <a href="/spotifylogin">
+          <div className="spotify_title">
+            <div className="title_wrapper">
+              <img src={Spotify} alt="Spotify" />
+              <div className="spotify_login">Login with Spotify</div>
+            </div>
+          </div>
+        </a>
+
+        <form className="login_form" onSubmit={handleSubmit}>
+          <input
+            type="text"
+            value={userId}
+            onChange={handleUsernameChange}
+            placeholder="ID"
+          />
+          <br />
           <input
             type="password"
             value={password}
             onChange={handlePasswordChange}
+            placeholder="Password"
           />
-        </label>
-        <br />
-        <button type="submit">로그인</button>
-      </form>
-      <Link to="/signup">
-        <button>회원가입</button>
-      </Link>
+          <br />
+          <button type="submit" className="login_buttom">
+            Log In
+          </button>
+        </form>
+        <div className="signup_buttom">
+          계정이 없으신가요? <a href="/signup">회원가입</a>
+        </div>
+      </div>
     </div>
   );
 }

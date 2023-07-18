@@ -7,7 +7,11 @@ from django.views.decorators.csrf import csrf_exempt
 import json
 from .models import Users
 from rest_framework_simplejwt.tokens import AccessToken, Token
-from rest_framework.decorators import api_view, permission_classes
+from rest_framework.decorators import (
+    api_view,
+    authentication_classes,
+    permission_classes,
+)
 from rest_framework.decorators import authentication_classes
 from rest_framework_simplejwt.authentication import JWTAuthentication
 from rest_framework_simplejwt.tokens import RefreshToken
@@ -86,6 +90,14 @@ def signup(request):
         # POST 데이터 추출
         data = json.loads(request.body)
 
+        # 사용자 중복 확인
+        if Users.objects.filter(name=data.get("username")).exists():
+            return JsonResponse({"success": False, "message": "이미 가입한 아이디가 있습니다."})
+
+        # 아이디 중복 확인
+        if Users.objects.filter(username=data.get("userId")).exists():
+            return JsonResponse({"success": False, "message": "이미 존재하는 아이디입니다."})
+
         # 사용자 정보 생성
         user = Users.objects.create_user(
             username=data.get("userId"),  # 사용자 아이디
@@ -103,8 +115,30 @@ def signup(request):
 
 
 @api_view(["POST"])
+def update(request):
+    # 토큰에서 사용자 정보 가져오기
+    authentication = JWTAuthentication()
+    user, _ = authentication.authenticate(request)
+
+    # 입력받은 데이터 추출
+    password = request.data.get("password")
+    new_password = request.data.get("newPassword")
+
+    # 사용자 인증 수행
+    if not user or not authenticate(username=user.username, password=password):
+        response_data = {"success": False, "message": "현재 비밀번호가 일치하지 않습니다."}
+        return JsonResponse(response_data, status=400)
+
+    # 비밀번호 업데이트
+    user.set_password(new_password)
+    user.save()
+
+    response_data = {"success": True, "message": "비밀번호가 성공적으로 변경되었습니다."}
+    return JsonResponse(response_data, status=200)
+
+
+@api_view(["POST"])
 @csrf_exempt
-# Create your views here.
 def search(request):
     if request.method == "POST":
         data = json.loads(request.body)

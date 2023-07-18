@@ -72,17 +72,18 @@ function Main() {
           setIsLoggedIn(false);
           handleStateChange("home");
           console.log("토큰 삭제");
+          window.location.reload();
         } else {
           // 로그아웃 실패 시에 대한 처리를 진행합니다.
           console.log("로그아웃 실패");
           localStorage.removeItem("access_token");
+          window.location.reload();
         }
       })
       .catch((error) => {
         // 요청 실패 시에 대한 처리를 진행합니다.
         console.log("로그아웃 요청 에러", error);
       });
-    window.location.reload();
   };
 
   return (

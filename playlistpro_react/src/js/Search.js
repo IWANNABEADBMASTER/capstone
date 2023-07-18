@@ -10,6 +10,10 @@ function Search({ handleStateChange, handleQueryChange }) {
   };
 
   const handleSubmit = (e) => {
+    if (inputValue.trim() === "") {
+      alert("검색어를 입력하세요.");
+      return;
+    }
     handleStateChange("search");
     handleQueryChange(inputValue);
     e.preventDefault();
