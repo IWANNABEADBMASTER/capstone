@@ -1,9 +1,10 @@
 import React from "react";
 import { useState, useEffect } from "react";
+import LoadingSpinner from "./LoadingSpinner";
+import Alert from "./Alert";
 import Add from "../favicon/Add.png";
 import Noresult from "../favicon/Noresult.png";
 import "../css/Searchresult.css";
-import LoadingSpinner from "./LoadingSpinner";
 
 function Searchresult({ handleQueryChange, query }) {
   // 검색 내용
@@ -24,6 +25,17 @@ function Searchresult({ handleQueryChange, query }) {
   // 로딩 상태를 나타내는 변수
   const [isLoading, setIsLoading] = useState(true);
 
+  // 알림 창을 보여주는 변수
+  const [showAlert, setShowAlert] = useState(false);
+  // 알림 창에 들어갈 제목 변수
+  const [title, setTitle] = useState("");
+  // 알림 창에 들어갈 메시지 변수
+  const [message, setMessage] = useState("");
+  // 모달 창을 열고 닫을 함수
+  const handleAlertButtonClick = () => {
+    setShowAlert(false);
+  };
+
   useEffect(() => {
     setIsLoading(true); // 데이터 로딩 시작 시 로딩 상태를 true로 설정
     fetch("http://127.0.0.1:8000/search", {
@@ -37,13 +49,18 @@ function Searchresult({ handleQueryChange, query }) {
         if (response.ok) {
           return response.json();
         } else {
-          throw new Error("검색 요청 에러");
+          setShowAlert(true);
+          setTitle("검색 에러");
+          setMessage("검색 요청 에러");
         }
       })
       .then((data) => {
         setContent(data.results);
       })
       .catch((error) => {
+        setShowAlert(true);
+        setTitle("검색 에러");
+        setMessage("검색 요청 에러");
         setIsLoading(false); // 데이터 로딩 완료 시 로딩 상태를 false로 설정
       })
       .finally(() => {
@@ -56,16 +73,17 @@ function Searchresult({ handleQueryChange, query }) {
   };
 
   const handleSubmit = (e) => {
-    setIsLoading(true); // 데이터 로딩 시작 시 로딩 상태를 true로 설정
-
     e.preventDefault();
     if (inputValue.trim() === "") {
-      alert("검색어를 입력하세요.");
+      setShowAlert(true);
+      setTitle("검색 에러");
+      setMessage("검색어를 입력하세요.");
       return;
     }
     handleQueryChange(inputValue);
     setSelectedRow(null);
 
+    setIsLoading(true); // 데이터 로딩 시작 시 로딩 상태를 true로 설정
     fetch("http://127.0.0.1:8000/search", {
       method: "POST",
       headers: {
@@ -77,13 +95,18 @@ function Searchresult({ handleQueryChange, query }) {
         if (response.ok) {
           return response.json();
         } else {
-          throw new Error("검색 요청 에러");
+          setShowAlert(true);
+          setTitle("검색 에러");
+          setMessage("검색 요청 에러");
         }
       })
       .then((data) => {
         setContent(data.results);
       })
       .catch((error) => {
+        setShowAlert(true);
+        setTitle("네트워크 에러");
+        setMessage("서버에 연결할 수 없습니다. 잠시 후 다시 시도해주세요.");
         setIsLoading(false); // 데이터 로딩 완료 시 로딩 상태를 false로 설정
       })
       .finally(() => {
@@ -115,7 +138,7 @@ function Searchresult({ handleQueryChange, query }) {
         <LoadingSpinner />
       ) : (
         <div>
-          {content === undefined ? (
+          {content === undefined || query.trim() === "" ? (
             <div className="exception">검색어를 입력하세요.</div>
           ) : content.length === 0 ? (
             <div className="exception">
@@ -166,6 +189,14 @@ function Searchresult({ handleQueryChange, query }) {
             </div>
           )}
         </div>
+      )}
+
+      {showAlert && (
+        <Alert
+          title={title}
+          message={message}
+          handleAlertButtonClick={handleAlertButtonClick}
+        />
       )}
     </div>
   );

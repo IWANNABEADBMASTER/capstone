@@ -30,8 +30,8 @@ def main(request):
         username = user.name
 
     # 사용자 이름을 포함한 JSON 응답 생성
-    response_data = {"username": username}
-    return JsonResponse(response_data)
+    response_data = {"success": True, "username": username}
+    return JsonResponse(response_data, status=200)
 
 
 @api_view(["POST"])
@@ -65,6 +65,14 @@ def login(request):
         # POST 요청이 아닌 경우 에러 반환
         response_data = {"message": "잘못된 요청입니다.", "success": False}
         return JsonResponse(response_data, status=400)
+
+
+@csrf_exempt
+def spotify_login(request):
+    clientId = "4037ec337517476ab7c59266ca50f4b2"
+    redirectUri = "http://localhost:3000/"
+    context = {"clientId": clientId, "redirectUri": redirectUri}
+    return JsonResponse(context)
 
 
 @api_view(["POST"])

@@ -1,6 +1,7 @@
 import React from "react";
+import { useState } from "react";
 import { useNavigate } from "react-router-dom";
-
+import Alert from "./Alert";
 import Home from "../favicon/Home.png";
 import Clickhome from "../favicon/Clickhome.png";
 import Playlist from "../favicon/Playlist.png";
@@ -12,13 +13,28 @@ import "../css/Sidebar.css";
 
 const SideBar = ({ handleLogout, state, handleStateChange, isLoggedIn }) => {
   const navigate = useNavigate();
+
+  // 알림 창을 보여주는 변수
+  const [showAlert, setShowAlert] = useState(false);
+  // 알림 창에 들어갈 제목 변수
+  const [title, setTitle] = useState("");
+  // 알림 창에 들어갈 메시지 변수
+  const [message, setMessage] = useState("");
+  // 모달 창을 열고 닫을 함수
+  const handleAlertButtonClick = () => {
+    setShowAlert(false);
+    // 로그인을 안한 경우, 알림 창을 보여주고 알림 창을 닫으면 로그인 페이지로 이동
+    navigate("/login");
+  };
+
   // 로그인 상태에서만 하단의 로그아웃 배경색 지정
   const sideBarClass = isLoggedIn ? "sideBar" : "noStyleSideBar";
 
   // 로그인 페이지로 리다이렉트
   function handleRedirectToLogin() {
-    alert("먼저 로그인을 해주세요");
-    navigate("/login");
+    setShowAlert(true);
+    setTitle("플레이리스트가 없습니다.");
+    setMessage("먼저 로그인을 해주세요");
   }
 
   return (
@@ -67,6 +83,14 @@ const SideBar = ({ handleLogout, state, handleStateChange, isLoggedIn }) => {
         </div>
       ) : (
         <div />
+      )}
+
+      {showAlert && (
+        <Alert
+          title={title}
+          message={message}
+          handleAlertButtonClick={handleAlertButtonClick}
+        />
       )}
     </div>
   );

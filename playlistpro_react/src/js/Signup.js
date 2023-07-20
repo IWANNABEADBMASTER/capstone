@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import Bar from "./Bar";
+import Alert from "./Alert";
 import "../css/Login.css";
 import Spotify from "../favicon/Spotify.png";
 
@@ -10,6 +11,22 @@ const Signup = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const navigate = useNavigate();
+
+  // 알림 창을 보여주는 변수
+  const [showAlert, setShowAlert] = useState(false);
+  // 알림 창에 들어갈 제목 변수
+  const [title, setTitle] = useState("");
+  // 알림 창에 들어갈 메시지 변수
+  const [message, setMessage] = useState("");
+  // 모달 창을 열고 닫을 함수
+  const handleAlertButtonClick = () => {
+    setShowAlert(false);
+    if (sucessSignup) {
+      navigate("/login");
+    }
+  };
+  // 회원가입 성공 변수
+  const [sucessSignup, setSucessSignup] = useState(false);
 
   const handleUsernameChange = (event) => {
     setUsername(event.target.value);
@@ -32,40 +49,54 @@ const Signup = () => {
 
     if (username == "") {
       // 이름이 비어있는 경우
-      alert("이름을 입력해주세요.");
+      setShowAlert(true);
+      setTitle("필수 정보 입력");
+      setMessage("이름을 입력해주세요.");
       return;
     }
 
     if (userId == "") {
       // 아이디가 비어있는 경우
-      alert("아이디를 입력해주세요.");
+      setShowAlert(true);
+      setTitle("필수 정보 입력");
+      setMessage("아이디를 입력해주세요.");
       return;
     }
 
     if (password == "") {
       // 비밀번호가 비어있는 경우
-      alert("비밀번호를 입력해주세요.");
+      setShowAlert(true);
+      setTitle("필수 정보 입력");
+      setMessage("비밀번호를 입력해주세요.");
       return;
     }
 
     if (email == "") {
       // 이메일이 비어있는 경우
-      alert("이메일을 입력해주세요.");
+      setShowAlert(true);
+      setTitle("필수 정보 입력");
+      setMessage("이메일을 입력해주세요.");
       return;
     }
 
     if (!/^.{2,5}$/.test(username)) {
-      alert("이름은 2~5글자로 입력해주세요.");
+      setShowAlert(true);
+      setTitle("형식 에러");
+      setMessage("이름은 2~5글자의 한글로 입력해주세요.");
       return;
     }
 
     if (!/^[a-zA-Z0-9]{4,12}$/.test(userId)) {
-      alert("아이디는 4~12글자의 영문 대소문자로만 입력해주세요.");
+      setShowAlert(true);
+      setTitle("형식 에러");
+      setMessage("아이디는 4~12글자의 영문 대소문자로만 입력해주세요.");
       return;
     }
 
     if (password.length < 8) {
-      alert("비밀번호는 8글자 이상으로 입력해주세요.");
+      setShowAlert(true);
+      setTitle("형식 에러");
+      setMessage("비밀번호는 8글자 이상으로 입력해주세요.");
       return;
     }
 
@@ -95,21 +126,28 @@ const Signup = () => {
           return response.json(); // JSON 형식으로 변환된 응답 반환
         } else {
           // 요청이 실패한 경우
-          alert("회원가입이 실패했습니다.");
+          setShowAlert(true);
+          setTitle("회원가입 에러");
+          setMessage("회원가입이 실패했습니다.");
         }
       })
       .then((data) => {
         // 서버에서 반환한 데이터 처리
         if (data.success) {
-          alert("회원가입 성공!");
-          // 회원가입 성공 후 로그인 페이지로 이동
-          navigate("/login");
+          setShowAlert(true);
+          setTitle("회원가입 성공");
+          setMessage("로그인 페이지로 이동합니다.");
+          setSucessSignup(true);
         } else {
-          alert(data.message);
+          setShowAlert(true);
+          setTitle("회원가입 에러");
+          setMessage(data.message); // 이미 가입한 아이디가 있습니다. , 이미 존재하는 아이디입니다.
         }
       })
       .catch((error) => {
-        alert("회원가입 중 오류가 발생했습니다.", error);
+        setShowAlert(true);
+        setTitle("회원가입 에러");
+        setMessage("회원가입 중 오류가 발생했습니다.");
       });
   };
 
@@ -182,6 +220,14 @@ const Signup = () => {
           Already have an account ? <a href="/login">Login</a>
         </div>
       </div>
+
+      {showAlert && (
+        <Alert
+          title={title}
+          message={message}
+          handleAlertButtonClick={handleAlertButtonClick}
+        />
+      )}
     </div>
   );
 };

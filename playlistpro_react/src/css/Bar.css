@@ -4,6 +4,12 @@
   align-items: center;
   color: white;
   background-color: black;
+  font-family: ABeeZee;
+}
+
+@font-face {
+  font-family: "ABeeZee";
+  src: url("../../public/ABeeZee-Regular.ttf") format("truetype");
 }
 
 .bar > *:nth-child(1) {

@@ -1,6 +1,7 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import Bar from "./Bar";
+import Alert from "./Alert";
 import "../css/Login.css";
 import Spotify from "../favicon/Spotify.png";
 
@@ -8,6 +9,19 @@ function Login() {
   const [userId, setUserId] = useState("");
   const [password, setPassword] = useState("");
   const navigate = useNavigate();
+
+  // 알림 창을 보여주는 변수
+  const [showAlert, setShowAlert] = useState(false);
+  // 알림 창에 들어갈 제목 변수
+  const [title, setTitle] = useState("");
+  // 알림 창에 들어갈 메시지 변수
+  const [message, setMessage] = useState("");
+  // 모달 창을 열고 닫을 함수
+  const handleAlertButtonClick = () => {
+    setShowAlert(false);
+  };
+
+  const csrftoken = getCookie("csrftoken"); // csrftoken은 Django에서 제공하는 쿠키 이름입니다.
 
   const handleUsernameChange = (event) => {
     setUserId(event.target.value);
@@ -22,17 +36,19 @@ function Login() {
 
     if (userId == "") {
       // 아이디가 비어있는 경우
-      alert("아이디를 입력해주세요.");
+      setShowAlert(true);
+      setTitle("로그인 에러");
+      setMessage("아이디를 입력해주세요.");
       return;
     }
 
     if (password == "") {
       // 비밀번호가 비어있는 경우
-      alert("비밀번호를 입력해주세요.");
+      setShowAlert(true);
+      setTitle("로그인 에러");
+      setMessage("비밀번호를 입력해주세요.");
       return;
     }
-
-    const csrftoken = getCookie("csrftoken"); // csrftoken은 Django에서 제공하는 쿠키 이름입니다.
 
     const userData = {
       userId: userId,
@@ -58,11 +74,15 @@ function Login() {
           // 로그인 성공 후 메인 페이지로 이동
           navigate("/");
         } else {
-          alert(message);
+          setShowAlert(true);
+          setTitle("로그인 에러");
+          setMessage(message); // 아이디 또는 비밀번호가 일치하지 않습니다.
         }
       })
       .catch((error) => {
-        alert("로그인 중 오류가 발생했습니다.", error);
+        setShowAlert(true);
+        setTitle("네트워크 에러");
+        setMessage("서버에 연결할 수 없습니다. 잠시 후 다시 시도해주세요.");
       });
   };
 
@@ -82,6 +102,38 @@ function Login() {
     return cookieValue;
   }
 
+  const [AUTH_URL, setAUTH_URL] = useState("");
+  useEffect(() => {
+    fetch("http://127.0.0.1:8000/spotify_login", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+        "X-CSRFToken": csrftoken, // CSRF 토큰을 요청 헤더에 포함
+      },
+    })
+      .then((response) => {
+        if (response.ok) {
+          return response.json();
+        }
+      })
+      .then((data) => {
+        const clientId = data.clientId;
+        const redirectUri = data.redirectUri;
+        const authEndpoint = "https://accounts.spotify.com/authorize";
+        const queryParams = `client_id=${
+          data.clientId
+        }&redirect_uri=${encodeURIComponent(
+          data.redirectUri
+        )}&response_type=token&show_dialog=true`;
+        setAUTH_URL(`${authEndpoint}?${queryParams}`);
+      })
+      .catch((error) => {
+        setShowAlert(true);
+        setTitle("네트워크 에러");
+        setMessage("서버에 연결할 수 없습니다. 잠시 후 다시 시도해주세요.");
+      });
+  }, []);
+
   return (
     <div>
       <Bar isLoggedIn={false} username={null} />
@@ -89,7 +141,7 @@ function Login() {
       <div className="login_container">
         <div className="login_title">Login</div>
 
-        <a href="/spotifylogin">
+        <a href={AUTH_URL}>
           <div className="spotify_title">
             <div className="title_wrapper">
               <img src={Spotify} alt="Spotify" />
@@ -121,6 +173,14 @@ function Login() {
           계정이 없으신가요? <a href="/signup">회원가입</a>
         </div>
       </div>
+
+      {showAlert && (
+        <Alert
+          title={title}
+          message={message}
+          handleAlertButtonClick={handleAlertButtonClick}
+        />
+      )}
     </div>
   );
 }

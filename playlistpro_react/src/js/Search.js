@@ -1,22 +1,36 @@
 import React from "react";
 import { useState } from "react";
+import Alert from "./Alert";
 import "../css/Search.css";
 
 function Search({ handleStateChange, handleQueryChange }) {
   const [inputValue, setInputValue] = useState("");
+
+  // 알림 창을 보여주는 변수
+  const [showAlert, setShowAlert] = useState(false);
+  // 알림 창에 들어갈 제목 변수
+  const [title, setTitle] = useState("");
+  // 알림 창에 들어갈 메시지 변수
+  const [message, setMessage] = useState("");
+  // 모달 창을 열고 닫을 함수
+  const handleAlertButtonClick = () => {
+    setShowAlert(false);
+  };
 
   const handleChange = (e) => {
     setInputValue(e.target.value);
   };
 
   const handleSubmit = (e) => {
+    e.preventDefault();
     if (inputValue.trim() === "") {
-      alert("검색어를 입력하세요.");
+      setShowAlert(true);
+      setTitle("검색 에러");
+      setMessage("검색어를 입력하세요.");
       return;
     }
     handleStateChange("search");
     handleQueryChange(inputValue);
-    e.preventDefault();
   };
 
   return (
@@ -40,6 +54,14 @@ function Search({ handleStateChange, handleQueryChange }) {
       </div>
       <div className="university">Dankook University</div>
       <div className="class">Capstone design 1st classroom</div>
+
+      {showAlert && (
+        <Alert
+          title={title}
+          message={message}
+          handleAlertButtonClick={handleAlertButtonClick}
+        />
+      )}
     </div>
   );
 }

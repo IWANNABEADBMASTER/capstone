@@ -1,6 +1,7 @@
 import React from "react";
 import { useLocation, useNavigate } from "react-router-dom";
 import { useState } from "react";
+import Alert from "./Alert";
 import "../css/Update.css";
 import Bar from "./Bar";
 
@@ -16,6 +17,22 @@ function Update() {
   const [password, setPassword] = useState("");
   const [newPassword, setNewPassword] = useState("");
   const [newPasswordCheck, setNewPasswordCheck] = useState("");
+
+  // 알림 창을 보여주는 변수
+  const [showAlert, setShowAlert] = useState(false);
+  // 알림 창에 들어갈 제목 변수
+  const [title, setTitle] = useState("");
+  // 알림 창에 들어갈 메시지 변수
+  const [message, setMessage] = useState("");
+  // 모달 창을 열고 닫을 함수
+  const handleAlertButtonClick = () => {
+    setShowAlert(false);
+    if (sucessUpdate) {
+      navigate("/");
+    }
+  };
+  // 정보 수정 성공 변수
+  const [sucessUpdate, setSucessUpdate] = useState(false);
 
   const handlePasswordChange = (event) => {
     setPassword(event.target.value);
@@ -34,27 +51,37 @@ function Update() {
 
     // 비밀번호 유효성 검사
     if (!password) {
-      alert("비밀번호를 입력해주세요.");
+      setShowAlert(true);
+      setTitle("필수 정보 입력");
+      setMessage("비밀번호를 입력해주세요.");
       return;
     }
 
     if (!newPassword) {
-      alert("새 비밀번호를 입력해주세요.");
+      setShowAlert(true);
+      setTitle("필수 정보 입력");
+      setMessage("새 비밀번호를 입력해주세요.");
       return;
     }
 
     if (newPassword !== newPasswordCheck) {
-      alert("새 비밀번호의 값이 서로 다릅니다.");
+      setShowAlert(true);
+      setTitle("필수 정보 입력");
+      setMessage("새 비밀번호의 값이 서로 다릅니다.");
       return;
     }
 
     if (newPassword.length < 8) {
-      alert("비밀번호는 8글자 이상으로 입력해주세요.");
+      setShowAlert(true);
+      setTitle("형식 에러");
+      setMessage("비밀번호는 8글자 이상으로 입력해주세요.");
       return;
     }
 
     if (password == newPassword) {
-      alert("이전 비밀번호와 다른 비밀번호를 입력하세요.");
+      setShowAlert(true);
+      setTitle("비밀번호 에러");
+      setMessage("이전 비밀번호와 다른 비밀번호를 입력하세요.");
       return;
     }
 
@@ -75,15 +102,20 @@ function Update() {
       .then((response) => response.json())
       .then((data) => {
         if (data.success) {
-          console.log(data.message);
-          // 로그인 성공 후 메인 페이지로 이동
-          navigate("/");
+          setShowAlert(true);
+          setTitle("변경 완료");
+          setMessage(data.message);
+          setSucessUpdate(true);
         } else {
-          console.log(data.message);
+          setShowAlert(true);
+          setTitle("회원정보 에러");
+          setMessage(data.message);
         }
       })
       .catch((error) => {
-        console.log(data.message);
+        setShowAlert(true);
+        setTitle("네트워크 에러");
+        setMessage(data.message);
       });
   };
 
@@ -124,6 +156,14 @@ function Update() {
           </button>
         </form>
       </div>
+
+      {showAlert && (
+        <Alert
+          title={title}
+          message={message}
+          handleAlertButtonClick={handleAlertButtonClick}
+        />
+      )}
     </div>
   );
 }

@@ -49,6 +49,14 @@
   margin-bottom: 20px;
   cursor: pointer;
   width: 100%; /* 아이콘과 텍스트가 가로로 균등하게 정렬되도록 너비를 100%로 설정 */
+  font-family: "Montserrat";
+  font-size: 14px;
+  font-weight: 600;
+}
+
+@font-face {
+  font-family: "Montserrat";
+  src: url("../../public/Montserrat-Light.ttf") format("truetype");
 }
 
 .sideBarIcon:first-child {
@@ -71,4 +79,5 @@
 img {
   width: 30px;
   height: 30px;
+  margin-bottom: 5px;
 }
