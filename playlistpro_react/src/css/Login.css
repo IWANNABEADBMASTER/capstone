@@ -1,5 +1,5 @@
 .login_container {
-  margin-top: 80px;
+  margin-top: 60px;
   margin-left: 100px;
   font-family: Inter;
 }
@@ -36,7 +36,7 @@
 }
 
 .login_form {
-  margin-top: 100px;
+  margin-top: 60px;
 }
 
 .login_form input {

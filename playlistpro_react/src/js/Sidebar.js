@@ -11,7 +11,13 @@ import Clicksearch from "../favicon/Clicksearch.png";
 import Logout from "../favicon/Logout.png";
 import "../css/Sidebar.css";
 
-const SideBar = ({ handleLogout, state, handleStateChange, isLoggedIn }) => {
+const SideBar = ({
+  handleLogout,
+  state,
+  handleStateChange,
+  isLoggedIn,
+  isSpotifyLoggedIn,
+}) => {
   const navigate = useNavigate();
 
   // 알림 창을 보여주는 변수
@@ -33,8 +39,8 @@ const SideBar = ({ handleLogout, state, handleStateChange, isLoggedIn }) => {
   // 로그인 페이지로 리다이렉트
   function handleRedirectToLogin() {
     setShowAlert(true);
-    setTitle("플레이리스트가 없습니다.");
-    setMessage("먼저 로그인을 해주세요");
+    setTitle("플레이리스트가 없습니다");
+    setMessage("먼저 로그인을 해주세요.");
   }
 
   return (
@@ -64,7 +70,9 @@ const SideBar = ({ handleLogout, state, handleStateChange, isLoggedIn }) => {
       <div
         className="sideBarIcon"
         onClick={() =>
-          isLoggedIn ? handleStateChange("playlist") : handleRedirectToLogin()
+          isLoggedIn || isSpotifyLoggedIn
+            ? handleStateChange("playlist")
+            : handleRedirectToLogin()
         }
       >
         <div>
@@ -77,7 +85,7 @@ const SideBar = ({ handleLogout, state, handleStateChange, isLoggedIn }) => {
         <div>Playlists</div>
       </div>
 
-      {isLoggedIn ? (
+      {isLoggedIn || isSpotifyLoggedIn ? (
         <div className="sideBarIcon" onClick={handleLogout}>
           <img src={Logout} alt="Logout" />
         </div>

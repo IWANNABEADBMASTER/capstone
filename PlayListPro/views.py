@@ -68,7 +68,7 @@ def login(request):
 
 
 @csrf_exempt
-def spotify_login(request):
+def spotify_url(request):
     clientId = "4037ec337517476ab7c59266ca50f4b2"
     redirectUri = "http://localhost:3000/"
     context = {"clientId": clientId, "redirectUri": redirectUri}

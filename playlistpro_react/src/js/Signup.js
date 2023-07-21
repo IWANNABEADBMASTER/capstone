@@ -1,5 +1,5 @@
-import React, { useState } from "react";
-import { useNavigate } from "react-router-dom";
+import React, { useState, useEffect } from "react";
+import { useNavigate, Link } from "react-router-dom";
 import Bar from "./Bar";
 import Alert from "./Alert";
 import "../css/Login.css";
@@ -11,6 +11,8 @@ const Signup = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const navigate = useNavigate();
+
+  const csrftoken = getCookie("csrftoken"); // csrftoken은 Django에서 제공하는 쿠키 이름입니다.
 
   // 알림 창을 보여주는 변수
   const [showAlert, setShowAlert] = useState(false);
@@ -100,8 +102,6 @@ const Signup = () => {
       return;
     }
 
-    const csrftoken = getCookie("csrftoken"); // csrftoken은 Django에서 제공하는 쿠키 이름입니다.
-
     const userData = {
       userId: userId,
       password: password,
@@ -167,6 +167,36 @@ const Signup = () => {
     return cookieValue;
   }
 
+  const [SIGNUP_URL, setSIGNUP_URL] = useState("");
+  useEffect(() => {
+    fetch("http://127.0.0.1:8000/spotify_url", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+        "X-CSRFToken": csrftoken, // CSRF 토큰을 요청 헤더에 포함
+      },
+    })
+      .then((response) => {
+        if (response.ok) {
+          return response.json();
+        }
+      })
+      .then((data) => {
+        const authEndpoint = "https://accounts.spotify.com/signup";
+        const queryParams = `client_id=${
+          data.clientId
+        }&redirect_uri=${encodeURIComponent(
+          data.redirectUri
+        )}&response_type=token&show_dialog=true`;
+        setSIGNUP_URL(`${authEndpoint}?${queryParams}`);
+      })
+      .catch((error) => {
+        setShowAlert(true);
+        setTitle("네트워크 에러");
+        setMessage("서버에 연결할 수 없습니다. 잠시 후 다시 시도해주세요.");
+      });
+  }, []);
+
   return (
     <div>
       <Bar isLoggedIn={false} username={null} />
@@ -174,7 +204,7 @@ const Signup = () => {
       <div className="login_container">
         <div className="login_title">Create Account </div>
 
-        <a href="/spotifysignup">
+        <a href={SIGNUP_URL}>
           <div className="spotify_title">
             <div className="title_wrapper">
               <img src={Spotify} alt="Spotify" />
@@ -217,7 +247,7 @@ const Signup = () => {
           </button>
         </form>
         <div className="signup_buttom">
-          Already have an account ? <a href="/login">Login</a>
+          Already have an account ? <Link to="/login">Login</Link>
         </div>
       </div>
 

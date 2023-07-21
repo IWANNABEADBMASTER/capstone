@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, Link } from "react-router-dom";
 import Bar from "./Bar";
 import Alert from "./Alert";
 import "../css/Login.css";
@@ -104,7 +104,7 @@ function Login() {
 
   const [AUTH_URL, setAUTH_URL] = useState("");
   useEffect(() => {
-    fetch("http://127.0.0.1:8000/spotify_login", {
+    fetch("http://127.0.0.1:8000/spotify_url", {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
@@ -117,8 +117,6 @@ function Login() {
         }
       })
       .then((data) => {
-        const clientId = data.clientId;
-        const redirectUri = data.redirectUri;
         const authEndpoint = "https://accounts.spotify.com/authorize";
         const queryParams = `client_id=${
           data.clientId
@@ -170,7 +168,7 @@ function Login() {
           </button>
         </form>
         <div className="signup_buttom">
-          계정이 없으신가요? <a href="/signup">회원가입</a>
+          계정이 없으신가요? <Link to="/signup">회원가입</Link>
         </div>
       </div>
 

@@ -3,11 +3,15 @@ import { Link, useNavigate } from "react-router-dom";
 import Logo from "../favicon/Logo.png";
 import "../css/Bar.css";
 
-function Bar({ isLoggedIn, username }) {
+function Bar({ isLoggedIn, isSpotifyLoggedIn, username }) {
   const navigate = useNavigate();
   // 업데이트 페이지로 리다이렉트
   function handleRedirectToUpdate() {
-    navigate("/update", { state: { username: username } });
+    if (isSpotifyLoggedIn) {
+      alert("스포티파이로 로그인하면 사용자 정보 수정 불가!");
+    } else {
+      navigate("/update", { state: { username: username } });
+    }
   }
 
   return (
@@ -22,7 +26,7 @@ function Bar({ isLoggedIn, username }) {
       </div>
       <div>Search</div>
       <div>MyList</div>
-      {isLoggedIn ? (
+      {isLoggedIn || isSpotifyLoggedIn ? (
         <div className="username" onClick={() => handleRedirectToUpdate()}>
           {username} 님
         </div>

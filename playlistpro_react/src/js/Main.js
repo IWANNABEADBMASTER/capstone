@@ -22,6 +22,8 @@ function Main() {
   const [username, setUsername] = useState("");
   // 사용자 로그인 여부
   const [isLoggedIn, setIsLoggedIn] = useState(false);
+  // 사용자 스포티파이 로그인 여부
+  const [isSpotifyLoggedIn, setIsSpotifyLoggedIn] = useState(false);
 
   // 검색 쿼리
   const [query, setQuery] = useState("");
@@ -33,6 +35,10 @@ function Main() {
   // 로컬 스토리지에서 토큰을 가져옵니다.
   const [accessToken, setAccessToken] = useState(
     localStorage.getItem("access_token")
+  );
+  // 로컬 스토리지에서 스포티파이 토큰을 가져옵니다.
+  const [accessToken2, setAccessToken2] = useState(
+    localStorage.getItem("access_token2")
   );
 
   // 로딩 상태를 나타내는 변수
@@ -56,10 +62,74 @@ function Main() {
   const [expiration, setExpiration] = useState(false);
 
   useEffect(() => {
-    setIsLoading(true); // 데이터 로딩 시작 시 로딩 상태를 true로 설정
+    // 스포티파이 토큰 관리 ----------------------------------------------------------
+    // 스포티파이 토큰 관리 ----------------------------------------------------------
+    const HashAccessToken = extractAccessTokenFromHash();
+    // 스포티파이로 로그인한 경우 해쉬 토큰을 사용하여 사용자 정보를 가져오는 API 요청
+    if (HashAccessToken) {
+      setIsLoading(true); // 데이터 로딩 완료 시 로딩 상태를 true로 설정
+      fetch("https://api.spotify.com/v1/me", {
+        headers: {
+          Authorization: `Bearer ${HashAccessToken}`,
+        },
+      })
+        .then((response) => response.json())
+        .then((data) => {
+          // API 응답에서 사용자의 디스플레이 이름 가져오기
+          const displayName = data.display_name || "";
+          // API 응답에서 사용자의 아이디 가져오기
+          const userId = data.id || "";
 
+          localStorage.setItem("access_token2", HashAccessToken);
+
+          setUsername(displayName);
+          setIsSpotifyLoggedIn(true);
+          return;
+        })
+        .catch((error) => {
+          setShowAlert(true);
+          setTitle("네트워크 에러");
+          setMessage("서버에 연결할 수 없습니다. 잠시 후 다시 시도해주세요.");
+        })
+        .finally(() => {
+          setIsLoading(false); // 데이터 로딩 완료 시 로딩 상태를 false로 설정
+        });
+    } else if (accessToken2 !== null && accessToken2.length > 0) {
+      setIsLoading(true); // 데이터 로딩 완료 시 로딩 상태를 true로 설정
+      // 액세스 토큰을 사용하여 사용자 정보를 가져오는 API 요청
+      fetch("https://api.spotify.com/v1/me", {
+        headers: {
+          Authorization: `Bearer ${accessToken2}`,
+        },
+      })
+        .then((response) => response.json())
+        .then((data) => {
+          // API 응답에서 사용자의 디스플레이 이름 가져오기
+          const displayName = data.display_name || "";
+          // API 응답에서 사용자의 아이디 가져오기
+          const userId = data.id || "";
+
+          setUsername(displayName);
+          setIsSpotifyLoggedIn(true);
+          return;
+        })
+        .catch((error) => {
+          setShowAlert(true);
+          setTitle("네트워크 에러");
+          setMessage("서버에 연결할 수 없습니다. 잠시 후 다시 시도해주세요.");
+        })
+        .finally(() => {
+          setIsLoading(false); // 데이터 로딩 완료 시 로딩 상태를 false로 설정
+        });
+    }
+    // 스포티파이 토큰 관리 ----------------------------------------------------------
+    // 스포티파이 토큰 관리 ----------------------------------------------------------
+
+    // 플레이리스트프로 토큰 관리 ----------------------------------------------------------
+    // 플레이리스트프로 토큰 관리 ----------------------------------------------------------
     // 토큰이 존재할 경우에만 백엔드로부터 사용자 정보를 가져옵니다.
     if (accessToken !== null && accessToken.length > 0) {
+      setIsLoading(true); // 데이터 로딩 시작 시 로딩 상태를 true로 설정
       // 백엔드에서 사용자 정보를 가져오는 함수 호출
       fetch("http://127.0.0.1:8000/main", {
         headers: {
@@ -88,32 +158,9 @@ function Main() {
         .finally(() => {
           setIsLoading(false); // 데이터 로딩 완료 시 로딩 상태를 false로 설정
         });
-    } else {
-      setIsLoading(false); // 데이터 로딩 완료 시 로딩 상태를 false로 설정
     }
-
-    // 스포티파이 토큰 관리 ----------------------------------------------------------
-    // 스포티파이 토큰 관리 ----------------------------------------------------------
-    const accessToken2 = extractAccessTokenFromHash();
-    if (accessToken2) {
-      // 액세스 토큰을 사용하여 사용자 정보를 가져오는 API 요청
-      fetch("https://api.spotify.com/v1/me", {
-        headers: {
-          Authorization: `Bearer ${accessToken2}`,
-        },
-      })
-        .then((response) => response.json())
-        .then((data) => {
-          // API 응답에서 사용자의 디스플레이 이름 가져오기
-          const displayName = data.display_name || "";
-          console.log(displayName);
-        })
-        .catch((error) => {
-          console.error("Error fetching Spotify user info:", error);
-        });
-    }
-    // 스포티파이 토큰 관리 ----------------------------------------------------------
-    // 스포티파이 토큰 관리 ----------------------------------------------------------
+    // 플레이리스트프로 토큰 관리 ----------------------------------------------------------
+    // 플레이리스트프로 토큰 관리 ----------------------------------------------------------
   }, []);
 
   const handleLogout = () => {
@@ -130,12 +177,16 @@ function Main() {
         if (response.ok) {
           // 서버에서 로그아웃 성공 응답을 받았을 때 클라이언트에서 토큰을 삭제하고 추가적인 처리를 진행할 수 있습니다.
           localStorage.removeItem("access_token");
+          localStorage.removeItem("access_token2");
           setAccessToken("");
+          setAccessToken2("");
           setIsLoggedIn(false);
           window.location.reload();
         } else {
           // 로그아웃 실패 시에 대한 처리를 진행합니다.
           localStorage.removeItem("access_token");
+          localStorage.removeItem("access_token2");
+          setAccessToken2("");
           window.location.reload();
         }
       })
@@ -162,16 +213,21 @@ function Main() {
         <LoadingSpinner />
       ) : (
         <div>
-          <Bar isLoggedIn={isLoggedIn} username={username} />
+          <Bar
+            isLoggedIn={isLoggedIn}
+            isSpotifyLoggedIn={isSpotifyLoggedIn}
+            username={username}
+          />
           <SideBar
             handleLogout={handleLogout}
             state={state}
             handleStateChange={handleStateChange}
             isLoggedIn={isLoggedIn}
+            isSpotifyLoggedIn={isSpotifyLoggedIn}
           />
 
           {state === "home" ? (
-            isLoggedIn ? (
+            isLoggedIn || isSpotifyLoggedIn ? (
               <div className="welcome">{username}님, 환영합니다!</div>
             ) : (
               <div className="welcome">
