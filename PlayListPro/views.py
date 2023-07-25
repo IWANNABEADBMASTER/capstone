@@ -76,22 +76,6 @@ def spotify_url(request):
 
 
 @api_view(["POST"])
-def logout(request):
-    token = request.data.get("token")
-    if token:
-        try:
-            # 토큰 무효화
-            # refresh_token = RefreshToken(token)
-            # refresh_token.blacklist()
-
-            return JsonResponse({"message": "토큰이 성공적으로 무효화되었습니다."})
-        except Exception as e:
-            return JsonResponse({"message": "토큰 무효화 중 오류가 발생했습니다."}, status=500)
-    else:
-        return JsonResponse({"message": "토큰이 제공되지 않았습니다."}, status=400)
-
-
-@api_view(["POST"])
 @csrf_exempt
 def signup(request):
     if request.method == "POST":
