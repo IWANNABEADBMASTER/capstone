@@ -1,0 +1,111 @@
+.getplaylist_container {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  display: flex;
+  align-items: center;
+  z-index: 5000; /* 배경보다 위에 오도록 설정 */
+  animation: fadeIn 0.3s ease; /* fadeIn Keyframes를 적용하여 애니메이션 설정 */
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translate(-50%, -50%);
+    top: 40%; /* 화면 상단 기준으로 50% 위치 */
+    left: 50%; /* 화면 좌측 기준으로 50% 위치 */
+  }
+  to {
+    opacity: 1;
+    transform: translate(-50%, -50%);
+    top: 50%; /* 화면 상단 기준으로 50% 위치 */
+    left: 50%; /* 화면 좌측 기준으로 50% 위치 */
+  }
+}
+
+.getplaylist_content {
+  position: fixed;
+  top: 50%; /* 화면 상단 기준으로 50% 위치 */
+  left: 50%; /* 화면 좌측 기준으로 50% 위치 */
+  transform: translate(-50%, -50%); /* 컨테이너를 중앙으로 이동시킴 */
+  padding: 5px 20px 20px;
+  justify-content: space-between;
+  background-color: black;
+  border: 1px solid white;
+  border-radius: 16px;
+}
+
+.getplaylist_content p {
+  color: white;
+  padding: 10px 20px;
+  font-size: 16px;
+  font-weight: 600;
+}
+
+.playlist_list {
+  border-top: 1px solid rgba(225, 225, 225, 1);
+  border-bottom: 1px solid rgba(225, 225, 225, 1);
+  width: 300px;
+  height: 120px;
+  padding: 15px;
+  overflow-y: auto; /* 스크롤 생성 */
+  overflow-x: hidden; /* 가로 스크롤 제거 */
+}
+
+/* 수직 스크롤바 스타일 */
+.playlist_list::-webkit-scrollbar {
+  width: 6px; /* 스크롤바의 너비 */
+}
+
+.playlist_list::-webkit-scrollbar-track {
+  background-color: transparent; /* 스크롤바 트랙의 배경색 */
+}
+
+.playlist_list::-webkit-scrollbar-thumb {
+  background-color: white; /* 스크롤바 색상 */
+  border-radius: 6px; /* 스크롤바 테두리의 둥글기 */
+}
+
+.playlist_list::-webkit-scrollbar-thumb:hover {
+  background-color: lightgray; /* 스크롤바에 마우스 호버 시 색상 */
+}
+
+.playlist_title {
+  color: white;
+  /* 텍스트에 두 개의 그림자 추가 */
+  text-shadow: 1px 1px 0px red, 3px 3px 0px blue;
+  padding: 5px;
+  cursor: pointer;
+}
+
+.button_container {
+  display: flex;
+  justify-content: flex-end;
+}
+
+.button_container button {
+  color: white;
+  display: inline-block;
+  margin-top: 10px;
+  background-color: black;
+  border: none;
+  cursor: pointer;
+}
+
+.button_container2 {
+  display: flex;
+  justify-content: flex-end;
+}
+
+.button_container2 button {
+  margin-top: 10px;
+  display: inline-block;
+  color: white;
+  background: rgba(226, 102, 246, 1);
+  border: none;
+  border-radius: 4px;
+  padding: 5px 10px;
+  cursor: pointer;
+}

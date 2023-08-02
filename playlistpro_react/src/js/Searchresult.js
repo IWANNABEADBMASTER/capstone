@@ -1,5 +1,6 @@
 import React from "react";
 import { useState, useEffect } from "react";
+import Selectplaylist from "./Selectplaylist";
 import LoadingSpinner from "./LoadingSpinner";
 import Alert from "./Alert";
 import Add from "../favicon/Add.png";
@@ -22,6 +23,13 @@ function Searchresult({ handleQueryChange, query }) {
     }
   };
 
+  // 플레이리스트를 선택하는 모달 창을 보여줄 변수
+  const [showSelectPlaylistModal, setShowSelectPlaylistModal] = useState(false);
+  // 플레이리스트를 선택하는 모달창을 열고 닫는 함수
+  const handleShowSelectPlaylistModal = () => {
+    setShowSelectPlaylistModal(!showSelectPlaylistModal);
+  };
+
   // 로딩 상태를 나타내는 변수
   const [isLoading, setIsLoading] = useState(true);
 
@@ -34,6 +42,34 @@ function Searchresult({ handleQueryChange, query }) {
   // 모달 창을 열고 닫을 함수
   const handleAlertButtonClick = () => {
     setShowAlert(false);
+  };
+
+  // 노래의 고유 값을 나타내는 변수
+  const [trackId, setTrackId] = useState([]);
+  // 선택된 노래의 정보를 담을 상태(State) 설정
+  const [selectedMusicData, setSelectedMusicData] = useState({
+    mugic_title: "",
+    artist: "",
+    album_image: "",
+    time: "",
+  });
+
+  // 플레이리스트 클릭 시 제출하는 함수
+  const handleAddMugicClick = (
+    trackId,
+    mugic_title,
+    artist,
+    album_image,
+    time
+  ) => {
+    setSelectedMusicData({
+      trackId: trackId,
+      mugic_title: mugic_title,
+      artist: artist,
+      album_image: album_image,
+      time: time,
+    });
+    setShowSelectPlaylistModal(true);
   };
 
   useEffect(() => {
@@ -56,6 +92,7 @@ function Searchresult({ handleQueryChange, query }) {
       })
       .then((data) => {
         setContent(data.results);
+        setTrackId(data.track_ids);
       })
       .catch((error) => {
         setShowAlert(true);
@@ -102,6 +139,7 @@ function Searchresult({ handleQueryChange, query }) {
       })
       .then((data) => {
         setContent(data.results);
+        setTrackId(data.trackId);
       })
       .catch((error) => {
         setShowAlert(true);
@@ -122,6 +160,13 @@ function Searchresult({ handleQueryChange, query }) {
 
   return (
     <div className="Searchresult">
+      {showSelectPlaylistModal && (
+        <Selectplaylist
+          handleShowSelectPlaylistModal={handleShowSelectPlaylistModal}
+          selectedMusicData={selectedMusicData}
+        />
+      )}
+
       <form onSubmit={handleSubmit}>
         <input
           type="text"
@@ -180,7 +225,18 @@ function Searchresult({ handleQueryChange, query }) {
                     <div className="duration">
                       {formatDuration(item.duration_ms)}
                     </div>
-                    <div className="add">
+                    <div
+                      className="add"
+                      onClick={() =>
+                        handleAddMugicClick(
+                          trackId[index],
+                          item.album.name,
+                          item.artists[0].name,
+                          item.album.images[0].url,
+                          formatDuration(item.duration_ms)
+                        )
+                      }
+                    >
                       <img src={Add} alt="Add" />
                     </div>
                   </div>

@@ -5,7 +5,8 @@ from django.http import JsonResponse
 from django.db import connections
 from django.views.decorators.csrf import csrf_exempt
 import json
-from .models import Users
+from django.db import IntegrityError
+from .models import Users, Playlist, Music
 from rest_framework_simplejwt.tokens import AccessToken, Token
 from rest_framework.decorators import (
     api_view,
@@ -25,12 +26,14 @@ def main(request):
 
     # 토큰에서 사용자 이름 가져오기
     if isinstance(user, Token):
+        userId = user["username"]
         username = user["name"]
     else:
+        userId = user.username
         username = user.name
 
     # 사용자 이름을 포함한 JSON 응답 생성
-    response_data = {"success": True, "username": username}
+    response_data = {"success": True, "userId": userId, "username": username}
     return JsonResponse(response_data, status=200)
 
 
@@ -69,7 +72,7 @@ def login(request):
 
 @csrf_exempt
 def spotify_url(request):
-    clientId = "4037ec337517476ab7c59266ca50f4b2"
+    clientId = "470b7e26ea7c4e8d84ff40bbd1b01616"
     redirectUri = "http://localhost:3000/"
     context = {"clientId": clientId, "redirectUri": redirectUri}
     return JsonResponse(context)
@@ -136,13 +139,136 @@ def search(request):
         data = json.loads(request.body)
         query = data.get("query")
         if len(query) > 0:
-            results = spotify.search_spotify(query)
-            context = {"results": results}
+            result_data = spotify.search_spotify(query)
+            context = {
+                "results": result_data["tracks"],
+                "track_ids": result_data["track_ids"],
+            }
         else:
-            context = {"result": ""}
+            context = {"result": []}
     else:
-        context = {"results": ""}
+        context = {"results": []}
     return JsonResponse(context)
+
+
+@api_view(["POST"])
+@csrf_exempt
+def playlist(request):
+    if request.method == "POST":
+        # POST 데이터 추출
+        data = json.loads(request.body)
+        userId = data.get("userId")
+
+        # userId에 해당하는 playlist 테이블의 정보 조회
+        try:
+            playlists = Playlist.objects.filter(userId=userId)
+            playlist_data = []
+            for playlist in playlists:
+                image_url = get_first_song_image(playlist.playlistId)
+                playlist_data.append(
+                    {
+                        "playlistId": playlist.playlistId,
+                        "playlistname": playlist.playlistname,
+                        "playlistcomment": playlist.playlistcomment,
+                        "imageURL": image_url,
+                    }
+                )
+            response_data = {"playlists": playlist_data}
+        except Exception as e:
+            print("플레이리스트 조회 실패:", e)
+            response_data = {"message": "플레이리스트 조회 실패"}
+
+        return JsonResponse(response_data)
+
+    else:
+        response_data = {"message": "플레이리스트 조회 실패"}
+
+    return JsonResponse(response_data)
+
+
+def get_first_song_image(playlistId):
+    try:
+        # 해당 playlistId에 해당하는 Music 중 가장 처음 노래의 이미지 URL을 반환
+        music = Music.objects.filter(playlistId=playlistId).first()
+        if music:
+            return music.album_img
+    except Exception as e:
+        print("노래 조회 실패:", e)
+    return None
+
+
+@api_view(["POST"])
+@csrf_exempt
+def createplaylist(request):
+    if request.method == "POST":
+        # POST 데이터 추출
+        data = json.loads(request.body)
+        userId = data.get("userId")
+        playlistname = data.get("playlistname")
+        playlistcomment = data.get("playlistcomment")
+        # Playlist 테이블에 데이터 생성
+        try:
+            # Users 모델에서 userId에 해당하는 인스턴스 가져오기
+            user_instance = Users.objects.get(username=userId)
+
+            # Playlist 테이블에 데이터 생성
+            playlist = Playlist.objects.create(
+                userId=user_instance,
+                playlistname=playlistname,
+                playlistcomment=playlistcomment,
+            )
+            response_data = {
+                "success": True,
+                "playlist_id": playlist.playlistId,  # 생성된 플레이리스트의 ID를 반환할 수도 있음
+            }
+        except Exception as e:
+            print("플레이리스트 생성 실패:", e)
+            response_data = {"success": False, "message": "플레이리스트 생성 실패"}
+
+        return JsonResponse(response_data)
+
+    else:
+        response_data = {"success": False, "message": "플레이리스트 생성 실패"}
+
+    return JsonResponse(response_data)
+
+
+@api_view(["POST"])
+@csrf_exempt
+def addmugic(request):
+    if request.method == "POST":
+        # POST 데이터 추출
+        data = json.loads(request.body)
+        playlistId = data.get("playlistId")
+        trackId = data.get("trackId")
+        mugic_title = data.get("mugic_title")
+        artist = data.get("artist")
+        album_image = data.get("album_image")
+        time = data.get("time")
+
+        # Playlist 모델의 인스턴스를 가져옵니다.
+        playlist = Playlist.objects.get(playlistId=playlistId)
+
+        # 이미 해당 플레이리스트에 동일한 trackId가 있는지 확인
+        try:
+            existing_music = Music.objects.get(playlistId=playlist, trackId=trackId)
+            response_data = {"success": False, "message": "이미 해당 노래가 추가되었습니다."}
+        except Music.DoesNotExist:
+            # Music 모델에 새로운 레코드 추가
+            music = Music.objects.create(
+                playlistId=playlist,
+                trackId=trackId,
+                title=mugic_title,
+                album_img=album_image,
+                artist=artist,
+                time=time,
+            )
+            response_data = {"success": True, "message": "노래 추가 성공"}
+
+    else:
+        response_data = {"success": False, "message": "노래 추가 실패"}
+
+    return JsonResponse(response_data)
 
 
 def topChart(request):

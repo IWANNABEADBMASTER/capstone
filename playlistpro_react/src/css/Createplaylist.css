@@ -1,0 +1,65 @@
+.createplaylist_container {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  display: flex;
+  align-items: center;
+  z-index: 5000; /* 배경보다 위에 오도록 설정 */
+  animation: fadeIn 0.3s ease; /* fadeIn Keyframes를 적용하여 애니메이션 설정 */
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translate(-50%, -50%);
+    top: 40%; /* 화면 상단 기준으로 50% 위치 */
+    left: 50%; /* 화면 좌측 기준으로 50% 위치 */
+  }
+  to {
+    opacity: 1;
+    transform: translate(-50%, -50%);
+    top: 50%; /* 화면 상단 기준으로 50% 위치 */
+    left: 50%; /* 화면 좌측 기준으로 50% 위치 */
+  }
+}
+
+.createplaylist_content {
+  position: fixed;
+  background-color: black;
+  top: 50%; /* 화면 상단 기준으로 50% 위치 */
+  left: 50%; /* 화면 좌측 기준으로 50% 위치 */
+  transform: translate(-50%, -50%); /* 컨테이너를 중앙으로 이동시킴 */
+  background-color: black;
+  border: 1px solid white;
+  border-radius: 16px;
+  height: 130px;
+  padding: 10px;
+  justify-content: space-between;
+}
+
+.createplaylist_content input {
+  background-color: black;
+  color: white;
+  font-weight: 400;
+  margin-bottom: 10px;
+  padding: 10px 5px;
+  border: none;
+  border-bottom: 1px solid white;
+  outline: none;
+}
+
+.button_container {
+  display: flex;
+  justify-content: flex-end;
+}
+
+.button_container button {
+  color: white;
+  display: inline-block;
+  margin-top: 10px;
+  background-color: black;
+  border: none;
+  cursor: pointer;
+}

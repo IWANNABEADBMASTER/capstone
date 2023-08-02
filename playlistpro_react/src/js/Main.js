@@ -65,7 +65,8 @@ function Main() {
 
     // 스포티파이로 로그인한 경우 해쉬 토큰을 사용하여 사용자 정보를 가져오는 API 요청
     if (HashAccessToken !== null && HashAccessToken.length > 0) {
-      setIsLoading(true); // 데이터 로딩 완료 시 로딩 상태를 true로 설정
+      setIsLoading(true); // 데이터 로딩 시 로딩 상태를 true로 설정
+
       fetch("https://api.spotify.com/v1/me", {
         headers: {
           Authorization: `Bearer ${HashAccessToken}`,
@@ -91,7 +92,8 @@ function Main() {
           setIsLoading(false); // 데이터 로딩 완료 시 로딩 상태를 false로 설정
         });
     } else if (accessToken2 !== null && accessToken2.length > 0) {
-      setIsLoading(true); // 데이터 로딩 완료 시 로딩 상태를 true로 설정
+      setIsLoading(true); // 데이터 완료 시 로딩 상태를 true로 설정
+
       // 액세스 토큰을 사용하여 사용자 정보를 가져오는 API 요청
       fetch("https://api.spotify.com/v1/me", {
         headers: {
@@ -127,7 +129,7 @@ function Main() {
     // 플레이리스트프로 토큰 관리 ----------------------------------------------------------
     // 토큰이 존재할 경우에만 백엔드로부터 사용자 정보를 가져옵니다.
     else if (accessToken !== null && accessToken.length > 0) {
-      setIsLoading(true); // 데이터 로딩 시작 시 로딩 상태를 true로 설정
+      setIsLoading(true); // 데이터 로딩 시 로딩 상태를 true로 설정
       // 백엔드에서 사용자 정보를 가져오는 함수 호출
       fetch("http://127.0.0.1:8000/main", {
         headers: {

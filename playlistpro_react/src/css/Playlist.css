@@ -1,6 +1,84 @@
-.pbtn {
-  color: white;
-  width: 200px;
-  background-color: #ffe4c4;
+.playlist {
+  margin-left: 200px;
+  font-family: ABeeZee;
+}
+
+@font-face {
+  font-family: "ABeeZee";
+  src: url("../../public/ABeeZee-Regular.ttf") format("truetype");
+}
+
+.noplaylist {
+  display: inline-block;
+  flex-direction: column;
+  align-items: center; /* 세로 방향으로 중앙 정렬 */
+}
+
+.noplaylist div {
+  margin-top: 15px;
+}
+
+.createplaylist,
+.getplaylist {
+  display: inline-block;
+  color: rgba(245, 142, 248, 1);
   cursor: pointer;
+}
+
+.createplaylist_box {
+  display: flex;
+  justify-content: flex-end;
+  width: 920px;
+}
+
+.playlist img {
+  margin-left: auto;
+  cursor: pointer;
+}
+
+.playlist_container {
+  background: rgba(142, 124, 237, 0.2);
+  display: grid;
+  grid-template-columns: repeat(
+    5,
+    160px
+  ); /* 1행에 4개의 아이템, 각각 150px 너비 */
+  grid-gap: 30px; /* 플레이리스트 박스 사이에 간격 추가 */
+  max-width: max-content; /* 최대 너비를 요소 4개 크기로 제한 */
+  grid-template-rows: repeat(
+    auto-fill,
+    minmax(150px, 1fr)
+  ); /* 행 높이 유연하게 설정 */
+  padding: 0px 30px;
+}
+
+.playlist_box {
+  padding: 10px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  cursor: pointer;
+}
+
+.playlistname {
+  font-size: 15px;
+  font-style: italic;
+  font-weight: 400;
+  margin-top: 10px;
+  line-height: 26px;
+  letter-spacing: 0em;
+}
+
+.playlistcomment {
+  font-size: 12px;
+  font-weight: 400;
+  margin-top: 5px;
+  line-height: 22px;
+  letter-spacing: 0em;
+  color: rgba(167, 167, 167, 1);
+}
+
+.playlist_box img {
+  width: 150px;
+  height: 150px;
 }

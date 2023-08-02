@@ -130,6 +130,10 @@
   width: 50px;
 }
 
+.add {
+  cursor: pointer;
+}
+
 .exception {
   margin-top: 50px;
   margin-left: 150px;
