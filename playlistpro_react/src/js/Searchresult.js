@@ -16,7 +16,7 @@ function Searchresult({ handleQueryChange, query }) {
   // 노래 선택 시 백그라운드 스타일 지정할 변수
   const [selectedRow, setSelectedRow] = useState(null);
   const handleRowClick = (index) => {
-    if (index == selectedRow) {
+    if (index === selectedRow) {
       setSelectedRow(null);
     } else {
       setSelectedRow(index);
@@ -93,14 +93,12 @@ function Searchresult({ handleQueryChange, query }) {
       .then((data) => {
         setContent(data.results);
         setTrackId(data.track_ids);
+        setIsLoading(false); // 데이터 로딩 완료 시 로딩 상태를 false로 설정
       })
       .catch((error) => {
         setShowAlert(true);
         setTitle("검색 에러");
         setMessage("검색 요청 에러");
-        setIsLoading(false); // 데이터 로딩 완료 시 로딩 상태를 false로 설정
-      })
-      .finally(() => {
         setIsLoading(false); // 데이터 로딩 완료 시 로딩 상태를 false로 설정
       });
   }, []);
@@ -140,14 +138,12 @@ function Searchresult({ handleQueryChange, query }) {
       .then((data) => {
         setContent(data.results);
         setTrackId(data.trackId);
+        setIsLoading(false); // 데이터 로딩 완료 시 로딩 상태를 false로 설정
       })
       .catch((error) => {
         setShowAlert(true);
         setTitle("네트워크 에러");
         setMessage("서버에 연결할 수 없습니다. 잠시 후 다시 시도해주세요.");
-        setIsLoading(false); // 데이터 로딩 완료 시 로딩 상태를 false로 설정
-      })
-      .finally(() => {
         setIsLoading(false); // 데이터 로딩 완료 시 로딩 상태를 false로 설정
       });
   };
@@ -187,7 +183,7 @@ function Searchresult({ handleQueryChange, query }) {
             <div className="exception">검색어를 입력하세요.</div>
           ) : content.length === 0 ? (
             <div className="exception">
-              <img src={Noresult} alt="Noresult" />
+              <img src={Noresult} alt="결과 없음 이미지" />
               <div>No Results Found for "{query}"</div>
               <div>Try shortening or rephrasing your search</div>
             </div>
@@ -214,8 +210,8 @@ function Searchresult({ handleQueryChange, query }) {
                     <div className="album">
                       <img
                         src={item.album.images[0].url}
-                        alt="no image"
                         className="album_image"
+                        alt="앨범 이미지"
                       />
                     </div>
                     <div className="title">
@@ -237,7 +233,7 @@ function Searchresult({ handleQueryChange, query }) {
                         )
                       }
                     >
-                      <img src={Add} alt="Add" />
+                      <img src={Add} alt="추가 이미지" />
                     </div>
                   </div>
                 ))}

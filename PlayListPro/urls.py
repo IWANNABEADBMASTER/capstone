@@ -11,4 +11,6 @@ urlpatterns = [
     path("playlist", views.playlist),
     path("createplaylist", views.createplaylist),
     path("addmugic", views.addmugic),
+    path("playlistmugic", views.playlistmugic),
+    path("deletemugic", views.deletemugic),
 ]

@@ -1,5 +1,6 @@
 import React from "react";
 import { Link, useNavigate } from "react-router-dom";
+import Peristalsis from "./Peristalsis";
 import Logo from "../favicon/Logo.png";
 import "../css/Bar.css";
 
@@ -18,7 +19,11 @@ function Bar({ isLoggedIn, isSpotifyLoggedIn, username }) {
     <div className="bar">
       <div>
         <a href="/">
-          <img src={Logo} style={{ width: "75px", height: "75px" }} />
+          <img
+            src={Logo}
+            style={{ width: "75px", height: "75px" }}
+            alt="로고 이미지"
+          />
         </a>
       </div>
       <div style={{ fontSize: "30px" }}>
@@ -26,6 +31,7 @@ function Bar({ isLoggedIn, isSpotifyLoggedIn, username }) {
       </div>
       <div>Search</div>
       <div>MyList</div>
+      {isSpotifyLoggedIn ? <Peristalsis /> : null}
       {isLoggedIn || isSpotifyLoggedIn ? (
         <div className="username" onClick={() => handleRedirectToUpdate()}>
           {username} 님

@@ -1,4 +1,5 @@
-import React from "react";
+import React, { useState } from "react";
+import Alert from "./Alert";
 
 function Peristalsis() {
   // 알림 창을 보여주는 변수
@@ -38,8 +39,6 @@ function Peristalsis() {
           username: displayName,
           email: "",
         };
-
-        const csrftoken = getCookie("csrftoken"); // csrftoken은 Django에서 제공하는 쿠키 이름입니다.
 
         // 서버로 전송할 데이터 객체(아이디, 비밀번호, 이름, 이메일)
         const postData = {
@@ -110,6 +109,14 @@ function Peristalsis() {
       <button className="peristalsis" onClick={peristalsis}>
         계정 연동
       </button>
+
+      {showAlert && (
+        <Alert
+          title={title}
+          message={message}
+          handleAlertButtonClick={handleAlertButtonClick}
+        />
+      )}
     </div>
   );
 }

@@ -6,6 +6,11 @@ function Getplaylist({ handleShowGetPlaylistModal }) {
   // 스포티파이에서 가져온 플레이리스트
   const [playlists, setPlaylists] = useState([]);
 
+  // 스포티파이 인증, 재생목록의 유무에 따라 보여줄 텍스트
+  const [comment, setComment] = useState(
+    "스포피파이에 생성된 재생목록이 없습니다."
+  );
+
   // 로딩 상태를 나타내는 변수
   const [isLoading, setIsLoading] = useState(true);
 
@@ -20,7 +25,13 @@ function Getplaylist({ handleShowGetPlaylistModal }) {
         Authorization: `Bearer ${accessToken2}`,
       },
     })
-      .then((response) => response.json())
+      .then((response) => {
+        if (response.ok) {
+          return response.json();
+        } else {
+          setComment("스포티파이에 가입된 아이디가 아닙니다.");
+        }
+      })
       .then((data) => {
         // API 응답에서 사용자의 플레이리스트 목록 가져오기
         const playlists = data.items || [];
@@ -45,7 +56,7 @@ function Getplaylist({ handleShowGetPlaylistModal }) {
             <div className="playlist_list">
               {playlists.length === 0 ? (
                 <div>
-                  <p>스포피파이에 생성된 재생목록이 없습니다.</p>
+                  <p>{comment}</p>
                 </div>
               ) : (
                 <div>

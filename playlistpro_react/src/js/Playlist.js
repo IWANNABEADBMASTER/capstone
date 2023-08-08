@@ -3,12 +3,17 @@ import LoadingSpinner from "./LoadingSpinner";
 import Alert from "./Alert";
 import Createplaylist from "./Createplaylist";
 import Getplaylist from "./Getplaylist";
+import PlaylistMugic from "./PlaylistMugic";
 import "../css/Playlist.css";
 import Createplaylistbutton from "../favicon/Createplaylistbutton.png";
 import Noimg from "../favicon/Noimg.png";
 
 function Playlist() {
   const [playlists, setPlaylists] = useState([]);
+  // 선택한 플레이리스트의 title
+  const [playlistTitle, setPlaylistTitle] = useState("");
+  // 선택한 플레이리스트의 img
+  const [playlistImg, setPlaylistImg] = useState("");
 
   // 플레이리스트 생성 모달 창을 보여줄 변수
   const [showCreatePlaylistModal, setShowCreatePlaylistModal] = useState(false);
@@ -36,6 +41,15 @@ function Playlist() {
   // 모달 창을 열고 닫을 함수
   const handleAlertButtonClick = () => {
     setShowAlert(false);
+  };
+
+  // 플레이리스트 클릭 시 선택한 플레이리스트 아이디를 나타내는 변수
+  const [selectedPlaylistId, setSelectedPlaylistId] = useState(null);
+  // 플레이리스트 클릭 시 노래 모달 창을 보여줄 변수
+  const [showPlaylistMugic, setShowPlaylistMugic] = useState(false);
+  // 노래 모달 창을 열고 닫을 함수
+  const handlePlaylistMugicClick = () => {
+    setShowPlaylistMugic(!showPlaylistMugic);
   };
 
   // 로컬 스토리지에서 토큰을 가져옵니다.
@@ -88,6 +102,7 @@ function Playlist() {
               setPlaylists(data.playlists);
             })
             .catch((error) => {
+              console.log(error);
               setShowAlert(true);
               setTitle("네트워크 에러");
               setMessage(
@@ -151,7 +166,19 @@ function Playlist() {
             });
         });
     }
-  }, []);
+  }, [csrftoken, accessToken, accessToken2]);
+
+  // 플레이리스트 클릭 시 실행되는 함수
+  const handlePlaylistClick = (playlistId, playlisTitle, playlistImg) => {
+    setSelectedPlaylistId(playlistId);
+    setPlaylistTitle(playlisTitle);
+    setPlaylistImg(playlistImg);
+    setShowPlaylistMugic(true);
+    // 1초 후에 setIsPressed(false)를 실행
+    setTimeout(() => {
+      setSelectedPlaylistId(null);
+    }, 100); // 1000ms(1초) 후에 setIsPressed(false)를 실행
+  };
 
   // getCookie 함수는 쿠키 값을 가져오기 위한 헬퍼 함수입니다.
   function getCookie(name) {
@@ -174,69 +201,102 @@ function Playlist() {
       {isLoading ? (
         <LoadingSpinner />
       ) : (
-        <div className="playlist">
-          {showCreatePlaylistModal && (
-            <Createplaylist
-              handleShowCreatePlaylistModal={handleShowCreatePlaylistModal}
+        <div>
+          {showPlaylistMugic ? (
+            <PlaylistMugic
+              selectedPlaylistId={selectedPlaylistId}
+              handlePlaylistMugicClick={handlePlaylistMugicClick}
+              playlistTitle={playlistTitle}
+              playlistImg={playlistImg}
             />
-          )}
-
-          {showGetPlaylistModal && (
-            <Getplaylist
-              handleShowGetPlaylistModal={handleShowGetPlaylistModal}
-            />
-          )}
-
-          <h1>Playlists</h1>
-          {playlists.length === 0 ? (
-            <div className="noplaylist">
-              <div>앗, 플레이리스트가 비었네요!</div>
-              <div
-                className="createplaylist"
-                onClick={() => setShowCreatePlaylistModal(true)}
-              >
-                플레이리스트 만들기
-              </div>
-              <br />
-              <div
-                className="getplaylist"
-                onClick={() => setShowGetPlaylistModal(true)}
-              >
-                Spotify에서 가져오기
-              </div>
-            </div>
           ) : (
-            // playlists 배열에 플레이리스트가 있는 경우 플레이리스트를 출력합니다.
-            <div>
-              <div className="createplaylist_box">
-                <div
-                  className="getplaylist"
-                  onClick={() => setShowGetPlaylistModal(true)}
-                >
-                  Spotify에서 가져오기
-                </div>
-                <img
-                  onClick={() => setShowCreatePlaylistModal(true)}
-                  src={Createplaylistbutton}
-                  alt="Createplaylistbutton"
+            <div className="playlist">
+              {showCreatePlaylistModal && (
+                <Createplaylist
+                  handleShowCreatePlaylistModal={handleShowCreatePlaylistModal}
                 />
-              </div>
-              <br />
-              <div className="playlist_container">
-                {playlists.map((playlist) => (
-                  <div className="playlist_box" key={playlist.playlistId}>
-                    {playlist.imageURL ? (
-                      <img src={playlist.imageURL} alt="Playlist Image" />
-                    ) : (
-                      <img src={Noimg} alt="No Image" />
-                    )}
-                    <div className="playlistname">{playlist.playlistname}</div>
-                    <div className="playlistcomment">
-                      {playlist.playlistcomment}
-                    </div>
+              )}
+
+              {showGetPlaylistModal && (
+                <Getplaylist
+                  handleShowGetPlaylistModal={handleShowGetPlaylistModal}
+                />
+              )}
+
+              <h1>Playlists</h1>
+              {playlists.length === 0 ? (
+                <div className="noplaylist">
+                  <div>앗, 플레이리스트가 비었네요!</div>
+                  <div
+                    className="createplaylist"
+                    onClick={() => setShowCreatePlaylistModal(true)}
+                  >
+                    플레이리스트 만들기
                   </div>
-                ))}
-              </div>
+                  <br />
+                  <div
+                    className="getplaylist"
+                    onClick={() => setShowGetPlaylistModal(true)}
+                  >
+                    Spotify에서 가져오기
+                  </div>
+                </div>
+              ) : (
+                // playlists 배열에 플레이리스트가 있는 경우 플레이리스트를 출력합니다.
+                <div>
+                  <div className="createplaylist_box">
+                    <div
+                      className="getplaylist"
+                      onClick={() => setShowGetPlaylistModal(true)}
+                    >
+                      Spotify에서 가져오기
+                    </div>
+                    <img
+                      onClick={() => setShowCreatePlaylistModal(true)}
+                      src={Createplaylistbutton}
+                      alt="플레이리스트 생성 이미지"
+                    />
+                  </div>
+                  <br />
+                  <div className="playlist_container">
+                    {playlists.map((playlist) => (
+                      <div
+                        className={`${
+                          selectedPlaylistId === playlist.playlistId
+                            ? "click_playlist_box"
+                            : "playlist_box"
+                        }`}
+                        key={playlist.playlistId}
+                        onClick={() =>
+                          handlePlaylistClick(
+                            playlist.playlistId,
+                            playlist.playlistname,
+                            playlist.imageURL
+                          )
+                        }
+                      >
+                        {playlist.imageURL ? (
+                          <img
+                            src={playlist.imageURL}
+                            alt="플레이리스트 이미지"
+                          />
+                        ) : (
+                          <img
+                            src={Noimg}
+                            alt="노래가 없는 플레이리스트 이미지"
+                          />
+                        )}
+                        <div className="playlistname">
+                          {playlist.playlistname}
+                        </div>
+                        <div className="playlistcomment">
+                          {playlist.playlistcomment}
+                        </div>
+                      </div>
+                    ))}
+                  </div>
+                </div>
+              )}
             </div>
           )}
         </div>

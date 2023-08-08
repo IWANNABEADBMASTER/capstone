@@ -3,7 +3,7 @@ import { useState } from "react";
 import Alert from "./Alert";
 import "../css/Search.css";
 
-function Search({ handleStateChange, handleQueryChange }) {
+function Search({ handleQueryChange }) {
   const [inputValue, setInputValue] = useState("");
 
   // 알림 창을 보여주는 변수
@@ -29,7 +29,6 @@ function Search({ handleStateChange, handleQueryChange }) {
       setMessage("검색어를 입력하세요.");
       return;
     }
-    handleStateChange("search");
     handleQueryChange(inputValue);
   };
 

@@ -31,6 +31,7 @@ function Main() {
   // search 컴포넌트에서 query 값 변경
   const handleQueryChange = (newQuery) => {
     setQuery(newQuery);
+    handleStateChange("search");
   };
 
   // 로컬 스토리지에서 토큰을 가져옵니다.
@@ -211,10 +212,7 @@ function Main() {
           ) : null}
 
           {state === "home" ? (
-            <Search
-              handleStateChange={handleStateChange}
-              handleQueryChange={handleQueryChange}
-            />
+            <Search handleQueryChange={handleQueryChange} />
           ) : state === "search" ? (
             <Searchresult handleQueryChange={handleQueryChange} query={query} />
           ) : state === "playlist" ? (

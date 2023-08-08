@@ -3,6 +3,7 @@ import LoadingSpinner from "./LoadingSpinner";
 import Alert from "./Alert";
 import "../css/Getplaylist.css";
 
+// 추가할 노래를 담을 플레이리스트를 선택했을 때의 컴포넌트
 function Selectplaylist({ handleShowSelectPlaylistModal, selectedMusicData }) {
   // 스포티파이에서 가져온 플레이리스트
   const [playlists, setPlaylists] = useState([]);
@@ -186,7 +187,7 @@ function Selectplaylist({ handleShowSelectPlaylistModal, selectedMusicData }) {
             });
         });
     }
-  }, []);
+  }, [csrftoken]);
 
   // getCookie 함수는 쿠키 값을 가져오기 위한 헬퍼 함수입니다.
   function getCookie(name) {

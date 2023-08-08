@@ -13,7 +13,7 @@ function Alert({ title, message, handleAlertButtonClick }) {
       <form onSubmit={handleButtonClick}>
         <div className="alert_content">
           <div className="alert_title">
-            <img src={Exclamation} alt="Exclamation" />
+            <img src={Exclamation} alt="예외" />
             {title}
           </div>
           <div className="alert_message">{message}</div>

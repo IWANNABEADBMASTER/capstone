@@ -28,7 +28,7 @@
 .createplaylist_box {
   display: flex;
   justify-content: flex-end;
-  width: 920px;
+  width: 1020px;
 }
 
 .playlist img {
@@ -41,9 +41,9 @@
   display: grid;
   grid-template-columns: repeat(
     5,
-    160px
+    180px
   ); /* 1행에 4개의 아이템, 각각 150px 너비 */
-  grid-gap: 30px; /* 플레이리스트 박스 사이에 간격 추가 */
+  grid-gap: 20px; /* 플레이리스트 박스 사이에 간격 추가 */
   max-width: max-content; /* 최대 너비를 요소 4개 크기로 제한 */
   grid-template-rows: repeat(
     auto-fill,
@@ -53,10 +53,23 @@
 }
 
 .playlist_box {
-  padding: 10px;
+  padding: 15px;
   display: flex;
   flex-direction: column;
   justify-content: center;
+  border-radius: 10px;
+  transition: background-color 0.3s ease; /* 트랜지션을 추가하여 부드러운 애니메이션 설정 */
+  cursor: pointer;
+}
+
+.click_playlist_box {
+  padding: 15px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  background-color: rgba(180, 172, 255, 0.8);
+  border-radius: 10px;
+  transition: background-color 0.3s ease; /* 트랜지션을 추가하여 부드러운 애니메이션 설정 */
   cursor: pointer;
 }
 
@@ -78,7 +91,7 @@
   color: rgba(167, 167, 167, 1);
 }
 
-.playlist_box img {
+.playlist_container img {
   width: 150px;
   height: 150px;
 }

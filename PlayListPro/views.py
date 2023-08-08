@@ -7,6 +7,8 @@ from django.views.decorators.csrf import csrf_exempt
 import json
 from django.db import IntegrityError
 from .models import Users, Playlist, Music
+
+# from .models import Users, Playlist, Music
 from rest_framework_simplejwt.tokens import AccessToken, Token
 from rest_framework.decorators import (
     api_view,
@@ -267,6 +269,57 @@ def addmugic(request):
 
     else:
         response_data = {"success": False, "message": "노래 추가 실패"}
+
+    return JsonResponse(response_data)
+
+
+@api_view(["POST"])
+@csrf_exempt
+def playlistmugic(request):
+    if request.method == "POST":
+        # POST 데이터 추출
+        data = json.loads(request.body)
+        playlistId = data.get("playlistId")
+        print("playlistId:", playlistId)
+
+        # playlistId에 해당하는 Music 테이블의 정보 조회
+        try:
+            music_data = Music.objects.filter(playlistId=playlistId)
+            music_list = []
+            for music in music_data:
+                music_list.append(
+                    {
+                        "trackId": music.trackId,
+                        "title": music.title,
+                        "album_img": music.album_img,
+                        "artist": music.artist,
+                        "time": music.time,
+                    }
+                )
+            response_data = {"music_list": music_list}
+            print("response_data:", response_data)
+        except Exception as e:
+            print("음악 데이터 조회 실패:", e)
+            response_data = {"message": "음악 데이터 조회 실패"}
+        return JsonResponse(response_data)
+
+    else:
+        response_data = {"message": "플레이리스트 조회 실패"}
+
+    return JsonResponse(response_data)
+
+
+@api_view(["POST"])
+@csrf_exempt
+def deletemugic(request):
+    if request.method == "POST":
+        # POST 데이터 추출
+        data = json.loads(request.body)
+        playlistId = trackId = data.get("playlistId")
+        trackId = data.get("trackId")
+
+    else:
+        response_data = {"message": "플레이리스트 조회 실패"}
 
     return JsonResponse(response_data)
 

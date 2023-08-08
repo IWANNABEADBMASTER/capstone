@@ -48,9 +48,9 @@ const SideBar = ({
       <div className="sideBarIcon" onClick={() => handleStateChange("home")}>
         <div>
           {state === "home" ? (
-            <img src={Clickhome} alt="Clickhome" />
+            <img src={Clickhome} alt="홈 클릭 시" />
           ) : (
-            <img src={Home} alt="Home" />
+            <img src={Home} alt="홈" />
           )}
         </div>
         <div>Home</div>
@@ -59,9 +59,9 @@ const SideBar = ({
       <div className="sideBarIcon" onClick={() => handleStateChange("search")}>
         <div>
           {state === "search" ? (
-            <img src={Clicksearch} alt="Clicksearch" />
+            <img src={Clicksearch} alt="검색 클릭 시" />
           ) : (
-            <img src={Search} alt="Search" />
+            <img src={Search} alt="검색" />
           )}
         </div>
         <div>Search</div>
@@ -77,9 +77,9 @@ const SideBar = ({
       >
         <div>
           {state === "playlist" ? (
-            <img src={Clickplaylist} alt="Clickplaylist" />
+            <img src={Clickplaylist} alt="플레이리스트 클릭 시" />
           ) : (
-            <img src={Playlist} alt="Playlist" />
+            <img src={Playlist} alt="플레이리스트" />
           )}
         </div>
         <div>Playlists</div>
@@ -87,7 +87,7 @@ const SideBar = ({
 
       {isLoggedIn || isSpotifyLoggedIn ? (
         <div className="sideBarIcon" onClick={handleLogout}>
-          <img src={Logout} alt="Logout" />
+          <img src={Logout} alt="로그아웃" />
         </div>
       ) : (
         <div />

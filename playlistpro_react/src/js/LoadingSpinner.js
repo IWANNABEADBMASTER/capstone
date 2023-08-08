@@ -5,7 +5,7 @@ import Loading from "../favicon/Loading.png";
 function LoadingSpinner() {
   return (
     <div className="loading">
-      <img src={Loading} />
+      <img src={Loading} alt="로딩 이미지" />
     </div>
   );
 }

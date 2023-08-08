@@ -49,7 +49,7 @@ const Signup = () => {
   const handleSubmit = (event) => {
     event.preventDefault(); //새로고침 방지
 
-    if (username == "") {
+    if (username === "") {
       // 이름이 비어있는 경우
       setShowAlert(true);
       setTitle("필수 정보 입력");
@@ -57,7 +57,7 @@ const Signup = () => {
       return;
     }
 
-    if (userId == "") {
+    if (userId === "") {
       // 아이디가 비어있는 경우
       setShowAlert(true);
       setTitle("필수 정보 입력");
@@ -65,7 +65,7 @@ const Signup = () => {
       return;
     }
 
-    if (password == "") {
+    if (password === "") {
       // 비밀번호가 비어있는 경우
       setShowAlert(true);
       setTitle("필수 정보 입력");
@@ -73,7 +73,7 @@ const Signup = () => {
       return;
     }
 
-    if (email == "") {
+    if (email === "") {
       // 이메일이 비어있는 경우
       setShowAlert(true);
       setTitle("필수 정보 입력");
@@ -195,7 +195,7 @@ const Signup = () => {
         setTitle("네트워크 에러");
         setMessage("서버에 연결할 수 없습니다. 잠시 후 다시 시도해주세요.");
       });
-  }, []);
+  }, [csrftoken]);
 
   return (
     <div>
@@ -207,7 +207,7 @@ const Signup = () => {
         <a href={SIGNUP_URL}>
           <div className="spotify_title">
             <div className="title_wrapper">
-              <img src={Spotify} alt="Spotify" />
+              <img src={Spotify} alt="스포티파이" />
               <div className="spotify_login">Sign up with Spotify</div>
             </div>
           </div>

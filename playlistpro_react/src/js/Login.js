@@ -34,7 +34,7 @@ function Login() {
   const handleSubmit = (event) => {
     event.preventDefault();
 
-    if (userId == "") {
+    if (userId === "") {
       // 아이디가 비어있는 경우
       setShowAlert(true);
       setTitle("로그인 에러");
@@ -42,7 +42,7 @@ function Login() {
       return;
     }
 
-    if (password == "") {
+    if (password === "") {
       // 비밀번호가 비어있는 경우
       setShowAlert(true);
       setTitle("로그인 에러");
@@ -130,7 +130,7 @@ function Login() {
         setTitle("네트워크 에러");
         setMessage("서버에 연결할 수 없습니다. 잠시 후 다시 시도해주세요.");
       });
-  }, []);
+  }, [csrftoken]);
 
   return (
     <div>
@@ -142,7 +142,7 @@ function Login() {
         <a href={AUTH_URL}>
           <div className="spotify_title">
             <div className="title_wrapper">
-              <img src={Spotify} alt="Spotify" />
+              <img src={Spotify} alt="스포티파이 이미지" />
               <div className="spotify_login">Login with Spotify</div>
             </div>
           </div>

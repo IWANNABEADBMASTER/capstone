@@ -78,7 +78,7 @@ function Update() {
       return;
     }
 
-    if (password == newPassword) {
+    if (password === newPassword) {
       setShowAlert(true);
       setTitle("비밀번호 에러");
       setMessage("이전 비밀번호와 다른 비밀번호를 입력하세요.");
