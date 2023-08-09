@@ -44,7 +44,7 @@ function Playlist() {
   };
 
   // 플레이리스트 클릭 시 선택한 플레이리스트 아이디를 나타내는 변수
-  const [selectedPlaylistId, setSelectedPlaylistId] = useState(null);
+  const [selectedPlaylistId, setSelectedPlaylistId] = useState("");
   // 플레이리스트 클릭 시 노래 모달 창을 보여줄 변수
   const [showPlaylistMugic, setShowPlaylistMugic] = useState(false);
   // 노래 모달 창을 열고 닫을 함수
@@ -173,11 +173,9 @@ function Playlist() {
     setSelectedPlaylistId(playlistId);
     setPlaylistTitle(playlisTitle);
     setPlaylistImg(playlistImg);
-    setShowPlaylistMugic(true);
-    // 1초 후에 setIsPressed(false)를 실행
-    setTimeout(() => {
-      setSelectedPlaylistId(null);
-    }, 100); // 1000ms(1초) 후에 setIsPressed(false)를 실행
+    const timeoutId = setTimeout(() => {
+      setShowPlaylistMugic(true);
+    }, 100);
   };
 
   // getCookie 함수는 쿠키 값을 가져오기 위한 헬퍼 함수입니다.

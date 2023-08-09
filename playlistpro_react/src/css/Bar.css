@@ -13,6 +13,7 @@
 }
 
 .bar > *:nth-child(1) {
+  margin-left: 10px;
   margin-right: 10px;
 }
 
@@ -21,17 +22,15 @@
 }
 
 .bar > *:nth-child(3) {
-  margin-right: 50px;
-  color: rgba(255, 255, 255, 0.6);
+  margin-right: 20px;
+  margin-left: auto;
+  border-radius: 50px;
+  background-color: rgba(226, 102, 246, 1);
+  padding: 5px 20px;
+  cursor: pointer;
 }
 
 .bar > *:nth-child(4) {
-  margin-right: 50px;
-  color: rgba(255, 255, 255, 0.6);
-}
-
-.bar > *:nth-child(5) {
-  margin-left: auto;
   margin-right: 100px;
 }
 
@@ -46,4 +45,8 @@
   border-radius: 50px;
   background-color: #4a3aff;
   padding: 5px 30px;
+}
+
+.none {
+  visibility: hidden;
 }

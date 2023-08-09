@@ -280,7 +280,6 @@ def playlistmugic(request):
         # POST 데이터 추출
         data = json.loads(request.body)
         playlistId = data.get("playlistId")
-        print("playlistId:", playlistId)
 
         # playlistId에 해당하는 Music 테이블의 정보 조회
         try:
@@ -297,9 +296,7 @@ def playlistmugic(request):
                     }
                 )
             response_data = {"music_list": music_list}
-            print("response_data:", response_data)
         except Exception as e:
-            print("음악 데이터 조회 실패:", e)
             response_data = {"message": "음악 데이터 조회 실패"}
         return JsonResponse(response_data)
 
@@ -315,11 +312,23 @@ def deletemugic(request):
     if request.method == "POST":
         # POST 데이터 추출
         data = json.loads(request.body)
-        playlistId = trackId = data.get("playlistId")
+        playlistId = data.get("playlistId")
         trackId = data.get("trackId")
 
+        print("playlistId:", playlistId)
+        print("trackId:", trackId)
+
+        try:
+            music_data = Music.objects.get(playlistId=playlistId, trackId=trackId)
+            music_data.delete()
+            response_data = {"messageTitle": "Music 삭제 성공", "message": "해당 노래를 삭제했습니다."}
+        except Music.DoesNotExist:
+            response_data = {
+                "messageTitle": "Music 삭제 실패",
+                "message": "해당하는 노래를 찾을 수 없습니다.",
+            }
     else:
-        response_data = {"message": "플레이리스트 조회 실패"}
+        response_data = {"messageTitle": "Music 삭제 실패", "message": "플레이리스트 조회 실패"}
 
     return JsonResponse(response_data)
 

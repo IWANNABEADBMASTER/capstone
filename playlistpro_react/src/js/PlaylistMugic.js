@@ -71,7 +71,9 @@ function PlaylistMugic({
         }
       })
       .then((data) => {
-        console.log(data);
+        setShowAlert(true);
+        setTitle(data.messageTitle);
+        setMessage(data.message);
       })
       .catch((error) => {
         setShowAlert(true);

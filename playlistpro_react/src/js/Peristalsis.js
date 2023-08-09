@@ -106,9 +106,7 @@ function Peristalsis() {
 
   return (
     <div className="peristalsis">
-      <button className="peristalsis" onClick={peristalsis}>
-        계정 연동
-      </button>
+      <div onClick={peristalsis}>계정 연동</div>
 
       {showAlert && (
         <Alert

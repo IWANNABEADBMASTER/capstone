@@ -25,7 +25,7 @@ class Playlist(models.Model):
 class Music(models.Model):
     musicId = models.AutoField(primary_key=True)
     playlistId = models.ForeignKey(Playlist, on_delete=models.CASCADE)
-    trackId = models.CharField(max_length=255, unique=True)
+    trackId = models.CharField(max_length=255)
     title = models.CharField(max_length=255)
     album_img = models.URLField()
     artist = models.CharField(max_length=255)
