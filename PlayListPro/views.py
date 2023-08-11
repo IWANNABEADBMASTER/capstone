@@ -89,7 +89,9 @@ def signup(request):
 
         # 사용자 중복 확인
         if Users.objects.filter(name=data.get("username")).exists():
-            return JsonResponse({"success": False, "message": "이미 가입한 아이디가 있습니다."})
+            return JsonResponse(
+                {"success": False, "message": "이미 해당 이름으로 가입한 아이디가 있습니다."}
+            )
 
         # 아이디 중복 확인
         if Users.objects.filter(username=data.get("userId")).exists():
@@ -147,9 +149,9 @@ def search(request):
                 "track_ids": result_data["track_ids"],
             }
         else:
-            context = {"result": []}
+            context = {"result": [], "track_ids": ""}
     else:
-        context = {"results": []}
+        context = {"results": [], "track_ids": ""}
     return JsonResponse(context)
 
 
@@ -177,7 +179,6 @@ def playlist(request):
                 )
             response_data = {"playlists": playlist_data}
         except Exception as e:
-            print("플레이리스트 조회 실패:", e)
             response_data = {"message": "플레이리스트 조회 실패"}
 
         return JsonResponse(response_data)
@@ -219,12 +220,13 @@ def createplaylist(request):
                 playlistname=playlistname,
                 playlistcomment=playlistcomment,
             )
+            playlistId = playlist.playlistId  # 생성한 playlistId 값 가져오기
             response_data = {
                 "success": True,
-                "playlist_id": playlist.playlistId,  # 생성된 플레이리스트의 ID를 반환할 수도 있음
+                "message": "플레이리스트 생성 성공",
+                "playlistId": playlistId,  # 생성한 playlistId 값을 반환
             }
         except Exception as e:
-            print("플레이리스트 생성 실패:", e)
             response_data = {"success": False, "message": "플레이리스트 생성 실패"}
 
         return JsonResponse(response_data)
@@ -237,13 +239,13 @@ def createplaylist(request):
 
 @api_view(["POST"])
 @csrf_exempt
-def addmugic(request):
+def addmusic(request):
     if request.method == "POST":
         # POST 데이터 추출
         data = json.loads(request.body)
         playlistId = data.get("playlistId")
         trackId = data.get("trackId")
-        mugic_title = data.get("mugic_title")
+        music_title = data.get("music_title")
         artist = data.get("artist")
         album_image = data.get("album_image")
         time = data.get("time")
@@ -260,7 +262,7 @@ def addmugic(request):
             music = Music.objects.create(
                 playlistId=playlist,
                 trackId=trackId,
-                title=mugic_title,
+                title=music_title,
                 album_img=album_image,
                 artist=artist,
                 time=time,
@@ -275,11 +277,59 @@ def addmugic(request):
 
 @api_view(["POST"])
 @csrf_exempt
-def playlistmugic(request):
+def addspotifymusic(request):
     if request.method == "POST":
         # POST 데이터 추출
         data = json.loads(request.body)
         playlistId = data.get("playlistId")
+        tracks = data.get("tracks")  # 여러 노래가 담긴 배열
+
+        # Playlist 모델의 인스턴스를 가져옵니다.
+        playlist = Playlist.objects.get(playlistId=playlistId)
+
+        # 각 노래 정보를 처리합니다.
+        for track in tracks:
+            trackId = track["track"]["id"]
+            music_title = track["track"]["name"]
+            artist = ", ".join([artist["name"] for artist in track["track"]["artists"]])
+            album_image = track["track"]["album"]["images"][0]["url"]
+            duration_ms = track["track"]["duration_ms"]
+
+            # 밀리초(ms)를 분과 초로 변환합니다.
+            minutes, seconds = divmod(duration_ms / 1000, 60)
+            formatted_duration = f"{int(minutes)}:{int(seconds):02}"
+
+            # Music 테이블에 노래 추가
+            music = Music.objects.create(
+                playlistId=playlist,
+                trackId=trackId,
+                title=music_title,
+                album_img=album_image,
+                artist=artist,
+                time=formatted_duration,
+            )
+
+        response_data = {
+            "success": True,
+            "message": "노래 추가 성공",
+        }
+
+    else:
+        response_data = {"success": False, "message": "노래 추가 실패"}
+
+    return JsonResponse(response_data)
+
+
+@api_view(["POST"])
+@csrf_exempt
+def playlistmusic(request):
+    if request.method == "POST":
+        # POST 데이터 추출
+        data = json.loads(request.body)
+        playlistId = data.get("playlistId")
+
+        # playlistId 값을 갖는 노래 중 첫번째 노래의 이미지를 가져옴
+        playlistImg = get_first_song_image(playlistId)
 
         # playlistId에 해당하는 Music 테이블의 정보 조회
         try:
@@ -295,40 +345,86 @@ def playlistmugic(request):
                         "time": music.time,
                     }
                 )
-            response_data = {"music_list": music_list}
+
+            # 결과 데이터 구성
+            response_data = {"playlistImg": playlistImg, "music_list": music_list}
         except Exception as e:
-            response_data = {"message": "음악 데이터 조회 실패"}
+            response_data = {"message": "음악 데이터 조회 실패", "music_list": []}
         return JsonResponse(response_data)
 
     else:
-        response_data = {"message": "플레이리스트 조회 실패"}
+        response_data = {"message": "플레이리스트 조회 실패", "music_list": []}
 
     return JsonResponse(response_data)
 
 
 @api_view(["POST"])
 @csrf_exempt
-def deletemugic(request):
+def deletemusic(request):
     if request.method == "POST":
         # POST 데이터 추출
         data = json.loads(request.body)
         playlistId = data.get("playlistId")
         trackId = data.get("trackId")
 
-        print("playlistId:", playlistId)
-        print("trackId:", trackId)
-
         try:
             music_data = Music.objects.get(playlistId=playlistId, trackId=trackId)
             music_data.delete()
-            response_data = {"messageTitle": "Music 삭제 성공", "message": "해당 노래를 삭제했습니다."}
+            response_data = {
+                "success": True,
+                "messageTitle": "Music 삭제 성공",
+                "message": "해당 노래를 삭제했습니다.",
+            }
         except Music.DoesNotExist:
             response_data = {
+                "success": False,
                 "messageTitle": "Music 삭제 실패",
-                "message": "해당하는 노래를 찾을 수 없습니다.",
+                "message": "해당 노래를 찾을 수 없습니다.",
             }
     else:
-        response_data = {"messageTitle": "Music 삭제 실패", "message": "플레이리스트 조회 실패"}
+        response_data = {
+            "success": False,
+            "messageTitle": "Music 삭제 실패",
+            "message": "플레이리스트 조회 실패",
+        }
+
+    return JsonResponse(response_data)
+
+
+@api_view(["POST"])
+@csrf_exempt
+def deleteplaylist(request):
+    if request.method == "POST":
+        # POST 데이터 추출
+        data = json.loads(request.body)
+        playlistId = data.get("playlistId")
+
+        try:
+            # Music 테이블에서 해당 playlistId 값을 갖는 데이터 삭제
+            music_data = Music.objects.filter(playlistId=playlistId)
+            music_data.delete()
+
+            # Playlist 테이블에서 해당 playlistId 값을 갖는 데이터 삭제
+            playlist_data = Playlist.objects.get(playlistId=playlistId)
+            playlist_data.delete()
+
+            response_data = {
+                "success": True,
+                "messageTitle": "플레이리스트 삭제 성공",
+                "message": "해당 플레이리스트를 삭제했습니다.",
+            }
+        except Playlist.DoesNotExist:
+            response_data = {
+                "success": False,
+                "messageTitle": "플레이리스트 삭제 실패",
+                "message": "해당 플레이리스트를 찾을 수 없습니다.",
+            }
+    else:
+        response_data = {
+            "success": False,
+            "messageTitle": "플레이리스트 삭제 실패",
+            "message": "플레이리스트 조회 실패",
+        }
 
     return JsonResponse(response_data)
 

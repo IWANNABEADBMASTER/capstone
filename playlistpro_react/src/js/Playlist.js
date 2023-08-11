@@ -3,7 +3,7 @@ import LoadingSpinner from "./LoadingSpinner";
 import Alert from "./Alert";
 import Createplaylist from "./Createplaylist";
 import Getplaylist from "./Getplaylist";
-import PlaylistMugic from "./PlaylistMugic";
+import PlaylistMusic from "./PlaylistMusic";
 import "../css/Playlist.css";
 import Createplaylistbutton from "../favicon/Createplaylistbutton.png";
 import Noimg from "../favicon/Noimg.png";
@@ -12,6 +12,8 @@ function Playlist() {
   const [playlists, setPlaylists] = useState([]);
   // 선택한 플레이리스트의 title
   const [playlistTitle, setPlaylistTitle] = useState("");
+  // 선택한 플레이리스트의 comment
+  const [playlistComment, setPlaylistComment] = useState("");
   // 선택한 플레이리스트의 img
   const [playlistImg, setPlaylistImg] = useState("");
 
@@ -20,6 +22,22 @@ function Playlist() {
   // 플레이리스트 생성 모달창을 열고 닫는 함수
   const handleShowCreatePlaylistModal = () => {
     setShowCreatePlaylistModal(!showCreatePlaylistModal);
+  };
+
+  // 플레이리스트 생성 시 동기화 변수
+  const [createPlaylistSynchronization, setCreatePlaylistSynchronization] =
+    useState(false);
+  // 플레이리스트 생성 시 동기화 변수를 변경하는 함수
+  const handleCreatePlaylistSynchronization = () => {
+    setCreatePlaylistSynchronization(!createPlaylistSynchronization);
+  };
+
+  // 플레이리스트 가져오기 시 동기화 변수
+  const [getPlaylistSynchronization, setGetPlaylistSynchronization] =
+    useState(false);
+  // 플레이리스트 생성 시 동기화 변수를 변경하는 함수
+  const handleGetPlaylistSynchronization = () => {
+    setGetPlaylistSynchronization(!getPlaylistSynchronization);
   };
 
   // 플레이리스트를 스포티파이로부터 가져오는 모달 창을 보여줄 변수
@@ -46,10 +64,10 @@ function Playlist() {
   // 플레이리스트 클릭 시 선택한 플레이리스트 아이디를 나타내는 변수
   const [selectedPlaylistId, setSelectedPlaylistId] = useState("");
   // 플레이리스트 클릭 시 노래 모달 창을 보여줄 변수
-  const [showPlaylistMugic, setShowPlaylistMugic] = useState(false);
+  const [showPlaylistMusic, setShowPlaylistMusic] = useState(false);
   // 노래 모달 창을 열고 닫을 함수
-  const handlePlaylistMugicClick = () => {
-    setShowPlaylistMugic(!showPlaylistMugic);
+  const handlePlaylistMusicClick = () => {
+    setShowPlaylistMusic(!showPlaylistMusic);
   };
 
   // 로컬 스토리지에서 토큰을 가져옵니다.
@@ -102,7 +120,6 @@ function Playlist() {
               setPlaylists(data.playlists);
             })
             .catch((error) => {
-              console.log(error);
               setShowAlert(true);
               setTitle("네트워크 에러");
               setMessage(
@@ -166,15 +183,28 @@ function Playlist() {
             });
         });
     }
-  }, [csrftoken, accessToken, accessToken2]);
+  }, [
+    csrftoken,
+    accessToken,
+    accessToken2,
+    showPlaylistMusic,
+    createPlaylistSynchronization,
+    getPlaylistSynchronization,
+  ]);
 
   // 플레이리스트 클릭 시 실행되는 함수
-  const handlePlaylistClick = (playlistId, playlisTitle, playlistImg) => {
+  const handlePlaylistClick = (
+    playlistId,
+    playlisTitle,
+    playlistComment,
+    playlistImg
+  ) => {
     setSelectedPlaylistId(playlistId);
     setPlaylistTitle(playlisTitle);
+    setPlaylistComment(playlistComment);
     setPlaylistImg(playlistImg);
-    const timeoutId = setTimeout(() => {
-      setShowPlaylistMugic(true);
+    setTimeout(() => {
+      setShowPlaylistMusic(true);
     }, 100);
   };
 
@@ -200,24 +230,30 @@ function Playlist() {
         <LoadingSpinner />
       ) : (
         <div>
-          {showPlaylistMugic ? (
-            <PlaylistMugic
+          {showPlaylistMusic ? (
+            <PlaylistMusic
               selectedPlaylistId={selectedPlaylistId}
-              handlePlaylistMugicClick={handlePlaylistMugicClick}
+              handlePlaylistMusicClick={handlePlaylistMusicClick}
               playlistTitle={playlistTitle}
-              playlistImg={playlistImg}
+              playlistComment={playlistComment}
             />
           ) : (
             <div className="playlist">
               {showCreatePlaylistModal && (
                 <Createplaylist
                   handleShowCreatePlaylistModal={handleShowCreatePlaylistModal}
+                  handleCreatePlaylistSynchronization={
+                    handleCreatePlaylistSynchronization
+                  }
                 />
               )}
 
               {showGetPlaylistModal && (
                 <Getplaylist
                   handleShowGetPlaylistModal={handleShowGetPlaylistModal}
+                  handleGetPlaylistSynchronization={
+                    handleGetPlaylistSynchronization
+                  }
                 />
               )}
 
@@ -240,7 +276,7 @@ function Playlist() {
                   </div>
                 </div>
               ) : (
-                // playlists 배열에 플레이리스트가 있는 경우 플레이리스트를 출력합니다.
+                // playlists 배열에 플레이리스트가 있는 경우 플레이리스트를 출력
                 <div>
                   <div className="createplaylist_box">
                     <div
@@ -269,6 +305,7 @@ function Playlist() {
                           handlePlaylistClick(
                             playlist.playlistId,
                             playlist.playlistname,
+                            playlist.playlistcomment,
                             playlist.imageURL
                           )
                         }
@@ -288,7 +325,9 @@ function Playlist() {
                           {playlist.playlistname}
                         </div>
                         <div className="playlistcomment">
-                          {playlist.playlistcomment}
+                          {playlist.playlistcomment
+                            ? playlist.playlistcomment
+                            : "No Description"}
                         </div>
                       </div>
                     ))}

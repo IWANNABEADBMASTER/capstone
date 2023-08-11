@@ -10,7 +10,9 @@ urlpatterns = [
     path("search", views.search),
     path("playlist", views.playlist),
     path("createplaylist", views.createplaylist),
-    path("addmugic", views.addmugic),
-    path("playlistmugic", views.playlistmugic),
-    path("deletemugic", views.deletemugic),
+    path("addmusic", views.addmusic),
+    path("addspotifymusic", views.addspotifymusic),
+    path("playlistmusic", views.playlistmusic),
+    path("deletemusic", views.deletemusic),
+    path("deleteplaylist", views.deleteplaylist),
 ]

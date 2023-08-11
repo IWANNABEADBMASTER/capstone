@@ -30,7 +30,7 @@ function Selectplaylist({ handleShowSelectPlaylistModal, selectedMusicData }) {
     const userData = {
       playlistId: playlistId,
       trackId: selectedMusicData.trackId,
-      mugic_title: selectedMusicData.mugic_title,
+      music_title: selectedMusicData.music_title,
       artist: selectedMusicData.artist,
       album_image: selectedMusicData.album_image,
       time: selectedMusicData.time,
@@ -44,7 +44,7 @@ function Selectplaylist({ handleShowSelectPlaylistModal, selectedMusicData }) {
       body: JSON.stringify(userData),
     };
 
-    fetch("http://127.0.0.1:8000/addmugic", postData)
+    fetch("http://127.0.0.1:8000/addmusic", postData)
       .then((response) => {
         if (response.ok) {
           // 요청이 성공한 경우
@@ -216,17 +216,18 @@ function Selectplaylist({ handleShowSelectPlaylistModal, selectedMusicData }) {
             <div className="playlist_list">
               {playlists.length === 0 ? (
                 <div>
-                  <p>재생목록이 없습니다.</p>
+                  <p>플레이리스트가 없습니다.</p>
                 </div>
               ) : (
                 <div>
                   {playlists.map((playlist) => (
-                    <div
-                      key={playlist.playlistId}
-                      onClick={() => handlePlaylistClick(playlist.playlistId)}
-                      className="playlist_title"
-                    >
-                      {playlist.playlistname}
+                    <div key={playlist.playlistId}>
+                      <div
+                        onClick={() => handlePlaylistClick(playlist.playlistId)}
+                        className="playlist_title"
+                      >
+                        {playlist.playlistname}
+                      </div>
                     </div>
                   ))}
                 </div>

@@ -48,23 +48,23 @@ function Searchresult({ handleQueryChange, query }) {
   const [trackId, setTrackId] = useState([]);
   // 선택된 노래의 정보를 담을 상태(State) 설정
   const [selectedMusicData, setSelectedMusicData] = useState({
-    mugic_title: "",
+    music_title: "",
     artist: "",
     album_image: "",
     time: "",
   });
 
-  // 플레이리스트 클릭 시 제출하는 함수
-  const handleAddMugicClick = (
+  // 노래 추가버튼 클릭 시 제출하는 함수
+  const handleAddMusicClick = (
     trackId,
-    mugic_title,
+    music_title,
     artist,
     album_image,
     time
   ) => {
     setSelectedMusicData({
       trackId: trackId,
-      mugic_title: mugic_title,
+      music_title: music_title,
       artist: artist,
       album_image: album_image,
       time: time,
@@ -137,7 +137,7 @@ function Searchresult({ handleQueryChange, query }) {
       })
       .then((data) => {
         setContent(data.results);
-        setTrackId(data.trackId);
+        setTrackId(data.track_ids);
         setIsLoading(false); // 데이터 로딩 완료 시 로딩 상태를 false로 설정
       })
       .catch((error) => {
@@ -201,15 +201,15 @@ function Searchresult({ handleQueryChange, query }) {
                     key={index}
                     className={
                       selectedRow === index
-                        ? "selected_mugic_data"
-                        : "mugic_data"
+                        ? "selected_music_data"
+                        : "music_data"
                     }
                     onClick={() => handleRowClick(index)}
                   >
                     <div className="index">{index + 1}</div>
                     <div className="album">
                       <img
-                        src={item.album.images[0].url}
+                        src={item.album.images[0]?.url}
                         className="album_image"
                         alt="앨범 이미지"
                       />
@@ -223,15 +223,17 @@ function Searchresult({ handleQueryChange, query }) {
                     </div>
                     <div
                       className="add"
-                      onClick={() =>
-                        handleAddMugicClick(
+                      onClick={(event) => {
+                        event.stopPropagation(); // 이벤트 버블링을 막음
+                        setSelectedRow(index);
+                        handleAddMusicClick(
                           trackId[index],
                           item.album.name,
                           item.artists[0].name,
                           item.album.images[0].url,
                           formatDuration(item.duration_ms)
-                        )
-                      }
+                        );
+                      }}
                     >
                       <img src={Add} alt="추가 이미지" />
                     </div>

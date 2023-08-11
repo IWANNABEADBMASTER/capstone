@@ -28,7 +28,7 @@
 .createplaylist_box {
   display: flex;
   justify-content: flex-end;
-  width: 1020px;
+  width: 820px;
 }
 
 .playlist img {
@@ -40,7 +40,7 @@
   background: rgba(142, 124, 237, 0.2);
   display: grid;
   grid-template-columns: repeat(
-    5,
+    4,
     180px
   ); /* 1행에 4개의 아이템, 각각 150px 너비 */
   grid-gap: 20px; /* 플레이리스트 박스 사이에 간격 추가 */

@@ -2,7 +2,10 @@ import React, { useState } from "react";
 import Alert from "./Alert";
 import "../css/Createplaylist.css";
 
-function Createplaylist({ handleShowCreatePlaylistModal }) {
+function Createplaylist({
+  handleShowCreatePlaylistModal,
+  handleCreatePlaylistSynchronization,
+}) {
   // 플레이리스트 제목
   const [playlistTitle, setPlaylistTitle] = useState("");
   // 플레이리스트 설명
@@ -17,6 +20,8 @@ function Createplaylist({ handleShowCreatePlaylistModal }) {
   // 모달 창을 열고 닫을 함수
   const handleAlertButtonClick = () => {
     setShowAlert(false);
+    // 모달 닫기
+    handleShowCreatePlaylistModal();
   };
 
   // 로컬 스토리지에서 토큰을 가져옵니다.
@@ -77,8 +82,16 @@ function Createplaylist({ handleShowCreatePlaylistModal }) {
               }
             })
             .then((data) => {
-              // 서버에서 반환한 데이터 처리
-              // 플레이리스트 생성 성공
+              if (data.success) {
+                // 플레이리스트 화면 재렌더링
+                handleCreatePlaylistSynchronization();
+                // 모달 닫기
+                handleShowCreatePlaylistModal();
+              } else {
+                setShowAlert(true);
+                setTitle("플레이리스트 생성 실패");
+                setMessage("플레이리스트 생성 중 오류가 발생했습니다.");
+              }
             })
             .catch((error) => {
               setShowAlert(true);
@@ -123,8 +136,16 @@ function Createplaylist({ handleShowCreatePlaylistModal }) {
               }
             })
             .then((data) => {
-              // 서버에서 반환한 데이터 처리
-              // 플레이리스트 생성 성공
+              if (data.success) {
+                // 플레이리스트 화면 재렌더링
+                handleCreatePlaylistSynchronization();
+                // 모달 닫기
+                handleShowCreatePlaylistModal();
+              } else {
+                setShowAlert(true);
+                setTitle("플레이리스트 생성 실패");
+                setMessage("플레이리스트 생성 중 오류가 발생했습니다.");
+              }
             })
             .catch((error) => {
               setShowAlert(true);
@@ -133,9 +154,6 @@ function Createplaylist({ handleShowCreatePlaylistModal }) {
             });
         });
     }
-
-    // 모달 닫기
-    handleShowCreatePlaylistModal();
   };
 
   // getCookie 함수는 쿠키 값을 가져오기 위한 헬퍼 함수입니다.
@@ -176,6 +194,7 @@ function Createplaylist({ handleShowCreatePlaylistModal }) {
           <button onClick={handleSubmit}>완료</button>
         </div>
       </div>
+
       {showAlert && (
         <Alert
           title={title}
