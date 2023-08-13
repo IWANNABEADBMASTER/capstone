@@ -71,13 +71,17 @@
   margin-top: 20px;
 }
 
+.sideBarIcon:nth-child(4) {
+  margin-top: 20px;
+}
+
 .sideBarIcon:last-child {
   margin-bottom: 20px;
   margin-top: auto;
 }
 
 img {
-  width: 30px;
-  height: 30px;
+  width: 27px;
+  height: 27px;
   margin-bottom: 5px;
 }

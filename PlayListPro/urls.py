@@ -15,4 +15,5 @@ urlpatterns = [
     path("playlistmusic", views.playlistmusic),
     path("deletemusic", views.deletemusic),
     path("deleteplaylist", views.deleteplaylist),
+    path("chartmusic", views.chartmusic),
 ]

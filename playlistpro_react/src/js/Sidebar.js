@@ -4,10 +4,12 @@ import { useNavigate } from "react-router-dom";
 import Alert from "./Alert";
 import Home from "../favicon/Home.png";
 import Clickhome from "../favicon/Clickhome.png";
-import Playlist from "../favicon/Playlist.png";
-import Clickplaylist from "../favicon/Clickplaylist.png";
 import Search from "../favicon/Search.png";
 import Clicksearch from "../favicon/Clicksearch.png";
+import Playlist from "../favicon/Playlist.png";
+import Clickplaylist from "../favicon/Clickplaylist.png";
+import Chart from "../favicon/Chart.png";
+import Clickchart from "../favicon/Clickchart.png";
 import Logout from "../favicon/Logout.png";
 import "../css/Sidebar.css";
 
@@ -83,6 +85,17 @@ const SideBar = ({
           )}
         </div>
         <div>Playlists</div>
+      </div>
+
+      <div className="sideBarIcon" onClick={() => handleStateChange("chart")}>
+        <div>
+          {state === "chart" ? (
+            <img src={Clickchart} alt="차트 클릭 시" />
+          ) : (
+            <img src={Chart} alt="차트" />
+          )}
+        </div>
+        <div>Charts</div>
       </div>
 
       {isLoggedIn || isSpotifyLoggedIn ? (

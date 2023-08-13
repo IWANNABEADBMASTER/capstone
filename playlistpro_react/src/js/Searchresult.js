@@ -93,12 +93,13 @@ function Searchresult({ handleQueryChange, query }) {
       .then((data) => {
         setContent(data.results);
         setTrackId(data.track_ids);
-        setIsLoading(false); // 데이터 로딩 완료 시 로딩 상태를 false로 설정
       })
       .catch((error) => {
         setShowAlert(true);
         setTitle("검색 에러");
         setMessage("검색 요청 에러");
+      })
+      .finally(() => {
         setIsLoading(false); // 데이터 로딩 완료 시 로딩 상태를 false로 설정
       });
   }, []);
@@ -138,12 +139,13 @@ function Searchresult({ handleQueryChange, query }) {
       .then((data) => {
         setContent(data.results);
         setTrackId(data.track_ids);
-        setIsLoading(false); // 데이터 로딩 완료 시 로딩 상태를 false로 설정
       })
       .catch((error) => {
         setShowAlert(true);
         setTitle("네트워크 에러");
         setMessage("서버에 연결할 수 없습니다. 잠시 후 다시 시도해주세요.");
+      })
+      .finally(() => {
         setIsLoading(false); // 데이터 로딩 완료 시 로딩 상태를 false로 설정
       });
   };

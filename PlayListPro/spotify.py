@@ -52,4 +52,6 @@ def get_top_songs_by_genre(genre):
         sorted_results = sorted(
             results["tracks"]["items"], key=lambda x: x["popularity"], reverse=True
         )
-        return sorted_results
+        # 각 노래 정보에서 trackId 값 추출
+        track_ids = [track["id"] for track in sorted_results]
+        return {"tracks": sorted_results, "track_ids": track_ids}

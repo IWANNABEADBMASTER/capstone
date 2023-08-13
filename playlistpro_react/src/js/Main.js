@@ -6,6 +6,7 @@ import SideBar from "./Sidebar";
 import Search from "./Search";
 import Searchresult from "./Searchresult";
 import Playlist from "./Playlist";
+import Chart from "./Chart";
 import LoadingSpinner from "./LoadingSpinner";
 import Alert from "./Alert";
 
@@ -217,6 +218,8 @@ function Main() {
             <Searchresult handleQueryChange={handleQueryChange} query={query} />
           ) : state === "playlist" ? (
             <Playlist />
+          ) : state === "chart" ? (
+            <Chart />
           ) : null}
         </div>
       )}
