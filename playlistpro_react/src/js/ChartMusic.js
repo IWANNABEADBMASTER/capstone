@@ -160,7 +160,7 @@ function ChartMusic({
               className="arrow_img"
               alt="뒤로가기"
             />
-            <div className="selectedgenre">{selectedGenre} TOP 100</div>
+            <div className="selectedgenre">{selectedGenre} 인기차트</div>
           </div>
 
           <div className="chart_img">
