@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from "react";
+import Selectplaylist from "./Selectplaylist";
 import Alert from "./Alert";
 import LoadingSpinner from "./LoadingSpinner";
 import "../css/ChartMusic.css";
@@ -6,7 +7,11 @@ import Arrowleft from "../favicon/Arrowleft.png";
 import Noimg from "../favicon/Noimg.png";
 import Add from "../favicon/Add.png";
 
-function ChartMusic({ handleChartMusicClick, selectedGenre }) {
+function ChartMusic({
+  handleChartMusicClick,
+  selectedGenre,
+  selectedGenreKey,
+}) {
   // 인기차트 해당하는 노래 데이터 리스트
   const [music, setMusic] = useState([]);
 
@@ -18,6 +23,13 @@ function ChartMusic({ handleChartMusicClick, selectedGenre }) {
     } else {
       setSelectedRow(index);
     }
+  };
+
+  // 플레이리스트를 선택하는 모달 창을 보여줄 변수
+  const [showSelectPlaylistModal, setShowSelectPlaylistModal] = useState(false);
+  // 플레이리스트를 선택하는 모달창을 열고 닫는 함수
+  const handleShowSelectPlaylistModal = () => {
+    setShowSelectPlaylistModal(!showSelectPlaylistModal);
   };
 
   // 로딩 상태를 나타내는 변수
@@ -61,11 +73,12 @@ function ChartMusic({ handleChartMusicClick, selectedGenre }) {
       album_image: album_image,
       time: time,
     });
+    setShowSelectPlaylistModal(true);
   };
 
   useEffect(() => {
     const userData = {
-      selectedGenre: selectedGenre,
+      selectedGenreKey: selectedGenreKey,
     };
     const postData = {
       method: "POST",
@@ -77,7 +90,6 @@ function ChartMusic({ handleChartMusicClick, selectedGenre }) {
     };
 
     setIsLoading(true); // 데이터 로딩 시작 시 로딩 상태를 true로 설정
-
     // 스포티파이로 부터 선택된 장르의 인기차트 목록을 받아옴
     fetch("http://127.0.0.1:8000/chartmusic", postData)
       .then((response) => {
@@ -104,7 +116,7 @@ function ChartMusic({ handleChartMusicClick, selectedGenre }) {
       .finally(() => {
         setIsLoading(false); // 데이터 로딩 완료 시 로딩 상태를 false로 설정
       });
-  }, [csrftoken]);
+  }, []);
 
   // getCookie 함수는 쿠키 값을 가져오기 위한 헬퍼 함수입니다.
   function getCookie(name) {
@@ -130,6 +142,13 @@ function ChartMusic({ handleChartMusicClick, selectedGenre }) {
 
   return (
     <div>
+      {showSelectPlaylistModal && (
+        <Selectplaylist
+          handleShowSelectPlaylistModal={handleShowSelectPlaylistModal}
+          selectedMusicData={selectedMusicData}
+        />
+      )}
+
       {isLoading ? (
         <LoadingSpinner />
       ) : (
@@ -167,16 +186,18 @@ function ChartMusic({ handleChartMusicClick, selectedGenre }) {
                   <div className="index">{index + 1}</div>
                   <div className="album">
                     <img
-                      src={item.album_img}
+                      src={item.album.images[0]?.url}
                       className="album_image"
                       alt="앨범 이미지"
                     />
                   </div>
                   <div className="title">
-                    {item.title}
-                    <div className="artist">{item.artist}</div>
+                    {item.album.name}
+                    <div className="artist">{item.artists[0].name}</div>
                   </div>
-                  <div className="duration">{item.time}</div>
+                  <div className="duration">
+                    {formatDuration(item.duration_ms)}
+                  </div>
                   <div
                     className="add"
                     onClick={(event) => {

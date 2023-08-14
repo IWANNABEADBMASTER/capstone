@@ -435,7 +435,7 @@ def chartmusic(request):
     if request.method == "POST":
         # POST 데이터 추출
         data = json.loads(request.body)
-        selected_genre = data.get("selectedGenre")  # 선택된 장르의 key 값 (스포티파이에 넘겨줄 값)
+        selected_genre = data.get("selectedGenreKey")  # 선택된 장르의 key 값 (스포티파이에 넘겨줄 값)
         result_data = spotify.get_top_songs_by_genre(selected_genre)
         context = {
             "results": result_data["tracks"],

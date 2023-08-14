@@ -26,13 +26,13 @@ def search_spotify(query):
     return {"tracks": tracks, "track_ids": track_ids}
 
 
-def get_top_songs_by_genre(genre):
-    results = sp.search(
-        q='genre:"{}"'.format(genre), type="track", limit=10, market="KR"
-    )  # 장르별로 10개의 노래 검색
-    tracks = results["tracks"]["items"]
+# def get_top_songs_by_genre(genre):
+#     results = sp.search(
+#         q='genre:"{}"'.format(genre), type="track", limit=10, market="KR"
+#     )  # 장르별로 10개의 노래 검색
+#     tracks = results["tracks"]["items"]
 
-    return tracks
+#     return tracks
 
 
 def get_top_songs_by_genre(genre):
@@ -42,9 +42,11 @@ def get_top_songs_by_genre(genre):
         tracks_response = sp.playlist_items(playlist_id, additional_types=["track"])
         tracks = tracks_response["items"]
         result = []
+        track_ids = []
         for track in tracks:
             result.append(track["track"])
-        return result
+            track_ids.append(track["track"]["id"])
+        return {"tracks": result, "track_ids": track_ids}
     else:
         results = sp.search(
             q='genre:"{}"'.format(genre), type="track", limit=50, market="KR"
