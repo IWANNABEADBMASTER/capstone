@@ -1,5 +1,7 @@
 import React, { useState } from "react";
+import { Provider } from "react-redux";
 import ChartMusic from "./ChartMusic";
+import Store from "./Store";
 import "../css/Chart.css";
 import Noimg from "../favicon/Noimg.png";
 
@@ -55,11 +57,13 @@ function Chart() {
   return (
     <div>
       {showChartMusic ? (
-        <ChartMusic
-          handleChartMusicClick={handleChartMusicClick}
-          selectedGenre={selectedGenre}
-          selectedGenreKey={selectedGenreKey}
-        />
+        <Provider store={Store}>
+          <ChartMusic
+            handleChartMusicClick={handleChartMusicClick}
+            selectedGenre={selectedGenre}
+            selectedGenreKey={selectedGenreKey}
+          />
+        </Provider>
       ) : (
         <div className="chart">
           <h1>Popular-Charts</h1>

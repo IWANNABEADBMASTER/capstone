@@ -133,7 +133,14 @@ DEFAULT_AUTO_FIELD = "django.db.models.BigAutoField"
 
 STATIC_ROOT = os.path.join(BASE_DIR, "staticfiles")
 
-CORS_ALLOWED_ORIGINS = ["http://localhost:3000"]
+# IP 주소 변수 설정
+MY_IP_ADDRESS = "172.20.10.2"
+CORS_ALLOWED_ORIGINS = [
+    f"http://{MY_IP_ADDRESS}:3000",
+    "http://localhost:3000",
+]
+ALLOWED_HOSTS = ["127.0.0.1", "localhost", "172.20.10.2"]
+
 
 REST_FRAMEWORK = {
     "DEFAULT_AUTHENTICATION_CLASSES": [

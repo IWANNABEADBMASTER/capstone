@@ -1,5 +1,6 @@
 import React from "react";
 import { useEffect, useState } from "react";
+import { useSelector } from "react-redux";
 import "../css/Main.css";
 import Bar from "./Bar";
 import SideBar from "./Sidebar";
@@ -39,6 +40,9 @@ function Main() {
   const accessToken = localStorage.getItem("access_token");
   // 로컬 스토리지에서 스포티파이 토큰을 가져옵니다.
   const accessToken2 = localStorage.getItem("access_token2");
+
+  // useSelector를 사용하여 Redux 스토어의 상태값(IP 주소)을 가져옵니다.
+  const ipAddress = useSelector((state) => state.ipAddress);
 
   // 로딩 상태를 나타내는 변수
   const [isLoading, setIsLoading] = useState(true);
@@ -133,7 +137,7 @@ function Main() {
     else if (accessToken !== null && accessToken.length > 0) {
       setIsLoading(true); // 데이터 로딩 시 로딩 상태를 true로 설정
       // 백엔드에서 사용자 정보를 가져오는 함수 호출
-      fetch("http://127.0.0.1:8000/main", {
+      fetch(`http://${ipAddress}:8000/main`, {
         headers: {
           Authorization: `Bearer ${accessToken}`,
         },

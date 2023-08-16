@@ -1,7 +1,9 @@
 import React, { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
+import { Provider } from "react-redux";
 import Peristalsis from "./Peristalsis";
 import Alert from "./Alert";
+import Store from "./Store";
 import Logo from "../favicon/Logo.png";
 import "../css/Bar.css";
 
@@ -45,7 +47,9 @@ function Bar({ isLoggedIn, isSpotifyLoggedIn, username }) {
       </div>
       {isSpotifyLoggedIn ? (
         <div>
-          <Peristalsis />
+          <Provider store={Store}>
+            <Peristalsis />
+          </Provider>
         </div>
       ) : (
         <div className="none" />

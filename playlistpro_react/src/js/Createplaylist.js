@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import { useSelector } from "react-redux";
 import Alert from "./Alert";
 import "../css/Createplaylist.css";
 
@@ -30,6 +31,9 @@ function Createplaylist({
   const accessToken2 = localStorage.getItem("access_token2");
   const csrftoken = getCookie("csrftoken"); // csrftoken은 Django에서 제공하는 쿠키 이름입니다.
 
+  // useSelector를 사용하여 Redux 스토어의 상태값(IP 주소)을 가져옵니다.
+  const ipAddress = useSelector((state) => state.ipAddress);
+
   const handleSubmit = () => {
     if (!playlistTitle.trim()) {
       setShowAlert(true);
@@ -46,7 +50,7 @@ function Createplaylist({
     }
 
     if (accessToken !== null && accessToken.length > 0) {
-      fetch("http://127.0.0.1:8000/main", {
+      fetch(`http://${ipAddress}:8000/main`, {
         headers: {
           Authorization: `Bearer ${accessToken}`,
         },
@@ -69,7 +73,7 @@ function Createplaylist({
             body: JSON.stringify(userData),
           };
 
-          fetch("http://127.0.0.1:8000/createplaylist", postData)
+          fetch(`http://${ipAddress}:8000/createplaylist`, postData)
             .then((response) => {
               if (response.ok) {
                 // 요청이 성공한 경우
@@ -123,7 +127,7 @@ function Createplaylist({
             body: JSON.stringify(userData),
           };
 
-          fetch("http://127.0.0.1:8000/createplaylist", postData)
+          fetch(`http://${ipAddress}:8000/createplaylist`, postData)
             .then((response) => {
               if (response.ok) {
                 // 요청이 성공한 경우

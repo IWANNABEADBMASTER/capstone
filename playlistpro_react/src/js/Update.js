@@ -1,4 +1,5 @@
 import React from "react";
+import { useSelector } from "react-redux";
 import { useLocation, useNavigate } from "react-router-dom";
 import { useState } from "react";
 import Alert from "./Alert";
@@ -12,6 +13,9 @@ function Update() {
 
   // 로컬 스토리지에서 토큰을 가져옵니다.
   const accessToken = localStorage.getItem("access_token");
+
+  // useSelector를 사용하여 Redux 스토어의 상태값(IP 주소)을 가져옵니다.
+  const ipAddress = useSelector((state) => state.ipAddress);
 
   // 비밀번호
   const [password, setPassword] = useState("");
@@ -91,7 +95,7 @@ function Update() {
       newPassword: newPassword,
     };
 
-    fetch("http://127.0.0.1:8000/update", {
+    fetch(`http://${ipAddress}:8000/update`, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",

@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from "react";
+import { useSelector } from "react-redux";
 import { useNavigate, Link } from "react-router-dom";
 import Bar from "./Bar";
 import Alert from "./Alert";
@@ -22,6 +23,9 @@ function Login() {
   };
 
   const csrftoken = getCookie("csrftoken"); // csrftoken은 Django에서 제공하는 쿠키 이름입니다.
+
+  // useSelector를 사용하여 Redux 스토어의 상태값(IP 주소)을 가져옵니다.
+  const ipAddress = useSelector((state) => state.ipAddress);
 
   const handleUsernameChange = (event) => {
     setUserId(event.target.value);
@@ -65,7 +69,7 @@ function Login() {
       body: JSON.stringify(userData),
     };
 
-    fetch("http://127.0.0.1:8000/login", postData)
+    fetch(`http://${ipAddress}:8000/login`, postData)
       .then((response) => response.json()) // 응답을 JSON 형식으로 파싱
       .then((data) => {
         const { message, access_token, success } = data;
@@ -104,7 +108,7 @@ function Login() {
 
   const [AUTH_URL, setAUTH_URL] = useState("");
   useEffect(() => {
-    fetch("http://127.0.0.1:8000/spotify_url", {
+    fetch(`http://${ipAddress}:8000/spotify_url`, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",

@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from "react";
+import { useSelector } from "react-redux";
 import LoadingSpinner from "./LoadingSpinner";
 import Alert from "./Alert";
 import "../css/Getplaylist.css";
@@ -20,6 +21,9 @@ function Getplaylist({
   // 스포티파이 인증 토큰
   const accessToken2 = localStorage.getItem("access_token2");
   const csrftoken = getCookie("csrftoken"); // csrftoken은 Django에서 제공하는 쿠키 이름입니다.
+
+  // useSelector를 사용하여 Redux 스토어의 상태값(IP 주소)을 가져옵니다.
+  const ipAddress = useSelector((state) => state.ipAddress);
 
   // 알림 창을 보여주는 변수
   const [showAlert, setShowAlert] = useState(false);
@@ -73,9 +77,7 @@ function Getplaylist({
         setPlaylists(playlists);
       })
       .catch((error) => {
-        setShowAlert(true);
-        setTitle("플레이리스트 가져오기 에러");
-        setMessage("스포티파이에 가입된 아이디가 아닙니다.");
+        return;
       })
       .finally(() => {
         setIsLoading(false); // 데이터 로딩 완료 시 로딩 상태를 false로 설정
@@ -102,7 +104,7 @@ function Getplaylist({
       body: JSON.stringify(userData),
     };
 
-    fetch("http://127.0.0.1:8000/createplaylist", postData)
+    fetch(`http://${ipAddress}:8000/createplaylist`, postData)
       .then((response) => {
         if (response.ok) {
           // 요청이 성공한 경우
@@ -143,7 +145,7 @@ function Getplaylist({
               };
 
               // 스포티파이에서 불러온 노래 데이터를 생성한 플레이리스트에 저장
-              fetch("http://127.0.0.1:8000/addspotifymusic", postData)
+              fetch(`http://${ipAddress}:8000/addspotifymusic`, postData)
                 .then((response) => {
                   if (response.ok) {
                     // 요청이 성공한 경우

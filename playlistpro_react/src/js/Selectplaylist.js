@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from "react";
+import { useSelector } from "react-redux";
 import LoadingSpinner from "./LoadingSpinner";
 import Alert from "./Alert";
 import "../css/Getplaylist.css";
@@ -25,6 +26,9 @@ function Selectplaylist({ handleShowSelectPlaylistModal, selectedMusicData }) {
 
   const csrftoken = getCookie("csrftoken"); // csrftoken은 Django에서 제공하는 쿠키 이름입니다.
 
+  // useSelector를 사용하여 Redux 스토어의 상태값(IP 주소)을 가져옵니다.
+  const ipAddress = useSelector((state) => state.ipAddress);
+
   // 플레이리스트 클릭 시 제출하는 함수
   const handlePlaylistClick = (playlistId) => {
     const userData = {
@@ -44,7 +48,7 @@ function Selectplaylist({ handleShowSelectPlaylistModal, selectedMusicData }) {
       body: JSON.stringify(userData),
     };
 
-    fetch("http://127.0.0.1:8000/addmusic", postData)
+    fetch(`http://${ipAddress}:8000/addmusic`, postData)
       .then((response) => {
         if (response.ok) {
           // 요청이 성공한 경우
@@ -84,7 +88,7 @@ function Selectplaylist({ handleShowSelectPlaylistModal, selectedMusicData }) {
     const csrftoken = getCookie("csrftoken"); // csrftoken은 Django에서 제공하는 쿠키 이름입니다.
 
     if (accessToken !== null && accessToken.length > 0) {
-      fetch("http://127.0.0.1:8000/main", {
+      fetch(`http://${ipAddress}:8000/main`, {
         headers: {
           Authorization: `Bearer ${accessToken}`,
         },
@@ -105,7 +109,7 @@ function Selectplaylist({ handleShowSelectPlaylistModal, selectedMusicData }) {
             body: JSON.stringify(userData),
           };
 
-          fetch("http://127.0.0.1:8000/playlist", postData)
+          fetch(`http://${ipAddress}:8000/playlist`, postData)
             .then((response) => {
               if (response.ok) {
                 // 요청이 성공한 경우
@@ -157,7 +161,7 @@ function Selectplaylist({ handleShowSelectPlaylistModal, selectedMusicData }) {
             body: JSON.stringify(userData),
           };
 
-          fetch("http://127.0.0.1:8000/playlist", postData)
+          fetch(`http://${ipAddress}:8000/playlist`, postData)
             .then((response) => {
               if (response.ok) {
                 // 요청이 성공한 경우

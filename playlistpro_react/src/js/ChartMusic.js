@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from "react";
+import { useSelector } from "react-redux";
 import Selectplaylist from "./Selectplaylist";
 import Alert from "./Alert";
 import LoadingSpinner from "./LoadingSpinner";
@@ -58,6 +59,9 @@ function ChartMusic({
 
   const csrftoken = getCookie("csrftoken"); // csrftoken은 Django에서 제공하는 쿠키 이름입니다.
 
+  // useSelector를 사용하여 Redux 스토어의 상태값(IP 주소)을 가져옵니다.
+  const ipAddress = useSelector((state) => state.ipAddress);
+
   // 노래 추가버튼 클릭 시 제출하는 함수
   const handleAddMusicClick = (
     trackId,
@@ -91,7 +95,7 @@ function ChartMusic({
 
     setIsLoading(true); // 데이터 로딩 시작 시 로딩 상태를 true로 설정
     // 스포티파이로 부터 선택된 장르의 인기차트 목록을 받아옴
-    fetch("http://127.0.0.1:8000/chartmusic", postData)
+    fetch(`http://${ipAddress}:8000/chartmusic`, postData)
       .then((response) => {
         if (response.ok) {
           // 요청이 성공한 경우

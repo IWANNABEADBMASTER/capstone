@@ -1,4 +1,5 @@
 import React from "react";
+import { useSelector } from "react-redux";
 import { useState, useEffect } from "react";
 import Selectplaylist from "./Selectplaylist";
 import LoadingSpinner from "./LoadingSpinner";
@@ -22,6 +23,9 @@ function Searchresult({ handleQueryChange, query }) {
       setSelectedRow(index);
     }
   };
+
+  // useSelector를 사용하여 Redux 스토어의 상태값(IP 주소)을 가져옵니다.
+  const ipAddress = useSelector((state) => state.ipAddress);
 
   // 플레이리스트를 선택하는 모달 창을 보여줄 변수
   const [showSelectPlaylistModal, setShowSelectPlaylistModal] = useState(false);
@@ -74,7 +78,7 @@ function Searchresult({ handleQueryChange, query }) {
 
   useEffect(() => {
     setIsLoading(true); // 데이터 로딩 시작 시 로딩 상태를 true로 설정
-    fetch("http://127.0.0.1:8000/search", {
+    fetch(`http://${ipAddress}:8000/search`, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
@@ -120,7 +124,7 @@ function Searchresult({ handleQueryChange, query }) {
     setSelectedRow(null);
 
     setIsLoading(true); // 데이터 로딩 시작 시 로딩 상태를 true로 설정
-    fetch("http://127.0.0.1:8000/search", {
+    fetch(`http://${ipAddress}:8000/search`, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",

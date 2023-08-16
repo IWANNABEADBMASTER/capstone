@@ -1,9 +1,12 @@
 import React, { useState, useEffect } from "react";
+import { useSelector } from "react-redux";
+import { Provider } from "react-redux";
 import LoadingSpinner from "./LoadingSpinner";
 import Alert from "./Alert";
 import Createplaylist from "./Createplaylist";
 import Getplaylist from "./Getplaylist";
 import PlaylistMusic from "./PlaylistMusic";
+import Store from "./Store";
 import "../css/Playlist.css";
 import Createplaylistbutton from "../favicon/Createplaylistbutton.png";
 import Noimg from "../favicon/Noimg.png";
@@ -76,11 +79,14 @@ function Playlist() {
   const accessToken2 = localStorage.getItem("access_token2");
   const csrftoken = getCookie("csrftoken"); // csrftoken은 Django에서 제공하는 쿠키 이름입니다.
 
+  // useSelector를 사용하여 Redux 스토어의 상태값(IP 주소)을 가져옵니다.
+  const ipAddress = useSelector((state) => state.ipAddress);
+
   useEffect(() => {
     setIsLoading(true); // 데이터 로딩 시 로딩 상태를 true로 설정
 
     if (accessToken !== null && accessToken.length > 0) {
-      fetch("http://127.0.0.1:8000/main", {
+      fetch(`http://${ipAddress}:8000/main`, {
         headers: {
           Authorization: `Bearer ${accessToken}`,
         },
@@ -101,7 +107,7 @@ function Playlist() {
             body: JSON.stringify(userData),
           };
 
-          fetch("http://127.0.0.1:8000/playlist", postData)
+          fetch(`http://${ipAddress}:8000/playlist`, postData)
             .then((response) => {
               if (response.ok) {
                 // 요청이 성공한 경우
@@ -153,7 +159,7 @@ function Playlist() {
             body: JSON.stringify(userData),
           };
 
-          fetch("http://127.0.0.1:8000/playlist", postData)
+          fetch(`http://${ipAddress}:8000/playlist`, postData)
             .then((response) => {
               if (response.ok) {
                 // 요청이 성공한 경우
@@ -231,30 +237,38 @@ function Playlist() {
       ) : (
         <div>
           {showPlaylistMusic ? (
-            <PlaylistMusic
-              selectedPlaylistId={selectedPlaylistId}
-              handlePlaylistMusicClick={handlePlaylistMusicClick}
-              playlistTitle={playlistTitle}
-              playlistComment={playlistComment}
-            />
+            <Provider store={Store}>
+              <PlaylistMusic
+                selectedPlaylistId={selectedPlaylistId}
+                handlePlaylistMusicClick={handlePlaylistMusicClick}
+                playlistTitle={playlistTitle}
+                playlistComment={playlistComment}
+              />
+            </Provider>
           ) : (
             <div className="playlist">
               {showCreatePlaylistModal && (
-                <Createplaylist
-                  handleShowCreatePlaylistModal={handleShowCreatePlaylistModal}
-                  handleCreatePlaylistSynchronization={
-                    handleCreatePlaylistSynchronization
-                  }
-                />
+                <Provider store={Store}>
+                  <Createplaylist
+                    handleShowCreatePlaylistModal={
+                      handleShowCreatePlaylistModal
+                    }
+                    handleCreatePlaylistSynchronization={
+                      handleCreatePlaylistSynchronization
+                    }
+                  />
+                </Provider>
               )}
 
               {showGetPlaylistModal && (
-                <Getplaylist
-                  handleShowGetPlaylistModal={handleShowGetPlaylistModal}
-                  handleGetPlaylistSynchronization={
-                    handleGetPlaylistSynchronization
-                  }
-                />
+                <Provider store={Store}>
+                  <Getplaylist
+                    handleShowGetPlaylistModal={handleShowGetPlaylistModal}
+                    handleGetPlaylistSynchronization={
+                      handleGetPlaylistSynchronization
+                    }
+                  />
+                </Provider>
               )}
 
               <h1>Playlists</h1>
