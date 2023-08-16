@@ -39,17 +39,26 @@
 .playlist_container {
   background: rgba(142, 124, 237, 0.2);
   display: grid;
-  grid-template-columns: repeat(
-    4,
-    180px
-  ); /* 1행에 4개의 아이템, 각각 150px 너비 */
+  grid-template-columns: repeat(4, 180px); /* 1행에 4개의 플레이리스트*/
   grid-gap: 20px; /* 플레이리스트 박스 사이에 간격 추가 */
   max-width: max-content; /* 최대 너비를 요소 4개 크기로 제한 */
-  grid-template-rows: repeat(
-    auto-fill,
-    minmax(150px, 1fr)
-  ); /* 행 높이 유연하게 설정 */
   padding: 0px 30px;
+  max-height: 520px;
+  overflow: auto; /* 스크롤 가능하도록 설정 */
+}
+
+/* 수직 스크롤바 스타일 */
+.playlist_container::-webkit-scrollbar {
+  width: 6px; /* 스크롤바의 너비 */
+}
+
+.playlist_container::-webkit-scrollbar-thumb {
+  background-color: white; /* 스크롤바 색상 */
+  border-radius: 6px; /* 스크롤바 테두리의 둥글기 */
+}
+
+.playlist_container::-webkit-scrollbar-thumb:hover {
+  background-color: lightgray; /* 스크롤바에 마우스 호버 시 색상 */
 }
 
 .playlist_box {

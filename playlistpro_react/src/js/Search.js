@@ -47,9 +47,8 @@ function Search({ handleQueryChange }) {
         </button>
       </form>
       <div className="comment">
-        PlayListPro는 Spotify Api를 제공받아 검색한 음원 하나를Recommend 함수를
-        통해 100곡을 추천받고 PlayListPro만의 자체 알고리즘으로 10곡을 추려
-        보여줍니다.
+        PlayListPro는 Spotify Api를 제공받아 PlayListPro만의 자체 알고리즘으로
+        사용자의 취향에 맞는 추천 곡을 보여줍니다.
       </div>
       <div className="university">Dankook University</div>
       <div className="class">Capstone design 1st classroom</div>

@@ -17,8 +17,6 @@ function Playlist() {
   const [playlistTitle, setPlaylistTitle] = useState("");
   // 선택한 플레이리스트의 comment
   const [playlistComment, setPlaylistComment] = useState("");
-  // 선택한 플레이리스트의 img
-  const [playlistImg, setPlaylistImg] = useState("");
 
   // 플레이리스트 생성 모달 창을 보여줄 변수
   const [showCreatePlaylistModal, setShowCreatePlaylistModal] = useState(false);
@@ -199,16 +197,10 @@ function Playlist() {
   ]);
 
   // 플레이리스트 클릭 시 실행되는 함수
-  const handlePlaylistClick = (
-    playlistId,
-    playlisTitle,
-    playlistComment,
-    playlistImg
-  ) => {
+  const handlePlaylistClick = (playlistId, playlisTitle, playlistComment) => {
     setSelectedPlaylistId(playlistId);
     setPlaylistTitle(playlisTitle);
     setPlaylistComment(playlistComment);
-    setPlaylistImg(playlistImg);
     setTimeout(() => {
       setShowPlaylistMusic(true);
     }, 100);
@@ -319,8 +311,7 @@ function Playlist() {
                           handlePlaylistClick(
                             playlist.playlistId,
                             playlist.playlistname,
-                            playlist.playlistcomment,
-                            playlist.imageURL
+                            playlist.playlistcomment
                           )
                         }
                       >

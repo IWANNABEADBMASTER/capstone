@@ -1,7 +1,7 @@
 .main {
   position: relative;
   background-image: url("../favicon/Background.png");
-  background-size: 500px 500px; /* 이미지 너비는 자동으로 조정하고 높이는 100%로 설정 */
+  background-size: 500px 600px; /* 이미지 너비는 자동으로 조정하고 높이는 100%로 설정 */
   background-position: right; /* 이미지를 오른쪽으로 배치 */
   background-repeat: no-repeat; /* 이미지 반복 없음 */
   background-color: black;

@@ -5,13 +5,13 @@ import Alert from "./Alert";
 import LoadingSpinner from "./LoadingSpinner";
 import "../css/ChartMusic.css";
 import Arrowleft from "../favicon/Arrowleft.png";
-import Noimg from "../favicon/Noimg.png";
 import Add from "../favicon/Add.png";
 
 function ChartMusic({
   handleChartMusicClick,
   selectedGenre,
   selectedGenreKey,
+  selectedGenreImg,
 }) {
   // 인기차트 해당하는 노래 데이터 리스트
   const [music, setMusic] = useState([]);
@@ -164,11 +164,11 @@ function ChartMusic({
               className="arrow_img"
               alt="뒤로가기"
             />
-            <div className="selectedgenre">{selectedGenre} 인기차트</div>
+            <div className="selectedgenre">{selectedGenre} 50 results</div>
           </div>
 
           <div className="chart_img">
-            <img src={Noimg} alt="차트 이미지" />
+            <img src={selectedGenreImg} alt="차트 이미지" />
           </div>
 
           <div>

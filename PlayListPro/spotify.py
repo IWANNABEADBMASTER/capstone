@@ -26,15 +26,6 @@ def search_spotify(query):
     return {"tracks": tracks, "track_ids": track_ids}
 
 
-# def get_top_songs_by_genre(genre):
-#     results = sp.search(
-#         q='genre:"{}"'.format(genre), type="track", limit=10, market="KR"
-#     )  # 장르별로 10개의 노래 검색
-#     tracks = results["tracks"]["items"]
-
-#     return tracks
-
-
 def get_top_songs_by_genre(genre):
     if genre == "top":
         results = sp.search(q="Top 50: korea", type="playlist", limit=1)
