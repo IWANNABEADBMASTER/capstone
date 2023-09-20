@@ -7,6 +7,7 @@ from django.views.decorators.csrf import csrf_exempt
 import json
 from django.db import IntegrityError
 from .models import Users, Playlist, Music
+from django.conf import settings
 
 # from .models import Users, Playlist, Music
 from rest_framework_simplejwt.tokens import AccessToken, Token
@@ -74,9 +75,17 @@ def login(request):
 
 @csrf_exempt
 def spotify_url(request):
-    clientId = "470b7e26ea7c4e8d84ff40bbd1b01616"
-    redirectUri = "http://172.20.10.2:3000"
-    context = {"clientId": clientId, "redirectUri": redirectUri}
+    clientId = "4037ec337517476ab7c59266ca50f4b2"
+    redirectUri = (
+        f"http://{settings.MY_IP_ADDRESS}:3000/"  # settings에서 MY_IP_ADDRESS 값을 가져옴
+    )
+    clientSecret = "2e554305d01f48809d5f69eb667f7ad0"
+
+    context = {
+        "clientId": clientId,
+        "redirectUri": redirectUri,
+        "clientSecret": clientSecret,
+    }
     return JsonResponse(context)
 
 

@@ -2,7 +2,7 @@ import { configureStore, createSlice } from "@reduxjs/toolkit";
 
 const ipAddressSlice = createSlice({
   name: "ipAddress",
-  initialState: "172.20.10.2", // 초기 IP 번호 값
+  initialState: "172.31.121.73", // 초기 IP 번호 값
   reducers: {
     setIpAddress: (state, action) => {
       return action.payload;

@@ -122,11 +122,28 @@ function Login() {
       })
       .then((data) => {
         const authEndpoint = "https://accounts.spotify.com/authorize";
-        const queryParams = `client_id=${
-          data.clientId
+        const scopes = [
+          "streaming",
+          "user-read-email",
+          "user-read-private",
+          "user-library-read",
+          "user-library-modify",
+          "user-read-playback-state",
+          "user-modify-playback-state",
+          "playlist-read-collaborative",
+          "user-read-currently-playing",
+          "playlist-read-private",
+          "playlist-modify-public",
+          "playlist-modify-private",
+        ]; // 필요한 스코프를 배열로 나열
+        const queryParams = `client_id=${data.clientId}&client_secret=${
+          data.clientSecret
         }&redirect_uri=${encodeURIComponent(
           data.redirectUri
-        )}&response_type=token&show_dialog=true`;
+        )}&response_type=token&show_dialog=true&scope=${encodeURIComponent(
+          scopes.join(" ")
+        )}`; // scope 추가
+
         setAUTH_URL(`${authEndpoint}?${queryParams}`);
       })
       .catch((error) => {

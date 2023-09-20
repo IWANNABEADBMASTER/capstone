@@ -133,13 +133,13 @@ DEFAULT_AUTO_FIELD = "django.db.models.BigAutoField"
 
 STATIC_ROOT = os.path.join(BASE_DIR, "staticfiles")
 
-# IP 주소 변수 설정
-MY_IP_ADDRESS = "172.20.10.2"
+# IP 주소 변수 설정 (python manage.py runserver 192.168.25.18:8000)로 서버 실행
+MY_IP_ADDRESS = "172.31.121.73"
 CORS_ALLOWED_ORIGINS = [
     f"http://{MY_IP_ADDRESS}:3000",
     "http://localhost:3000",
 ]
-ALLOWED_HOSTS = ["127.0.0.1", "localhost", "172.20.10.2"]
+ALLOWED_HOSTS = ["127.0.0.1", "localhost", "172.31.121.73"]
 
 
 REST_FRAMEWORK = {

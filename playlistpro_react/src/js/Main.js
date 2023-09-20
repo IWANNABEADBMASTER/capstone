@@ -11,6 +11,8 @@ import Chart from "./Chart";
 import LoadingSpinner from "./LoadingSpinner";
 import Alert from "./Alert";
 
+import PlayMusic from "./PlayMusic";
+
 function Main() {
   // 메인페이지에서 보여주는 화면 상태
   // 1. home 2. search 3. playlist
@@ -223,7 +225,7 @@ function Main() {
           ) : state === "playlist" ? (
             <Playlist />
           ) : state === "chart" ? (
-            <Chart />
+            <PlayMusic />
           ) : null}
         </div>
       )}

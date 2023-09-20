@@ -18,8 +18,10 @@ function Getplaylist({
     "스포피파이에 생성된 재생목록이 없습니다."
   );
 
-  // 스포티파이 인증 토큰
+  // 로컬 스토리지에서 스포티파이 토큰을 가져옵니다.
   const accessToken2 = localStorage.getItem("access_token2");
+
+  // 스포티파이 인증 토큰
   const csrftoken = getCookie("csrftoken"); // csrftoken은 Django에서 제공하는 쿠키 이름입니다.
 
   // useSelector를 사용하여 Redux 스토어의 상태값(IP 주소)을 가져옵니다.
@@ -52,6 +54,7 @@ function Getplaylist({
       .then((data) => {
         // API 응답에서 사용자의 아이디 가져오기
         setUserId(data.id || "");
+        console.log(accessToken2);
       })
       .catch((error) => {
         setShowAlert(true);
@@ -68,7 +71,7 @@ function Getplaylist({
         if (response.ok) {
           return response.json();
         } else {
-          setComment("스포티파이에 가입된 아이디가 아닙니다.");
+          setComment("재생목록을 가져올 수 없습니다.");
         }
       })
       .then((data) => {
@@ -82,7 +85,7 @@ function Getplaylist({
       .finally(() => {
         setIsLoading(false); // 데이터 로딩 완료 시 로딩 상태를 false로 설정
       });
-  }, []);
+  }, [accessToken2]);
 
   // 플레이리스트 클릭 시 제출하는 함수
   const handleGetPlaylistClick = (
