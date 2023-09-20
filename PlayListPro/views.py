@@ -79,7 +79,7 @@ def spotify_url(request):
     redirectUri = (
         f"http://{settings.MY_IP_ADDRESS}:3000/"  # settings에서 MY_IP_ADDRESS 값을 가져옴
     )
-    clientSecret = "2e554305d01f48809d5f69eb667f7ad0"
+    clientSecret = ""
 
     context = {
         "clientId": clientId,
